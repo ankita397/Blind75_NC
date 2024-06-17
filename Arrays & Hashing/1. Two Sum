@@ -1,0 +1,16 @@
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+       int[] resArr = new int[2];
+       HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+       for(int i = 0 ; i < nums.length; i++){
+            int second_index_val = target - nums[i];
+           //if difference between target and current number is present among the map keys
+           if(map.containsKey(second_index_val)){
+               resArr[0] = map.get(second_index_val);//stores corresponding value/index
+               resArr[1] = i;
+           }
+           map.put(nums[i],i);// key = actual number and value = number index
+       }
+       return resArr; 
+    }
+}
