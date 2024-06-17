@@ -1,0 +1,20 @@
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        int[] freq = new int[26];
+        // increment count of each char for s
+        for(char ch : s.toCharArray()){
+            freq[ch-'a'] += 1;
+        }
+        // increment count of each char for s
+        for(char ch : t.toCharArray()){
+            freq[ch-'a'] -= 1;
+        }
+        // after increment + decremtnt , count should be 0 for all letters if botg are anagrams
+        for(int count : freq){
+            if(count!=0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
