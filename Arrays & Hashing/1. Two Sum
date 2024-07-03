@@ -9,7 +9,7 @@ class Solution {
                resArr[0] = map.get(second_index_val);//stores corresponding value/index
                resArr[1] = i;
            }
-           map.put(nums[i],i);// key = actual number and value = number index
+           map.put(nums[i],i);// key = actual number(second_index_val) and value = number index
        }
        return resArr; 
     }
