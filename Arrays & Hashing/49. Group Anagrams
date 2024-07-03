@@ -1,0 +1,28 @@
+class Solution { // O(NK) ; N = length of strs array , K = max length of a string in strs
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        for(String word : strs){//eat / tea / tan /ate
+            int[] freq = new int[26];
+            for(char ch : word.toCharArray()){
+                freq[ch - 'a']++;// get freq of each letter in the words
+            }
+            StringBuilder sb = new StringBuilder(); // used to construct a hash to be used as key for map
+            for(int count : freq){
+                sb.append("#"); // '#' is added for this kind of example - ["aaaaaaaaaaab","abbbbbbbbbbb"] - both freq arrays will be same ([11,1,0,0...] & [1,11,0,0...]). So to differentiate, we add '#'
+                sb.append(count);
+            }
+            String key = sb.toString();//hash1 / hash1 / hash2 / hash1
+            if(!map.containsKey(key)){
+                map.put(key,new ArrayList<String>());//{"hash1" : []} / not enter here for 'tea' since hash will be same(hash1) / {"hash2" : []} /not enter here for 'ate' since hash will be same(hash1)
+            }
+            map.get(key).add(word);//{"hash1" : ["eat"]} /
+                                    //{"hash1" : ["eat", "tea"]} /
+                                    //{"hash2" : ["tan"]} /
+                                    //{hash1} : ["eat", "tea", "ate"]}
+            //after all loops - 
+            //map = {"hash1" : ["eat", "tea", "ate"], "hash2": ["tan","nat"] , "hash3": ["bat"]}
+        }
+        //take all values in the map and add to array list
+        return new ArrayList(map.values());
+    }
+}
