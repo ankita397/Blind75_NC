@@ -9,7 +9,7 @@ class Solution {
         for(char ch : t.toCharArray()){
             freq[ch-'a'] -= 1;
         }
-        // after increment + decremtnt , count should be 0 for all letters if botg are anagrams
+        // after increment + decremtnt , count should be 0 for all letters if both are anagrams
         for(int count : freq){
             if(count!=0){
                 return false;
