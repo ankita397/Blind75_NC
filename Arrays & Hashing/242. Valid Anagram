@@ -5,7 +5,7 @@ class Solution {
         for(char ch : s.toCharArray()){
             freq[ch-'a'] += 1;
         }
-        // increment count of each char for s
+        // increment count of each char for t
         for(char ch : t.toCharArray()){
             freq[ch-'a'] -= 1;
         }
