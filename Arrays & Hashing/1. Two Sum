@@ -6,7 +6,7 @@ class Solution {
             int second_index_val = target - nums[i];
            //if difference between target and current number is present among the map keys
            if(map.containsKey(second_index_val)){
-               resArr[0] = map.get(second_index_val);//stores corresponding value/index
+               resArr[0] = map.get(second_index_val);//stores index of second_index_val
                resArr[1] = i;
            }
            map.put(nums[i],i);// key = actual number(second_index_val) and value = number index
