@@ -1,7 +1,7 @@
 //https://leetcode.com/problems/contains-duplicate/description/
 //Eg : Input: nums = [1,2,3,1]
 //Output: true
-
+//Note : hashset to get unique values in array, to check for duplicates easily. first check and then add to set
 class Solution {
     public boolean containsDuplicate(int[] nums) {
         int init_count = nums.length;
