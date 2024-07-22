@@ -2,6 +2,8 @@
 //Eg : nums = [2,7,11,15], target = 13
 //i = 0 , second_index_val = 13 - 2 = 11 
 //true -> resArr[0] = map.get(11) = 2 , resArr[1] = 0
+//use hash map to instantly check for difference value, map will add index of last occurrence of a num, don’t use same element twice.
+
 class Solution {
     public int[] twoSum(int[] nums, int target) {
        int[] resArr = new int[2];
