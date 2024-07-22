@@ -1,3 +1,11 @@
+//https://leetcode.com/problems/group-anagrams/description/
+//https://www.youtube.com/watch?v=Fpedl1ZCSZk
+
+//Input: strs = ["eat","tea","tan","ate","nat","bat"]
+//Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+//for each of 26 chars, use count of each char in each word as tuple for key in dict, value is the list of anagrams;
+
 class Solution { // O(NK) ; N = length of strs array , K = max length of a string in strs
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
