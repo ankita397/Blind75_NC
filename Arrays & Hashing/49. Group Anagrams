@@ -7,7 +7,10 @@
 //for each of 26 chars, use count of each char in each word. Use StringBuilder to create unique hash that acts as key of map 
 //and value will be the list of anagrams
 
-class Solution { // O(NK) ; N = length of strs array , K = max length of a string in strs
+//TC : O(NK) ; N = length of strs array , K = max length of a string in strs
+//SC : O(N)
+
+class Solution { 
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
         for(String word : strs){//eat / tea / tan /ate
