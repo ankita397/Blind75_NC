@@ -8,6 +8,9 @@
 //https://www.youtube.com/watch?v=6iLb_Z-osmQ
 //https://youtu.be/yXGY2srjGpQ - heap is explaned better here
 
+//TC : O(nlogk)
+//SC : O(n)
+
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> freqMap = new HashMap<>();
