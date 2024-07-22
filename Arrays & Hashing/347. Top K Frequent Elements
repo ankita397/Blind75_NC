@@ -1,1 +1,45 @@
+//https://leetcode.com/problems/top-k-frequent-elements/description/
+//Input: nums = [1,1,1,2,2,3], k = 2
+//Output: [1,2]
+//Note : PriorityQueue<Map.Entry<Integer,Integer>> to priortise the one that has max freq
+//map to store key as element in nums and value as its frequency
+//minheap that’s kept at size k, if its size exceeds k pop the min, by the end it should be left with k largest;
+
+//https://www.youtube.com/watch?v=6iLb_Z-osmQ
+//https://youtu.be/yXGY2srjGpQ - heap is explaned better here
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> freqMap = new HashMap<>();
+        
+        for(int num : nums){
+            freqMap.put(num, freqMap.getOrDefault(num, 0)+1); 
+            //getOrDefault - for first occurence - frequency will be 0 + 1 = 1
+            //for next occurrences - frequency will be prev frequency + 1 (1+1=2 for second occurence)
+        }
+
+        PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>((a,b) -> a.getValue() - b.getValue());//ascending order - so minimum value of frequency(less occurrence) will be at the top of the min heap - this would be polled out when pq size exceeds k
+
+        for(Map.Entry entry : freqMap.entrySet()){
+            pq.add(entry);
+            if (pq.size() > k) {
+                pq.poll();
+                //min occurring value will be polled out when pq size exceeds k
+            }
+        }
+
+        int[] res = new int[k];
+        int i = 0;
+        // add the remaining values in the pq to the result array
+        // remaining values in pq will be the top K frequent elements
+        while (!pq.isEmpty()) {
+            res[i] = pq.poll().getKey();
+            i++;
+        }
+    
+        return res;
+    }
+}
+
+
 
