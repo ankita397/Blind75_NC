@@ -4,6 +4,9 @@
 //increment count of each char in str1, decrement for str2. 
 //after increment and decrement , count should be 0 for all letters if both are anagrams
 
+//TC : O(n)
+//SC : O(1)
+
 class Solution {
     public boolean isAnagram(String s, String t) {
         int[] freq = new int[26];
