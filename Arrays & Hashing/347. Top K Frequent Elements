@@ -18,7 +18,9 @@ class Solution {
             //for next occurrences - frequency will be prev frequency + 1 (1+1=2 for second occurence)
         }
 
-        PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>((a,b) -> a.getValue() - b.getValue());//ascending order - so minimum value of frequency(less occurrence) will be at the top of the min heap - this would be polled out when pq size exceeds k
+        PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>((a,b) -> a.getValue() - b.getValue());
+        //ascending order - so minimum value of frequency(less occurrence) will be at the top of the min heap 
+        //- this would be polled out when pq size exceeds k
 
         for(Map.Entry entry : freqMap.entrySet()){
             pq.add(entry);
