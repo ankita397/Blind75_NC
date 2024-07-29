@@ -1,7 +1,9 @@
 //https://leetcode.com/problems/two-sum/description/
 //Eg : nums = [2,7,11,15], target = 13
-//i = 0 , second_index_val = 13 - 2 = 11 
-//true -> resArr[0] = map.get(11) = 2 , resArr[1] = 0
+//i = 0 , second_index_val = 13 - 2 = 11 , map.put(2,0)
+//i = 1 , second_index_val = 13 - 7 = 6 , map.put(7,1)
+//i = 2, second_index_val = 13 - 11 = 2 , 2 is already present in map as key - map.containsKey(second_index_val) == true
+//true -> resArr[0] = map.get(2) = 11 , resArr[1] = 2
 //use hash map to instantly check for difference value, map will add index of last occurrence of a num, don’t use same element twice.
 
 //TC = O(n)
