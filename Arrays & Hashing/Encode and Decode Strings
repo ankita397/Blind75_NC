@@ -1,0 +1,8 @@
+//https://leetcode.com/problems/encode-and-decode-strings - Leetcode Premium
+
+//Encode:
+//Use StringBuilder to append length of each string and '#' before the string to encode it.
+
+//Decode:
+//Find the number of characters
+//iterate the number of characters and add on to the result list
