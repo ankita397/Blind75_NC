@@ -1,8 +1,63 @@
 //https://leetcode.com/problems/encode-and-decode-strings - Leetcode Premium
+//Eclipse
 
 //Encode:
 //Use StringBuilder to append length of each string and '#' before the string to encode it.
 
 //Decode:
-//Find the number of characters
-//iterate the number of characters and add on to the result list
+//loop over the string - i points to length characters
+//increment j till delimiter is encountered
+//add string after delimiter till length of string we got earlier
+//increment i to point to next string length
+
+package com.blind75.arrays;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class EncodeAndDecodeStrings {
+
+	public static void main(String[] args) {
+		List<String> strList = new ArrayList<String>();
+		strList = Arrays.asList("Hello", "World","WhatUp");
+		
+		//System.out.println(strList.toString());
+		
+		String encodedString = encoder(strList);
+		System.out.println("Encoded String is : "+ encodedString);
+		
+		List<String> decodedStrList = decoder(encodedString);
+		System.out.println("Decoded String is :"+ decodedStrList.toString());
+		
+
+	}
+	
+	public static String encoder(List<String> strList) {
+		StringBuilder sb = new StringBuilder();
+		for(String str : strList) {
+			sb.append(str.length());
+			sb.append("#");
+			sb.append(str);
+		}
+		return sb.toString();
+	}
+	
+	
+	public static List<String> decoder(String str) {
+		List<String> decodedStrList = new ArrayList<>();
+		int i = 0;
+		while(i < str.length()) {
+			int j = i;
+			while(str.charAt(j) != '#') {
+				j++;
+			}
+			int strLen = Integer.parseInt(str.substring(i, j)); // each string length that got appended before delimiter #
+			decodedStrList.add(str.substring(j+1, (j+1+strLen))); // add string after delimiter till length of string we got earlier to list
+			i = j+1+strLen; // increment i to point to next string length
+		}
+		return decodedStrList;
+		
+	}
+
+}
