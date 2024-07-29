@@ -1,6 +1,12 @@
 //https://leetcode.com/problems/3sum/description/
 //https://www.youtube.com/watch?v=DhFh8Kw7ymk&t=1186s
 
+//2 pointer approach
+//sort the array
+//Fix i and look for the value of j and k starting from j = i + 1(left) and k = n - 1(right).
+//we add to triplet if nums[i] + nums[j] + nums[k] = sum = 0
+//move j to right if sum < 0 and k to left if sum > 0
+
 //TC : O(NlogN)+O(N2)
 //SC : O(no. of quadruplets) - This space is only used to store the answer. We are not using any extra space to solve this problem.
 
@@ -32,7 +38,7 @@ class Solution {
                     //after adding triplet to main list, move j and k
                     j++;
                     k--;
-                    //keep moving j and k till their values are same so that we do not end up with same triplets again and again
+                    //keep moving j and k till their values are same so that we do not end up with same sum again and again
                     while(j < k && nums[j] == nums[j-1]){
                         j++;
                     }
