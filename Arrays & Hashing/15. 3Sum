@@ -8,8 +8,8 @@
 //move j to right if sum < 0 and k to left if sum > 0
 //keep moving j and k till their values are same so that we do not end up with same sum again and again
 
-//TC : O(NlogN)+O(N2)
-//SC : O(no. of quadruplets) - This space is only used to store the answer. We are not using any extra space to solve this problem.
+//TC : O(NlogN)+O(N^2)
+//SC : O(no. of unique triplets) - This space is only used to store the answer. We are not using any extra space to solve this problem.
 
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
