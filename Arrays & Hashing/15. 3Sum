@@ -23,7 +23,7 @@ class Solution {
             if(i > 0 && nums[i] == nums[i-1]){
                 continue;//ignore duplicate and do not proceed further; continue the loop
             }
-            //move the points j and k
+            //pointers j and k
             int j = i + 1;//left pointer
             int k = n - 1;//right pointer
 
