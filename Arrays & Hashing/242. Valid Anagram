@@ -18,7 +18,8 @@ class Solution {
         for(char ch : t.toCharArray()){
             freq[ch-'a'] -= 1;
         }
-        // after increment + decremtnt , count should be 0 for all letters if both are anagrams
+        // after increment + decremtnt , count should be 0 for all letters if both are anagrams(since same array is used to store count 
+        //of alphabet for both strings)
         for(int count : freq){
             if(count!=0){
                 return false;
