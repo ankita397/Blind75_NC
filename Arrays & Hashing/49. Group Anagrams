@@ -8,7 +8,7 @@
 //and value will be the list of anagrams
 
 //TC : O(NK) ; N = length of strs array , K = max length of a string in strs
-//SC : O(N)
+//SC : O(NK)
 
 class Solution { 
     public List<List<String>> groupAnagrams(String[] strs) {
