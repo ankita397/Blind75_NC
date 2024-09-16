@@ -23,7 +23,7 @@ class Solution {
                 sb.append("#"); // '#' is added for this kind of example - ["aaaaaaaaaaab","abbbbbbbbbbb"] - both freq arrays will be same ([11,1,0,0...] & [1,11,0,0...]). 
                 //So both the strings will be same [11100000...],[111,00000...]. But both strings are not anagrams of each other.
                 //So to differentiate, we add '#'.
-                //After adding #, our key strings will be [11#1#0#0#...], [1#11#0#0#...]. Now we get different hash keys.
+                //After adding #, our key strings will be [#11#1#0#0#...], [#1#11#0#0#...]. Now we get different hash keys.
                 sb.append(count);
             }
             String key = sb.toString();//hash1 / hash1 / hash2 / hash1
