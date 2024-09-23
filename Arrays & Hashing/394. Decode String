@@ -3,30 +3,30 @@
 //SC = O(n)
 class Solution {
     public String decodeString(String s) {
-		int num=0;
-		StringBuilder resStr = new StringBuilder();
-		Stack<Integer> countStack = new Stack<>();
-		Stack<StringBuilder> stringStack = new Stack<>();
-		for(char c: s.toCharArray()) {
-			if(c >= '0' && c <= '9') {
-				num = num*10 + c - '0';
-			}else if(c == '[') {//add to both stacks and reset them
-				stringStack.push(resStr);
-				resStr = new StringBuilder();
-				countStack.push(num);
-				num = 0;
-			}else if(c == ']') {//"aaa","bcbc"
-				StringBuilder strInsideBrackets = resStr;
-				resStr = stringStack.pop();
-				int count = countStack.pop();
-				while(count --> 0) {
-					resStr.append(strInsideBrackets);
-					//count--;
-				}
-			}else {
-				resStr.append(c);//"a","bc"
+	int num=0;
+	StringBuilder resStr = new StringBuilder();
+	Stack<Integer> countStack = new Stack<>();
+	Stack<StringBuilder> stringStack = new Stack<>();
+	for(char c: s.toCharArray()) {
+		if(c >= '0' && c <= '9') {
+			num = num*10 + c - '0';
+		}else if(c == '[') {//add to both stacks and reset them
+			stringStack.push(resStr);
+			resStr = new StringBuilder();
+			countStack.push(num);
+			num = 0;
+		}else if(c == ']') {//"aaa","bcbc"
+			StringBuilder strInsideBrackets = resStr;
+			resStr = stringStack.pop();
+			int count = countStack.pop();
+			while(count --> 0) {
+				resStr.append(strInsideBrackets);
+				//count--;
 			}
+		}else {
+			resStr.append(c);//"a","bc"
 		}
+	}
         return resStr.toString();
     }
 }
