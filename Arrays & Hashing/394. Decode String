@@ -19,9 +19,9 @@ class Solution {
 				StringBuilder strInsideBrackets = resStr;
 				resStr = stringStack.pop();
 				int count = countStack.pop();
-				while(count > 0) {
+				while(count --> 0) {
 					resStr.append(strInsideBrackets);
-					count--;
+					//count--;
 				}
 			}else {
 				resStr.append(c);//"a","bc"
