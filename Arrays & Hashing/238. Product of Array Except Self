@@ -29,6 +29,8 @@ class Solution {
 
 
 //Little Different - Keep left products in output array and right products in variable
+//Left Products: You need the cumulative product for all previous indices, so you need to store intermediate results in the output array.
+//Right Products: You can maintain a running product in a single variable because you’re moving backwards through the array, allowing you to update it directly.
 class Solution { //TC = O(n) and SC = O(1)
     public int[] productExceptSelf(int[] nums) {
         int[] output = new int[nums.length];
@@ -41,7 +43,8 @@ class Solution { //TC = O(n) and SC = O(1)
         int right_products  = 1;
         for(int i = nums.length-1; i >= 0; i--){// use variable for all right products
           output[i] = output[i] * right_products;
-          right_products = right_products * nums[i];
+          right_products = right_products * nums[i]; // when calculating the right products, 
+//we can use a single variable (right_products) because we’re processing the array in reverse.
           //System.out.println("Right :"+ output[i]);
         }
 
