@@ -1,0 +1,28 @@
+//https://www.youtube.com/watch?v=oO5uLE7EUlM&list=PLgUwDviBIf0oF6QL8m22w1hIDC1vJ_BHz&index=29
+//Brute Force - O(nlog(n))
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        if(nums.length == 0){
+            return 0;
+        }
+        int csLen = 0; // length of each consecutive seq that we find
+        int max = 1; // LCS length
+        int last_smaller = Integer.MIN_VALUE; // previous smaller element which is a part of our subsequence 
+        // Eg : [1,0,2,1] -> [0,1,1,2] 
+
+        Arrays.sort(nums);
+        for(int i=0; i < nums.length; i++){
+            if(nums[i]-1 ==last_smaller ){// For above example, when i = 1, nums[i] - 1 = 1 - 1 = 0 => 0 has to be the last_smaller for nums[i] to be part of our seq
+                csLen++;
+                last_smaller = nums[i];        
+            }if(nums[i] != last_smaller ){// this is the start of new seq
+                csLen = 1;
+                last_smaller = nums[i]; 
+            }  
+            if(csLen > max) // calculate the max of all consecutive seq that we find
+                max = csLen;  
+        }   
+        return max;
+    }
+}
+
