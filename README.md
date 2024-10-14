@@ -1,5 +1,7 @@
 # Blind75_NC_TUF
 
+https://hackernoon.com/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed
+
 TEMPLATES FOR COMMON PATTERNS :
 
 Here are some common LeetCode patterns along with their general templates in Java:
