@@ -4,67 +4,71 @@ TEMPLATES FOR COMMON PATTERNS :
 
 Here are some common LeetCode patterns along with their general templates in Java:
 1. Two-pointer Pattern (Sorted Array / String)
-Problem types:
-•	Finding pairs that sum to a target.
-•	Checking if a string is a palindrome.
-•	Merging sorted arrays.
-Template:
-java
-Copy code
-public int[] twoPointerTemplate(int[] arr, int target) {
-    Arrays.sort(arr); // Sort if necessary
+    Ways to identify when to use the Two Pointer method:
+    •	It will feature problems where you deal with sorted arrays (or Linked Lists) and need to find a set of elements that fulfill 
+        certain constraints
+    •	The set of elements in the array is a pair, a triplet, or even a subarray
 
-    int left = 0;
-    int right = arr.length - 1;
+    
+    Problem types:
+    •	Finding pairs that sum to a target.
+    •	Checking if a string is a palindrome.
+    •	Merging sorted arrays.
 
-    while (left < right) {
-        int sum = arr[left] + arr[right];
-
-        if (sum == target) {
-            return new int[] { arr[left], arr[right] };
-        } else if (sum < target) {
-            left++; // Move the left pointer
-        } else {
-            right--; // Move the right pointer
+    public int[] twoPointerTemplate(int[] arr, int target) {
+        Arrays.sort(arr); // Sort if necessary
+    
+        int left = 0;
+        int right = arr.length - 1;
+    
+        while (left < right) {
+            int sum = arr[left] + arr[right];
+    
+            if (sum == target) {
+                return new int[] { arr[left], arr[right] };
+            } else if (sum < target) {
+                left++; // Move the left pointer
+            } else {
+                right--; // Move the right pointer
+            }
         }
+    
+        return null; // Return null if no pair is found
     }
-
-    return null; // Return null if no pair is found
-}
  
 2. Sliding Window Pattern
-Problem types:
-•	Finding the maximum sum of subarrays of size k.
-•	Longest substring without repeating characters.
-•	Smallest subarray with a given sum.
-Template:
-java
-Copy code
-public int slidingWindowTemplate(int[] arr, int k) {
-    int maxSum = 0, currentSum = 0;
-
-    for (int i = 0; i < k; i++) {
-        currentSum += arr[i]; // Sum first 'k' elements
+   Following are some ways you can identify that the given problem might require a sliding window:
+    •	The problem input is a linear data structure such as a linked list, array, or string
+    •	You’re asked to find the longest/shortest substring, subarray, or a desired value
+   
+   Problem types:
+    •	Finding the maximum sum of subarrays of size k.
+    •	Longest substring without repeating characters.
+    •	Smallest subarray with a given sum.
+    
+    public int slidingWindowTemplate(int[] arr, int k) {
+        int maxSum = 0, currentSum = 0;
+    
+        for (int i = 0; i < k; i++) {
+            currentSum += arr[i]; // Sum first 'k' elements
+        }
+    
+        maxSum = currentSum;
+    
+        for (int i = k; i < arr.length; i++) {
+            currentSum += arr[i] - arr[i - k]; // Slide the window
+            maxSum = Math.max(maxSum, currentSum); // Update max sum
+        }
+    
+        return maxSum;
     }
 
-    maxSum = currentSum;
-
-    for (int i = k; i < arr.length; i++) {
-        currentSum += arr[i] - arr[i - k]; // Slide the window
-        maxSum = Math.max(maxSum, currentSum); // Update max sum
-    }
-
-    return maxSum;
-}
-________________________________________
-3. Binary Search Pattern
+4. Binary Search Pattern
 Problem types:
 •	Searching for an element in a sorted array.
 •	Finding the first/last occurrence of a target.
 •	Searching in a rotated sorted array.
-Template:
-java
-Copy code
+
 public int binarySearchTemplate(int[] arr, int target) {
     int left = 0, right = arr.length - 1;
 
@@ -82,41 +86,50 @@ public int binarySearchTemplate(int[] arr, int target) {
 
     return -1; // Target not found
 }
-________________________________________
+
 4. Fast & Slow Pointer Pattern (Floyd’s Cycle Detection)
-Problem types:
-•	Detecting a cycle in a linked list.
-•	Finding the middle of a linked list.
-•	Finding the starting point of the cycle.
-Template:
-java
-Copy code
-public boolean hasCycle(ListNode head) {
-    if (head == null || head.next == null) return false;
+    How do you identify when to use the Fast and Slow pattern?
+    •	The problem will deal with a loop in a linked list or array
+    •	When you need to know the position of a certain element or the overall length of the linked list.
+    When should I use it over the Two Pointer method mentioned above?
+    •	There are some cases where you shouldn’t use the Two Pointer approach such as in a singly linked list where you can’t move in a backwards direction. An example of when to use the Fast and Slow pattern is when you’re trying to determine if a linked list is a palindrome.
 
-    ListNode slow = head;
-    ListNode fast = head;
-
-    while (fast != null && fast.next != null) {
-        slow = slow.next; // Move slow pointer by 1 step
-        fast = fast.next.next; // Move fast pointer by 2 steps
-
-        if (slow == fast) {
-            return true; // Cycle detected
+    Problem types:
+    •	Detecting a cycle in a linked list.
+    •	Finding the middle of a linked list.
+    •	Finding the starting point of the cycle.
+    
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) return false;
+    
+        ListNode slow = head;
+        ListNode fast = head;
+    
+        while (fast != null && fast.next != null) {
+            slow = slow.next; // Move slow pointer by 1 step
+            fast = fast.next.next; // Move fast pointer by 2 steps
+    
+            if (slow == fast) {
+                return true; // Cycle detected
+            }
         }
+    
+        return false; // No cycle
     }
 
-    return false; // No cycle
-}
-________________________________________
 5. Merge Intervals Pattern
+How do you identify when to use the Merge Intervals pattern?
+•	If you’re asked to produce a list with only mutually exclusive intervals
+•	If you hear the term “overlapping intervals”.
+Merge interval problem patterns:
+•	Intervals Intersection (medium)
+•	Maximum CPU Load (hard)
+
 Problem types:
 •	Merging overlapping intervals.
 •	Inserting an interval into a list of intervals.
 •	Checking if two intervals overlap.
-Template:
-java
-Copy code
+
 public int[][] mergeIntervals(int[][] intervals) {
     if (intervals.length <= 1) return intervals;
 
@@ -140,15 +153,13 @@ public int[][] mergeIntervals(int[][] intervals) {
     result.add(currentInterval); // Add the last interval
     return result.toArray(new int[result.size()][]);
 }
-________________________________________
+
 6. Backtracking Pattern
 Problem types:
 •	Generating all subsets of a set.
 •	Solving the N-Queens problem.
 •	Permutations and combinations.
-Template:
-java
-Copy code
+
 public List<List<Integer>> backtrackingTemplate(int[] nums) {
     List<List<Integer>> result = new ArrayList<>();
     backtrack(result, new ArrayList<>(), nums, 0);
@@ -170,9 +181,7 @@ Problem types:
 •	Finding the nth Fibonacci number.
 •	Knapsack problems.
 •	Longest common subsequence.
-Template:
-java
-Copy code
+
 public int dynamicProgrammingTemplate(int n) {
     if (n <= 1) return n;
 
@@ -192,9 +201,7 @@ Problem types:
 •	Finding connected components in a graph.
 •	Detecting cycles in an undirected graph.
 •	Kruskal’s algorithm for minimum spanning tree.
-Template:
-java
-Copy code
+
 class UnionFind {
     private int[] parent;
     private int[] rank;
@@ -246,8 +253,7 @@ Here are some common DSA patterns and tricks implemented in Java:
 •	Use Case: Problems that involve finding a subarray or substring that meets specific conditions, such as finding the maximum sum of a subarray of size k, or longest substring with unique characters.
 •	Trick: Maintain a window with two pointers or indices, and adjust the window size based on problem constraints.
 Example: Maximum sum of a subarray of size k:
-java
-Copy code
+
 public class SlidingWindow {
     public static int maxSumSubarray(int[] arr, int k) {
         int maxSum = 0, windowSum = 0;
@@ -276,8 +282,7 @@ public class SlidingWindow {
 •	Use Case: Typically used for problems like finding pairs that meet certain conditions, or when the array is sorted, such as the "Two Sum" problem or the "Container with Most Water" problem.
 •	Trick: Use two pointers, one starting from the beginning and the other from the end, and move them towards each other based on conditions.
 Example: Two Sum problem with sorted array:
-java
-Copy code
+
 public class TwoPointers {
     public static int[] twoSumSorted(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
@@ -307,8 +312,7 @@ public class TwoPointers {
 •	Use Case: Used for cyclic linked list problems, finding cycles, or determining if a number sequence has a cycle (e.g., detecting loops in a linked list).
 •	Trick: Use two pointers, one moving twice as fast as the other. If they meet, a cycle exists.
 Example: Detecting a cycle in a linked list:
-java
-Copy code
+
 class ListNode {
     int val;
     ListNode next;
@@ -354,8 +358,7 @@ public class CycleDetection {
 •	Use Case: Problems that involve intervals, such as merging overlapping intervals, finding gaps between intervals, or finding if a new interval conflicts with existing ones.
 •	Trick: Sort the intervals by the start time and merge overlapping intervals as you iterate.
 Example: Merging overlapping intervals:
-java
-Copy code
+
 import java.util.*;
 
 public class MergeIntervals {
@@ -400,8 +403,7 @@ public class MergeIntervals {
 •	Use Case: Solving problems like generating permutations, combinations, and subsets, or solving puzzles like N-Queens and Sudoku.
 •	Trick: Try all possibilities recursively, backtrack when a condition is not met, and undo changes before moving to the next possibility.
 Example: Generating all subsets of a set:
-java
-Copy code
+
 import java.util.*;
 
 public class Subsets {
