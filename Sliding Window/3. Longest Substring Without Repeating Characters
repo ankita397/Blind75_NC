@@ -31,3 +31,28 @@ class Solution {
 //TC = O(n)
 //SC = O(1)
 
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int len = s.length();
+        int left = 0;
+        int right = 0;
+        int maxLen = 0;
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();//<Character, last seen position>
+        //right pointer moving out of the array is where we stop 
+        while(right < len){
+            char currentChar = s.charAt(right);
+            //only when repeating character is seen and it is after left, move left
+            if(map.containsKey(currentChar) && map.get(currentChar) >= left){
+                // Move left to avoid repeating character
+                left = map.get(currentChar)+1;
+            }
+            //update last seen position of the repeated character in the map
+            map.put(currentChar,right);
+            // Calculate the length of the current substring
+            maxLen = Math.max(maxLen, right-left+1);
+            //move right to next character
+            right++;  
+        }
+        return maxLen;
+    }
+}
