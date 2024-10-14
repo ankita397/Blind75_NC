@@ -2,15 +2,15 @@
 
 TEMPLATES FOR COMMON PATTERNS :
 
+Here are some common LeetCode patterns along with their general templates in Java:
 1. Two-pointer Pattern (Sorted Array / String)
 Problem types:
-
 •	Finding pairs that sum to a target.
 •	Checking if a string is a palindrome.
 •	Merging sorted arrays.
-•	Template:
-
-
+Template:
+java
+Copy code
 public int[] twoPointerTemplate(int[] arr, int target) {
     Arrays.sort(arr); // Sort if necessary
 
@@ -31,15 +31,15 @@ public int[] twoPointerTemplate(int[] arr, int target) {
 
     return null; // Return null if no pair is found
 }
-
+ 
 2. Sliding Window Pattern
 Problem types:
-
 •	Finding the maximum sum of subarrays of size k.
 •	Longest substring without repeating characters.
 •	Smallest subarray with a given sum.
-•	Template:
-
+Template:
+java
+Copy code
 public int slidingWindowTemplate(int[] arr, int k) {
     int maxSum = 0, currentSum = 0;
 
@@ -56,14 +56,15 @@ public int slidingWindowTemplate(int[] arr, int k) {
 
     return maxSum;
 }
-
+________________________________________
 3. Binary Search Pattern
 Problem types:
-
 •	Searching for an element in a sorted array.
 •	Finding the first/last occurrence of a target.
 •	Searching in a rotated sorted array.
-
+Template:
+java
+Copy code
 public int binarySearchTemplate(int[] arr, int target) {
     int left = 0, right = arr.length - 1;
 
@@ -81,14 +82,15 @@ public int binarySearchTemplate(int[] arr, int target) {
 
     return -1; // Target not found
 }
-
+________________________________________
 4. Fast & Slow Pointer Pattern (Floyd’s Cycle Detection)
 Problem types:
-
 •	Detecting a cycle in a linked list.
 •	Finding the middle of a linked list.
 •	Finding the starting point of the cycle.
-
+Template:
+java
+Copy code
 public boolean hasCycle(ListNode head) {
     if (head == null || head.next == null) return false;
 
@@ -106,14 +108,15 @@ public boolean hasCycle(ListNode head) {
 
     return false; // No cycle
 }
-
+________________________________________
 5. Merge Intervals Pattern
 Problem types:
-
 •	Merging overlapping intervals.
 •	Inserting an interval into a list of intervals.
 •	Checking if two intervals overlap.
-
+Template:
+java
+Copy code
 public int[][] mergeIntervals(int[][] intervals) {
     if (intervals.length <= 1) return intervals;
 
@@ -137,13 +140,15 @@ public int[][] mergeIntervals(int[][] intervals) {
     result.add(currentInterval); // Add the last interval
     return result.toArray(new int[result.size()][]);
 }
+________________________________________
 6. Backtracking Pattern
 Problem types:
-
 •	Generating all subsets of a set.
 •	Solving the N-Queens problem.
 •	Permutations and combinations.
-
+Template:
+java
+Copy code
 public List<List<Integer>> backtrackingTemplate(int[] nums) {
     List<List<Integer>> result = new ArrayList<>();
     backtrack(result, new ArrayList<>(), nums, 0);
@@ -159,14 +164,15 @@ private void backtrack(List<List<Integer>> result, List<Integer> tempList, int[]
         tempList.remove(tempList.size() - 1); // Remove the last element (backtrack)
     }
 }
-
+________________________________________
 7. Dynamic Programming (DP) Pattern
 Problem types:
-
 •	Finding the nth Fibonacci number.
 •	Knapsack problems.
 •	Longest common subsequence.
-
+Template:
+java
+Copy code
 public int dynamicProgrammingTemplate(int n) {
     if (n <= 1) return n;
 
@@ -180,14 +186,15 @@ public int dynamicProgrammingTemplate(int n) {
 
     return dp[n];
 }
-
+ 
 8. Union-Find Pattern (Disjoint Set Union - DSU)
 Problem types:
-
 •	Finding connected components in a graph.
 •	Detecting cycles in an undirected graph.
 •	Kruskal’s algorithm for minimum spanning tree.
-
+Template:
+java
+Copy code
 class UnionFind {
     private int[] parent;
     private int[] rank;
@@ -225,6 +232,9 @@ class UnionFind {
         return false;
     }
 }
+
+![Uploading image.png…]()
+
 
 TRICKS -
 
