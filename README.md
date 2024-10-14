@@ -225,3 +225,196 @@ class UnionFind {
         return false;
     }
 }
+
+TRICKS -
+
+Here are some common DSA patterns and tricks implemented in Java:
+1. Sliding Window Pattern
+•	Use Case: Problems that involve finding a subarray or substring that meets specific conditions, such as finding the maximum sum of a subarray of size k, or longest substring with unique characters.
+•	Trick: Maintain a window with two pointers or indices, and adjust the window size based on problem constraints.
+Example: Maximum sum of a subarray of size k:
+java
+Copy code
+public class SlidingWindow {
+    public static int maxSumSubarray(int[] arr, int k) {
+        int maxSum = 0, windowSum = 0;
+
+        // Calculate the sum of the first window of size k
+        for (int i = 0; i < k; i++) {
+            windowSum += arr[i];
+        }
+
+        // Slide the window over the array
+        for (int i = k; i < arr.length; i++) {
+            windowSum += arr[i] - arr[i - k];  // Slide the window right
+            maxSum = Math.max(maxSum, windowSum);  // Update the maximum sum
+        }
+
+        return maxSum;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {2, 1, 5, 1, 3, 2};
+        int k = 3;
+        System.out.println("Maximum sum of a subarray of size " + k + ": " + maxSumSubarray(arr, k));
+    }
+}
+2. Two Pointers Pattern
+•	Use Case: Typically used for problems like finding pairs that meet certain conditions, or when the array is sorted, such as the "Two Sum" problem or the "Container with Most Water" problem.
+•	Trick: Use two pointers, one starting from the beginning and the other from the end, and move them towards each other based on conditions.
+Example: Two Sum problem with sorted array:
+java
+Copy code
+public class TwoPointers {
+    public static int[] twoSumSorted(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+
+        while (left < right) {
+            int sum = nums[left] + nums[right];
+            if (sum == target) {
+                return new int[] {left, right};  // Return the indices of the two numbers
+            } else if (sum < target) {
+                left++;  // Move the left pointer to the right
+            } else {
+                right--;  // Move the right pointer to the left
+            }
+        }
+
+        return new int[] {-1, -1};  // Return -1 if no valid pair is found
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3, 4, 6};
+        int target = 6;
+        int[] result = twoSumSorted(nums, target);
+        System.out.println("Indices of the two numbers: " + result[0] + ", " + result[1]);
+    }
+}
+3. Fast and Slow Pointers (Tortoise and Hare)
+•	Use Case: Used for cyclic linked list problems, finding cycles, or determining if a number sequence has a cycle (e.g., detecting loops in a linked list).
+•	Trick: Use two pointers, one moving twice as fast as the other. If they meet, a cycle exists.
+Example: Detecting a cycle in a linked list:
+java
+Copy code
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+public class CycleDetection {
+    public static boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;  // Move slow by 1 step
+            fast = fast.next.next;  // Move fast by 2 steps
+
+            if (slow == fast) {  // If both meet, there's a cycle
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(3);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(0);
+        head.next.next.next = new ListNode(-4);
+        head.next.next.next.next = head.next;  // Creating a cycle
+
+        System.out.println("Does the linked list have a cycle? " + hasCycle(head));
+    }
+}
+4. Merge Intervals Pattern
+•	Use Case: Problems that involve intervals, such as merging overlapping intervals, finding gaps between intervals, or finding if a new interval conflicts with existing ones.
+•	Trick: Sort the intervals by the start time and merge overlapping intervals as you iterate.
+Example: Merging overlapping intervals:
+java
+Copy code
+import java.util.*;
+
+public class MergeIntervals {
+    public static int[][] merge(int[][] intervals) {
+        if (intervals.length <= 1) {
+            return intervals;
+        }
+
+        // Sort intervals based on the starting time
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+
+        List<int[]> merged = new ArrayList<>();
+        int[] currentInterval = intervals[0];
+        merged.add(currentInterval);
+
+        for (int[] interval : intervals) {
+            int currentEnd = currentInterval[1];
+            int nextStart = interval[0];
+            int nextEnd = interval[1];
+
+            if (currentEnd >= nextStart) {  // Overlapping intervals, merge them
+                currentInterval[1] = Math.max(currentEnd, nextEnd);
+            } else {  // No overlap, move to the next interval
+                currentInterval = interval;
+                merged.add(currentInterval);
+            }
+        }
+
+        return merged.toArray(new int[merged.size()][]);
+    }
+
+    public static void main(String[] args) {
+        int[][] intervals = {{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+        int[][] result = merge(intervals);
+        System.out.println("Merged intervals: ");
+        for (int[] interval : result) {
+            System.out.println(Arrays.toString(interval));
+        }
+    }
+}
+5. Backtracking Pattern
+•	Use Case: Solving problems like generating permutations, combinations, and subsets, or solving puzzles like N-Queens and Sudoku.
+•	Trick: Try all possibilities recursively, backtrack when a condition is not met, and undo changes before moving to the next possibility.
+Example: Generating all subsets of a set:
+java
+Copy code
+import java.util.*;
+
+public class Subsets {
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        generateSubsets(0, nums, new ArrayList<>(), result);
+        return result;
+    }
+
+    private static void generateSubsets(int index, int[] nums, List<Integer> current, List<List<Integer>> result) {
+        result.add(new ArrayList<>(current));  // Add the current subset to the result
+
+        for (int i = index; i < nums.length; i++) {
+            current.add(nums[i]);  // Choose an element
+            generateSubsets(i + 1, nums, current, result);  // Explore further
+            current.remove(current.size() - 1);  // Backtrack and remove the element
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3};
+        List<List<Integer>> subsets = subsets(nums);
+        System.out.println("All subsets: " + subsets);
+    }
+}
+Conclusion
+These are some of the fundamental patterns used in solving DSA problems. Recognizing these patterns can help streamline problem-solving in coding interviews and competitions. Each pattern has its own tricks and can often be applied across multiple problems.
+
+![image](https://github.com/user-attachments/assets/2ec3f1cd-b8d4-42e2-b0e6-6bdba8afd950)
