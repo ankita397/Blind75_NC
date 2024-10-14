@@ -10,8 +10,8 @@ Problem types:
 •	Merging sorted arrays.
 •	Template:
 
-public int[] twoPointerTemplate(int[] arr, int target) {
 
+public int[] twoPointerTemplate(int[] arr, int target) {
     Arrays.sort(arr); // Sort if necessary
 
     int left = 0;
