@@ -164,7 +164,7 @@ private void backtrack(List<List<Integer>> result, List<Integer> tempList, int[]
         tempList.remove(tempList.size() - 1); // Remove the last element (backtrack)
     }
 }
-________________________________________
+ 
 7. Dynamic Programming (DP) Pattern
 Problem types:
 •	Finding the nth Fibonacci number.
@@ -232,8 +232,11 @@ class UnionFind {
         return false;
     }
 }
+ 
+These templates cover common problem-solving patterns found in many LeetCode problems and can be adapted to a wide range of challenges.
 
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/619e0f8d-16b7-4995-a126-2ad6b454a742)
+
 
 
 TRICKS -
