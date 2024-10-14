@@ -64,28 +64,28 @@ Here are some common LeetCode patterns along with their general templates in Jav
     }
 
 4. Binary Search Pattern
-Problem types:
-•	Searching for an element in a sorted array.
-•	Finding the first/last occurrence of a target.
-•	Searching in a rotated sorted array.
-
-public int binarySearchTemplate(int[] arr, int target) {
-    int left = 0, right = arr.length - 1;
-
-    while (left <= right) {
-        int mid = left + (right - left) / 2; // Prevents overflow
-
-        if (arr[mid] == target) {
-            return mid; // Target found
-        } else if (arr[mid] < target) {
-            left = mid + 1; // Search in the right half
-        } else {
-            right = mid - 1; // Search in the left half
+    Problem types:
+    •	Searching for an element in a sorted array.
+    •	Finding the first/last occurrence of a target.
+    •	Searching in a rotated sorted array.
+    
+    public int binarySearchTemplate(int[] arr, int target) {
+        int left = 0, right = arr.length - 1;
+    
+        while (left <= right) {
+            int mid = left + (right - left) / 2; // Prevents overflow
+    
+            if (arr[mid] == target) {
+                return mid; // Target found
+            } else if (arr[mid] < target) {
+                left = mid + 1; // Search in the right half
+            } else {
+                right = mid - 1; // Search in the left half
+            }
         }
+    
+        return -1; // Target not found
     }
-
-    return -1; // Target not found
-}
 
 4. Fast & Slow Pointer Pattern (Floyd’s Cycle Detection)
     How do you identify when to use the Fast and Slow pattern?
@@ -118,41 +118,41 @@ public int binarySearchTemplate(int[] arr, int target) {
     }
 
 5. Merge Intervals Pattern
-How do you identify when to use the Merge Intervals pattern?
-•	If you’re asked to produce a list with only mutually exclusive intervals
-•	If you hear the term “overlapping intervals”.
-Merge interval problem patterns:
-•	Intervals Intersection (medium)
-•	Maximum CPU Load (hard)
-
-Problem types:
-•	Merging overlapping intervals.
-•	Inserting an interval into a list of intervals.
-•	Checking if two intervals overlap.
-
-public int[][] mergeIntervals(int[][] intervals) {
-    if (intervals.length <= 1) return intervals;
-
-    // Sort intervals by the start time
-    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
-
-    List<int[]> result = new ArrayList<>();
-    int[] currentInterval = intervals[0];
-
-    for (int i = 1; i < intervals.length; i++) {
-        if (intervals[i][0] <= currentInterval[1]) {
-            // Overlapping intervals, merge them
-            currentInterval[1] = Math.max(currentInterval[1], intervals[i][1]);
-        } else {
-            // Non-overlapping interval, add to result and move to the next
-            result.add(currentInterval);
-            currentInterval = intervals[i];
+    How do you identify when to use the Merge Intervals pattern?
+    •	If you’re asked to produce a list with only mutually exclusive intervals
+    •	If you hear the term “overlapping intervals”.
+    Merge interval problem patterns:
+    •	Intervals Intersection (medium)
+    •	Maximum CPU Load (hard)
+    
+    Problem types:
+    •	Merging overlapping intervals.
+    •	Inserting an interval into a list of intervals.
+    •	Checking if two intervals overlap.
+    
+    public int[][] mergeIntervals(int[][] intervals) {
+        if (intervals.length <= 1) return intervals;
+    
+        // Sort intervals by the start time
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
+    
+        List<int[]> result = new ArrayList<>();
+        int[] currentInterval = intervals[0];
+    
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] <= currentInterval[1]) {
+                // Overlapping intervals, merge them
+                currentInterval[1] = Math.max(currentInterval[1], intervals[i][1]);
+            } else {
+                // Non-overlapping interval, add to result and move to the next
+                result.add(currentInterval);
+                currentInterval = intervals[i];
+            }
         }
+    
+        result.add(currentInterval); // Add the last interval
+        return result.toArray(new int[result.size()][]);
     }
-
-    result.add(currentInterval); // Add the last interval
-    return result.toArray(new int[result.size()][]);
-}
 
 6. Backtracking Pattern
 Problem types:
@@ -241,9 +241,6 @@ class UnionFind {
 }
  
 These templates cover common problem-solving patterns found in many LeetCode problems and can be adapted to a wide range of challenges.
-
-![image](https://github.com/user-attachments/assets/619e0f8d-16b7-4995-a126-2ad6b454a742)
-
 
 
 TRICKS -
