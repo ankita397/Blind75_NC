@@ -72,3 +72,56 @@ class Solution {
         return maxLen;
     }
 }
+
+ChatGPT explanation
+class Solution {
+    public int characterReplacement(String s, int k) {
+        // Get the length of the input string `s`
+        int n = s.length();
+
+        // Variable to store the maximum length of the valid substring
+        int maxLen = 0;
+
+        // Variable to track the frequency of the most frequent character in the current window
+        int maxCharFreq = 0;
+
+        // Two pointers for sliding window: `left` is the start, `right` is the end of the window
+        int left = 0, right = 0;
+
+        // Array to store the frequency of each character (assuming all uppercase letters A-Z)
+        int freq[] = new int[26];
+
+        // Traverse the string using the right pointer (sliding window)
+        while (right < n) {
+            // Increment the frequency of the current character at `right`
+            freq[s.charAt(right) - 'A']++;
+
+            // Calculate the current window length
+            int length = right - left + 1;
+
+            // Update `maxCharFreq` to the highest frequency of any character in the window
+            maxCharFreq = Math.max(maxCharFreq, freq[s.charAt(right) - 'A']);
+
+            // Check if the number of replacements needed to make all characters the same in the current window exceeds `k`
+            // If the window is invalid, shrink it by moving the `left` pointer
+            if (length - maxCharFreq > k) {
+                // Decrease the frequency of the character at `left` as we are shrinking the window
+                freq[s.charAt(left) - 'A']--;
+                left++;  // Slide the window by moving the left pointer
+            }
+
+            // If the window is valid (i.e., the number of changes needed <= k), update `maxLen`
+            if (length - maxCharFreq <= k) {
+                // Update `maxLen` to the maximum of the current length and the previous maximum length
+                maxLen = Math.max(maxLen, length);
+            }
+
+            // Move the `right` pointer to expand the window
+            right++;
+        }
+
+        // Return the maximum length of the valid substring
+        return maxLen;
+    }
+}
+
