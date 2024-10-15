@@ -57,3 +57,54 @@ class Solution {
     }
 }
 
+//Optimal approach : Sliding window with 2 pointers
+
+//TC = O(n)
+//SC = O(128)
+
+class Solution {
+    public String minWindow(String s, String t) {
+        int minLen = Integer.MAX_VALUE;  // Track the length of the smallest window
+        int sLen = s.length();  // Length of string s
+        int tLen = t.length();  // Length of string t
+        int startingIndex = -1;  // Start index of the smallest window
+        int[] freqT = new int[128];  // Frequency count for characters in t
+        int left = 0, right = 0;  // Pointers for the sliding window
+        int matchCount = 0;  // Count of matched characters
+
+        // Storer frequency of characters in t
+        for(int i = 0; i < tLen; i++){
+            freqT[t.charAt(i)]++;
+        }
+
+        // Expand the window by moving the right pointer
+        while(right < sLen){
+            // If the character encountered is needed or can be part of substring (positive frequency)
+            if(freqT[s.charAt(right)] > 0) {
+                matchCount++;  // Increment match count
+            }
+            freqT[s.charAt(right)]--;  // Decrease the frequency for the current character in s
+
+            // Try to contract the window when we have all characters matched
+            while(matchCount == tLen) {
+                int length = right - left + 1;  // Calculate the current window length
+                if(length < minLen) {  // Update minimum length if needed
+                    minLen = length;
+                    startingIndex = left;  // Update starting index of the minimum window
+                }
+                
+                // Try to shrink the window from the left
+                freqT[s.charAt(left)]++;  // Increment frequency for the character at left as we encounter it in s while shrinking from left
+                if(freqT[s.charAt(left)] > 0) {  // If this character is still needed but we are removing it while shrinking
+                    matchCount--;  // Decrease match count since we removed this character
+                }
+                left++;  // Move the left pointer to the right
+            }
+            right++;  // Move the right pointer to the right
+        }
+
+        // Return the minimum window substring or an empty string if no window found
+        String minWindowStr = (startingIndex == -1) ? "" : s.substring(startingIndex, startingIndex + minLen);
+        return minWindowStr;
+    }
+}
