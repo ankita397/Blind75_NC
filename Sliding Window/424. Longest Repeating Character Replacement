@@ -42,7 +42,7 @@ class Solution {
 //Optimal approach : Sliding window with 2 pointers
 
 //TC = O(n)
-//SC = O(1)
+//SC = O(26)
 
 class Solution {
     public int characterReplacement(String s, int k) {
