@@ -4,7 +4,7 @@ https://leetcode.com/problems/longest-substring-without-repeating-characters/des
 //Generate all substrings and get the max length
 //keep i constant and move j to right till we encounter a repeating char in our hashSet
 
-//TC = O(n)
+//TC = O(n^2)
 class Solution {
     public int lengthOfLongestSubstring(String s) {
 
