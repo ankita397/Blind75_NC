@@ -1,7 +1,7 @@
 https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
 
 //brute force
-//find out all substrings and get the max length
+//Generate all substrings and get the max length
 //keep i constant and move j to right till we encounter a repeating char in our hashSet
 
 //TC = O(n)
