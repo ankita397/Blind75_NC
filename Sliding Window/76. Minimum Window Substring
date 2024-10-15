@@ -1,0 +1,59 @@
+https://leetcode.com/problems/minimum-window-substring/description/
+//i/p - s = ddaaabbca , t = abc
+//o/p - bca
+
+//NOTE : Sliding Window problem where output is a string(not length), always keep srack of the starting index.
+
+
+//brute force
+//Generate all substrings and get the max length
+//keep i constant and move j to right 
+//Count and store frequency of characters in 't'.
+//Start expanding window by moving j to right and increment match count if the value of that character's freq is positive
+//decrement freq
+//if count == length of t - valid substring => check if it has min length and update minLen accordingly. Keep trach of startingIndex 
+
+//TC = O(n^2)
+class Solution {
+    public String minWindow(String s, String t) {
+        int minLen = Integer.MAX_VALUE;  // Track the length of the smallest window
+        int sLen = s.length();  // Length of string s
+        int tLen = t.length();  // Length of string t
+        int startingIndex = -1;  // Start index of the smallest window
+
+        // Try starting a window from each position in s
+        for (int i = 0; i < sLen; i++) {
+            int[] freqT = new int[128];  // Frequency count for characters in t
+            int count = 0;  // Track how many characters of t are matched
+
+            // Fill the frequency array with characters in t
+            for (int k = 0; k < tLen; k++) {
+                freqT[t.charAt(k)]++;
+            }
+
+            // Expand the window by including characters from s
+            for (int j = i; j < sLen; j++) {
+                // If the current character is needed for t
+                if (freqT[s.charAt(j)] > 0) {
+                    count++;  // Increment match count 
+                }
+                freqT[s.charAt(j)]--;  // Decrease frequency of the character we encounter in s string
+
+                // If all characters from t are matched
+                if (count == tLen) {
+                    int length = j - i + 1;  // Calculate window length
+                    if (length < minLen) {  // Update smallest window
+                        minLen = length;
+                        startingIndex = i;
+                    }
+                    break;  // Stop once a valid window is found
+                }
+            }
+        }
+
+        // Return the smallest window or an empty string if no window was found
+        String minWindowStr = (startingIndex == -1) ? "" : s.substring(startingIndex, startingIndex + minLen);
+        return minWindowStr;
+    }
+}
+
