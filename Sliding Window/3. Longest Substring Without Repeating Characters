@@ -55,9 +55,48 @@ class Solution {
 }
 
 //Optimal approach : Sliding window with 2 pointers
+//using array for storing each character's index
 
 //TC = O(n)
-//SC = O(1)
+//SC = O(256)
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int len = s.length();
+        int left = 0;
+        int right = 0;
+        int maxLen = 0;
+        int[] charIndex = new int[256];//<Character's last seen position>
+        for(int i = 0; i < charIndex.length; i++){
+            charIndex[i] = -1;
+        }
+        //right pointer moving out of the array is where we stop 
+        while(right < len){
+            char currentChar = s.charAt(right);
+            //only when repeating character is seen and it is after left, move left
+            if(charIndex[s.charAt(right)] != -1 &&  charIndex[s.charAt(right)] >= left){
+                // Move left to avoid repeating character
+                // Eg: in cadbzabcd, for substring "cadbza" where right = 'a'(index 5), we found 'a' repeating
+                // so, we need to move left beyond charIndex[s.charAt(right)] 
+                // left = charIndex[s.charAt(right)]+1 -- i.e; left = 1+1=2
+                // this lets us skip left at index 1 where we have a first.
+                left = charIndex[s.charAt(right)]+1;
+            }
+            //update last seen position of the repeated character in the map to current position
+            charIndex[s.charAt(right)] = right;
+            // Calculate the length of the current substring
+            maxLen = Math.max(maxLen, right-left+1);
+            //move right to next character
+            right++;  
+        }
+        return maxLen;
+    }
+}
+
+//Optimal approach : Sliding window with 2 pointers
+//using hashmap for storing <character,index>
+
+//TC = O(n)
+//SC = O(n)
 
 class Solution {
     public int lengthOfLongestSubstring(String s) {
