@@ -13,7 +13,7 @@ https://leetcode.com/problems/minimum-window-substring/description/
 //decrement freq
 //if count == length of t - valid substring => check if it has min length and update minLen accordingly. Keep trach of startingIndex 
 
-//TC = O(n^2)
+//TC = O(n^2)// O(n*n*1) - O(1) for for accessing array
 class Solution {
     public String minWindow(String s, String t) {
         int minLen = Integer.MAX_VALUE;  // Track the length of the smallest window
