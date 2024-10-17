@@ -1,10 +1,10 @@
 https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
 
-//brute force - using Set
+//brute force - using Set(ignore)
 //Generate all substrings and get the max length
 //keep i constant and move j to right till we encounter a repeating char in our hashSet
 
-//TC = O(n^2)
+//TC = O(n^2) // O(n*n*1) - O(1) for for accessing set
 //O(256)
 class Solution {
     public int lengthOfLongestSubstring(String s) {
@@ -27,11 +27,11 @@ class Solution {
     }
 }
 
-//brute force - using freq array
+//brute force - using freq array (best)
 //Generate all substrings and get the max length
 //keep i constant and move j to right till we encounter a repeating char in our freq array
 
-//TC = O(n^2)
+//TC = O(n^2)// O(n*n*1) - O(1) for for accessing array
 //O(256)
 
 class Solution {
