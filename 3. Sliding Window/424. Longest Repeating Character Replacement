@@ -9,7 +9,7 @@ https://leetcode.com/problems/longest-repeating-character-replacement/descriptio
 //char appraring max no of times
 //No of conversions = length - maxFreq(char)
 
-//TC = O(n^2)// O(n*n*1) - O(1) for for accessing set
+//TC = O(n^2)// O(n*n*1) - O(1) for for accessing array
 class Solution {
     public int characterReplacement(String s, int k) {
         int n = s.length();
