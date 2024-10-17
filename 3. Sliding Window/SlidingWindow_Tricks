@@ -25,6 +25,7 @@
           And then starting expanding(move right) again.
 
 General :
-i. Shrink or move left when condition is invalid
-ii. Expand or move right when condition is valid
-iii. length always means length of substring from left to right - length = right-left+1
+1. Shrink or move left when condition is invalid
+2. Expand or move right when condition is valid
+3. length always means length of substring from left to right - length = right-left+1
+4. Code the invalid confition first.
