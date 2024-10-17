@@ -71,7 +71,7 @@ class Solution {
         }
         //right pointer moving out of the array is where we stop 
         while(right < len){
-            char currentChar = s.charAt(right);
+            //char currentChar = s.charAt(right);
             //only when repeating character is seen and it is after left, move left
             if(charIndex[s.charAt(right)] != -1 &&  charIndex[s.charAt(right)] >= left){
                 // Move left to avoid repeating character
