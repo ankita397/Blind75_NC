@@ -8,7 +8,6 @@ https://leetcode.com/problems/longest-substring-without-repeating-characters/des
 //O(256)
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-
         int len = s.length();
         int maxLen = 0;
         if(len==0)
@@ -27,7 +26,7 @@ class Solution {
     }
 }
 
-//brute force - using freq array (best)
+//brute force - using visited array (best)
 //Generate all substrings and get the max length
 //keep i constant and move j to right till we encounter a repeating char in our freq array
 
@@ -40,14 +39,14 @@ class Solution {
         int maxLen = 0;
         for(int i =0; i < n; i++){
             //Set<Character> set = new HashSet<Character>();
-            int[] freq = new int[256];
+            int[] visited = new int[256];
             for(int j = i; j < n; j++){
                 int length = j-i+1;
-                if(freq[s.charAt(j)] == 1){// already encountered this character
+                if(visited[s.charAt(j)] == 1){// already encountered this character
                     break;
                 }
                 maxLen = Math.max(maxLen, length);
-                freq[s.charAt(j)] = 1; // mark it a seen before - so it will become repeating char next time
+                visited[s.charAt(j)] = 1; // mark it a seen before - so it will become repeating char next time
             }
         }
         return maxLen;
