@@ -20,7 +20,8 @@
           keep track of statring and ending index of substring(in case we need the substring as answer)
         right++;
       }
-    iii. If for (ii), TC = O(2N) and only maxLen or minLen is asked and not the string, then we can compromise on substring and optimise more.
+    iii. If for (ii), TC = O(2N) and only maxLen or minLen is asked and not the string, some may ask to optimise more to make TC = O(N)
+      -> then we can compromise on substring and optimise more.
       -> Keep shrinking window or moving left to keep the maxLen or minLen same, ignoring the current substring till we get valid condition.
           And then starting expanding(move right) again.
 
