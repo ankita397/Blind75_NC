@@ -30,3 +30,14 @@ General :
 2. Expand or move right when condition is valid
 3. length always means length of substring from left to right - length = right-left+1
 4. Code the invalid condition first.
+5. freq[s.charAt(right)-'A'] - This is typically used when you are working with alphabetic characters, and you only want to focus
+        on the letters 'A' to 'Z' (or their lowercase equivalents by normalizing case). Here, you're subtracting 'A' to map the ASCII value of
+        the character into a smaller range (0 to 25 for uppercase letters).
+        Context: This is more efficient if you only need to handle letters because you can use an array of size 26 instead of 256. 
+        You should use this when you're guaranteed that the input is alphabetic or you are working with uppercase letters (or you normalize 
+        the case).
+6. freq[s.charAt(right) - This is generally useful when you want to track the frequency of any character (including special characters
+        or any other non-letter characters) in the string.
+        Context: The array is large enough to cover all possible characters in the ASCII or Unicode table. 
+        You use this when you're working with all characters without a specific restriction (for example, alphanumeric, special characters,
+        or full ASCII).
