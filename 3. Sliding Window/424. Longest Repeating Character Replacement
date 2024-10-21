@@ -58,6 +58,9 @@ class Solution {
             maxCharFreq = Math.max(maxCharFreq, freq[s.charAt(right)-'A']);
             if(length-maxCharFreq > k){//invalid - so slide the window by moving left
                 freq[s.charAt(left)-'A']--;
+                //for(int i = 0; i < 26; i++){
+                //  maxCharFreq = Math.max(maxCharFreq, freq[s.charAt(right)-'A']); // this will reduce value of maxCharFreq during shrink
+                //}
                 // no point in reducing maxCharFreq as it will not give us a better maxLen
                 //Eg: AABABBA - substring AABAB - here we already get maxCharFreq = 3 and length = 5 which is the maxLen till now. Now next maxLen will have to 6 or more. It cannot be lesser.
                 //So reducing maxCharFreq can never satisfy the the condition length-maxCharFreq <= k . Suppose, we reduce maxCharFreq to 2 after sliding window to substring ABAB, if we need length 6 then 6-2 <= k(2) = false always
