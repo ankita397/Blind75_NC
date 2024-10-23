@@ -117,7 +117,7 @@ class Solution {
     }
 }
 
-ChatGPT explanation
+ChatGPT explanation for optimal
 class Solution {
     public int characterReplacement(String s, int k) {
         // Get the length of the input string `s`
