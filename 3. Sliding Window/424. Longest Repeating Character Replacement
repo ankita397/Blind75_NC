@@ -39,7 +39,48 @@ class Solution {
     }
 }
 
-//Optimal approach : Sliding window with 2 pointers
+//Better  : Sliding window with 2 pointers
+
+//length is used for validating our condition again and again in a while loop. So re-updating length is needed during shrink.
+
+//TC = O(n+n)
+//SC = O(26)
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int n = s.length();
+        int maxLen = 0;
+        int maxCharFreq = 0;
+        int left = 0, right = 0;
+        int freq[] = new int[26];
+        while(right < n){
+            int length = 0;
+            freq[s.charAt(right)-'A']++;
+            length = right-left+1;
+            maxCharFreq = Math.max(maxCharFreq, freq[s.charAt(right)-'A']);
+            while(length-maxCharFreq > k){//invalid - so shrink the window by moving left
+                freq[s.charAt(left)-'A']--;
+                //for(int i = 0; i < 26; i++){
+                //  maxCharFreq = Math.max(maxCharFreq, freq[s.charAt(right)-'A']); // this will reduce value of maxCharFreq during shrink
+                //}
+                // no point in reducing maxCharFreq as it will not give us a better maxLen
+                //Eg: AABABBA - substring AABAB - here we already get maxCharFreq = 3 and length = 5 which is the maxLen till now. Now next maxLen will have to 6 or more. It cannot be lesser.
+                //So reducing maxCharFreq can never satisfy the the condition length-maxCharFreq <= k . Suppose, we reduce maxCharFreq to 2 after sliding window to substring ABAB, if we need length 6 then 6-2 <= k(2) = false always
+                //maxCharFreq = 0;
+                left++;
+                length = right-left+1;
+            }
+            if(length - maxCharFreq <= k){// update maxLen when condition satisfies
+                maxLen = Math.max(maxLen,length);
+            }
+            right++;
+        }
+        return maxLen;
+    }
+}
+
+//Optimal approach : Sliding window with 2 pointers 
+//while (length-maxCharFreq > k) -> if(length-maxCharFreq > k)
+//length is used for validating our condition on once here. So re-updating length is not needed during shrink.
 
 //TC = O(n)
 //SC = O(26)
@@ -56,7 +97,7 @@ class Solution {
             freq[s.charAt(right)-'A']++;
             length = right-left+1;
             maxCharFreq = Math.max(maxCharFreq, freq[s.charAt(right)-'A']);
-            if(length-maxCharFreq > k){//invalid - so slide the window by moving left
+            if(length-maxCharFreq > k){//invalid - so shrink the window by moving left
                 freq[s.charAt(left)-'A']--;
                 //for(int i = 0; i < 26; i++){
                 //  maxCharFreq = Math.max(maxCharFreq, freq[s.charAt(right)-'A']); // this will reduce value of maxCharFreq during shrink
