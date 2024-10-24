@@ -74,7 +74,7 @@ class Solution {
         int left = 0, right = 0;  // Pointers for the sliding window
         int matchCount = 0;  // Count of matched characters
 
-        // Storer frequency of characters in t
+        // Store frequency of characters in t
         for(int i = 0; i < tLen; i++){
             freqT[t.charAt(i)]++;
         }
@@ -94,10 +94,12 @@ class Solution {
                     minLen = length;
                     startingIndex = left;  // Update starting index of the minimum window
                 }
-                
+
+                //We got a valid window but we need a minimum window, so we start shrinking our window
+
                 // Try to shrink the window from the left
                 freqT[s.charAt(left)]++;  // Increment frequency for the character at left as we encounter it in s while shrinking from left
-                if(freqT[s.charAt(left)] > 0) {  // If this character is still needed but we are removing it while shrinking
+                if(freqT[s.charAt(left)] > 0) {  // Freq becomes positive means this character is still needed but we are removing it while shrinking
                     matchCount--;  // Decrease match count since we removed this character
                 }
                 left++;  // Move the left pointer to the right
