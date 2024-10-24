@@ -14,6 +14,8 @@ https://leetcode.com/problems/minimum-window-substring/description/
 //if count == length of t - valid substring => check if it has min length and update minLen accordingly. Keep trach of startingIndex 
 
 //TC = O(n^2)// O(n*n*1) - O(1) for for accessing array
+//SC = O(128)// considering all alphabets 
+
 class Solution {
     public String minWindow(String s, String t) {
         int minLen = Integer.MAX_VALUE;  // Track the length of the smallest window
@@ -33,11 +35,11 @@ class Solution {
 
             // Expand the window by including characters from s
             for (int j = i; j < sLen; j++) {
-                // If the current character is needed for t
+                // If the current character in s is needed (exists in t), increase the match count
                 if (freqT[s.charAt(j)] > 0) {
-                    count++;  // Increment match count 
+                    count++;  // We've matched one more character of t
                 }
-                freqT[s.charAt(j)]--;  // Inserting chars from s into the map means increasing freq
+                freqT[s.charAt(j)]--;  // Reduce the frequency of the current character(index j char) in s
 
                 // If all characters from t are matched
                 if (count == tLen) {
