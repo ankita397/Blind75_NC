@@ -36,7 +36,7 @@ class Solution {
             // Expand the window by including characters from s
             for (int j = i; j < sLen; j++) {
                 // If the current character in s is needed (exists in t), increase the match count
-                if (freqT[s.charAt(j)] > 0) {
+                if (freqT[s.charAt(j)] > 0) { // positive freq means we found a match
                     count++;  // We've matched one more character of t
                 }
                 freqT[s.charAt(j)]--;  // Reduce the frequency of the current character(index j char) in s - do this for all chars in s
