@@ -1,0 +1,37 @@
+https://leetcode.com/problems/valid-parentheses/description/
+
+//TC = O(n)
+//SC = O(n) - for stack
+
+class Solution {
+    public boolean isValid(String s) {
+        if(s.length() % 2 != 0)
+            return false;
+        Stack<Character> stack = new Stack<Character>();
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '(' || s.charAt(i) == '{' || s.charAt(i) == '['){
+                stack.push(s.charAt(i)); // simply add all opening brackets to stack
+            }else{
+                //In else block, s.charAt(i) can either be a closing bracket or empty char
+                //ideally s.charAt(i) should be closing bracket - for returning true
+                if(stack.isEmpty()) //empty char - for our opening bracket, we did not find any closing bracket
+                    return false;
+                Character currentCharacter = stack.peek(); // top most character in our stack 
+                //top most character in our stack has to be a opening bracket since we are expecting s.charAt(i) to be a closing bracket
+                if((currentCharacter == '(' && s.charAt(i) == ')') ||
+                    (currentCharacter == '{' && s.charAt(i) == '}') ||
+                    (currentCharacter == '[' && s.charAt(i) == ']')){
+                        stack.pop(); // pop for all valid bracket matches
+                }else{
+                    return false;
+                }
+            }
+        }
+        // if(stack.isEmpty()){
+        //     return true;
+        // }else{
+        //     return false;
+        // }
+        return stack.isEmpty();//At the end, if the entire string is valid, then stack will become empty 
+    }
+}
