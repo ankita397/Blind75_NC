@@ -1,0 +1,75 @@
+https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/
+
+//TC = O(log n)
+//SC = O(1)
+
+class Solution {
+    public int findMin(int[] nums) {
+        int low = 0, high = nums.length-1, min = Integer.MAX_VALUE;
+        int mid = 0;
+        // Binary Search: Repeatedly divide and search for the minimum
+        while(low <= high){
+            mid = (low+high)/2;
+            //Optimization - not mandatory
+            // Check if the current search space is already sorted
+            // If nums[low] <= nums[high], the smallest element must be nums[low]
+            //Eg-[4,5,6,0,1,2]
+            //Initially, nums[low] = 0, nums[mid] = 6, nums[high] = 2 => perform BS and eliminate the left half as it is sorted
+            //Now, nums[low] = 0, nums[mid] = 1, nums[high] = 2
+            //Here, both left half(01) and right half(12) are sorted - (nums[low] <= nums[mid] and nums[mid] <= nums[high] => nums[low] <= nums[high]) => this means entire array is sorted(012) => so we dont need to perform anothe BS here. We now nums[low] is the minimum.
+            if(nums[low] <= nums[high]){ //Optimization - not mandatory
+                min = Math.min(min, nums[low]);
+                break;
+            }
+            // If left half is sorted (nums[low] <= nums[mid])
+            if(nums[low] <= nums[mid]){
+                min = Math.min(min, nums[low]);
+                low = mid+1;//eliminate the left half as it is sorted and search in only right half
+            }else{ // Otherwise, the right half is sorted
+                min = Math.min(min, nums[mid]);
+                high = mid-1;//eliminate the right half as it is sorted and search in only left half
+                
+            }
+        }
+        return min;
+    }
+}
+
+
+//If array has duplicates
+//TC = O((n) - worst case
+//SC = O(1)
+
+class Solution {
+    public int findMin(int[] nums) {
+        int low = 0, high = nums.length - 1;
+        int min = Integer.MAX_VALUE;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            // Check if the segment is sorted
+            if (nums[low] < nums[high]) {
+                min = Math.min(min, nums[low]);
+                break;
+            }
+
+            // Update min with the current mid element
+            min = Math.min(min, nums[mid]);
+
+            // If nums[low] == nums[mid] == nums[high], we can't decide, so adjust bounds
+            if (nums[low] == nums[mid] && nums[mid] == nums[high]) {
+                low++;
+                high--;
+            } else if (nums[low] <= nums[mid]) {
+                // Left half is sorted, so search right half
+                low = mid + 1;
+            } else {
+                // Right half is sorted, so search left half
+                high = mid - 1;
+            }
+        }
+
+        return min;
+    }
+}
