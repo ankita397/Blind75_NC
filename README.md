@@ -70,6 +70,7 @@ Here are some common LeetCode patterns along with their general templates in Jav
     •	Searching for an element in a sorted array.
     •	Finding the first/last occurrence of a target.
     •	Searching in a rotated sorted array.
+   If required TC is mentioned as O(log n) in the question and the array is sorted, then think of binary search.
     
     public int binarySearchTemplate(int[] arr, int target) {
         int left = 0, right = arr.length - 1;
