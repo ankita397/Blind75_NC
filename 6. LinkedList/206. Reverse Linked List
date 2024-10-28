@@ -1,0 +1,22 @@
+
+//Iterative approach
+//TC = O(n+n)
+//SC = O(n)
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode temp = head;
+        Stack<Integer> stack = new Stack();
+        while(temp != null){// push all the values to a stack
+            stack.push(temp.val);
+            temp = temp.next;
+        }
+        temp = head;//make temp as head again
+        while(temp != null){
+            // temp.val = stack.peek();
+            // stack.pop();
+            temp.val = stack.pop();//and get the values from stack for temp. These values will come reversed since stack follows LIFO
+            temp = temp.next;
+        }
+        return head;
+    }
+}
