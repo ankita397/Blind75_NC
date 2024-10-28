@@ -1,8 +1,10 @@
 https://leetcode.com/problems/reverse-linked-list/description/
 
 //Iterative approach
+
 //TC = O(n+n)
 //SC = O(n)
+
 class Solution {
     public ListNode reverseList(ListNode head) {
         ListNode temp = head;
@@ -23,3 +25,20 @@ class Solution {
 }
 
 //Iterative approach - better
+
+//TC = O(n)
+//SC = O(1)
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode temp = head;
+        ListNode prev = null;// prev should be initialized to null since after reversing it will be the last node
+        while(temp != null){
+            ListNode next = temp.next; //Store the next node in 'fronextnt' to preserve the reference
+            temp.next = prev; //Reverse the direction of the current node's 'next' pointer to point to 'prev'
+            prev = temp;//Move 'prev' to the current node for the next iteration
+            temp = next;//Move 'temp' to the 'next' node advancing the traversal
+        }
+        return prev; //prev will have the new head of the reversed linked list
+    }
+}
