@@ -42,3 +42,31 @@ class Solution {
         return prev; //prev will have the new head of the reversed linked list
     }
 }
+
+//Recursive 
+
+//TC = O(n)
+//SC = O(n) - recursion stack space
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        // base case
+        // If the linked list is empty or has only one node,
+        // return the head as it is already reversed.
+        if(head == null || head.next == null){// if single node is there
+            return head;
+        }
+        // Reverse the linked list starting
+        // from the second node (head.next).
+        ListNode newHead = reverseList(head.next); //solve for the next node recursively
+        // Save a reference to the node following the current 'head' node in 'next'.
+        ListNode next = head.next;
+        // Make the 'next' node point to the current 'head' node in the reversed order.
+        next.next = head;
+        // Make the 'head' node point to null to denote it as last node and break the link from the current 'head' node to the 'next' node to avoid cycles.
+        head.next = null;
+
+        // Return the 'newHead,' which is the new head of the reversed linked list.
+        return newHead;
+    }
+}
