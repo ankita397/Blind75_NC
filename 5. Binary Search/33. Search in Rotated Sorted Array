@@ -1,5 +1,7 @@
 https://leetcode.com/problems/search-in-rotated-sorted-array/description/
 
+//Brute Force - Linear Search [TC = O(n)] - Tell this to the interviewer and then mention binary search
+
 //TC = O(log n)
 //SC = O(1)
 
