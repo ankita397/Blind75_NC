@@ -1,0 +1,35 @@
+https://leetcode.com/problems/search-in-rotated-sorted-array/description/
+
+//TC = O(log n)
+//SC = O(1)
+
+class Solution {
+    public int search(int[] nums, int target) {
+        int low = 0, high = nums.length-1, mid = 0;
+        while(low <= high){
+            mid = (low+high)/2;
+            if(nums[mid] == target){
+                return mid;
+            }
+            //Identify the sorted half - only one half will always be sorted. The other half may or may not be sorted.
+            // If left half is sorted for sure - (nums[low] <= nums[mid])
+            if(nums[low] <= nums[mid]){
+               //check if the target is between low and mid
+                if(target >= nums[low] && target <=nums[mid]){
+                    //eliminate the right half as our target is in left half
+                    high = mid - 1;
+                }else{//eliminate the left half as our target is in right half
+                    low = mid + 1;
+                }
+            }else{// if right half is sorted
+                if(target >= nums[mid] && target <=nums[high]){
+                    //eliminate the left half as our target is in right half
+                    low = mid + 1;
+                }else{//eliminate the right half as our target is in left half
+                    high = mid - 1;
+                }
+            }
+        }
+        return -1; // target not found
+    }
+}
