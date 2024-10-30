@@ -1,0 +1,49 @@
+https://leetcode.com/problems/merge-two-sorted-lists/description/
+
+//Brute Force
+
+//TC = O(N1 + N2) + O(N log N) + O(N) 
+//SC = O(N)+O(N) where N is the total number of nodes from both lists, N1 + N2. O(N) to store all the nodes of both the lists in an 
+//external array and another O(N) to create a new combined list.
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ArrayList<Integer> arrList = new ArrayList<Integer>();
+        ListNode temp1 = list1, temp2 = list2;
+        //Add the nodes of both linked lists to an array list
+        while(temp1 != null){//O(N1)
+            arrList.add(temp1.val);
+            temp1 = temp1.next;
+        }
+        while(temp2 != null){//O(N2)
+            arrList.add(temp2.val);
+            temp1 = temp2.next;
+        }
+
+        //Sort the array list
+        Collections.sort(arrList);//O(NlogN) - N = N1+N2
+
+        //Convert the sorted array list into linked list
+        ListNode node = convertArrToLinkedList(arrList);//O(N)
+
+        return node;
+    }
+
+    //Common method to Convert the array list into linked list
+    private ListNode convertArrToLinkedList(ArrayList<Integer> arrList){
+        // Create a dummy node to serve  as the head of the linked list
+        ListNode dummyNode = new ListNode(-1);
+        ListNode temp = dummyNode;
+
+        // Iterate through the array and create nodes with array elements
+        for(int i = 0; i < arrList.size(); i++){
+            // Create a new node with the array element
+            temp.next = new ListNode(arrList.get(i));
+            // Move the temporary pointer to the newly created node
+            temp = temp.next;
+        }
+        // Return the linked list starting from the next of the dummy node
+        return dummyNode.next;   
+    }
+}
+
