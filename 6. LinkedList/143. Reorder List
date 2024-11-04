@@ -48,7 +48,8 @@ class Solution {
         // Slow pointer moves one step, and fast pointer moves two steps at a time.
         ListNode slow = head;
         ListNode fast = head;
-        while (fast != null && fast.next != null) {
+        while (fast != null && fast.next != null) { // if LL has even no of nodes, then 1st condition will be executed and if LL has odd 
+        // no of nodes, the 2ns condition will get executed
             slow = slow.next;       // Move slow pointer by 1 step
             fast = fast.next.next;   // Move fast pointer by 2 steps
         }
