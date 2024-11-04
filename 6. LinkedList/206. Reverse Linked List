@@ -31,13 +31,13 @@ class Solution {
 
 class Solution {
     public ListNode reverseList(ListNode head) {
-        ListNode temp = head;
+        ListNode curr = head;
         ListNode prev = null;// prev should be initialized to null since after reversing it will be the last node
-        while(temp != null){
-            ListNode next = temp.next; //Store the next node in 'fronextnt' to preserve the reference
-            temp.next = prev; //Reverse the direction of the current node's 'next' pointer to point to 'prev'
-            prev = temp;//Move 'prev' to the current node for the next iteration
-            temp = next;//Move 'temp' to the 'next' node advancing the traversal
+        while(curr != null){
+            ListNode temp = curr.next; //Store the next node in 'fronextnt' to preserve the reference
+            curr.next = prev; //Reverse the direction of the current node's 'next' pointer to point to 'prev'
+            prev = curr;//Move 'prev' to the current node for the next iteration
+            curr = next;//Move 'temp' to the 'next' node advancing the traversal
         }
         return prev; //prev will have the new head of the reversed linked list
     }
