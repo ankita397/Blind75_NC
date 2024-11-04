@@ -24,5 +24,37 @@ public class Solution {
 
 //Optimal - 2 pointers
 
+//INTUITION:
 //If slow and fast pointer collide at(point to) any node then we know the LL has a cycle.
+//This is because the distance between fast and slow (or fast-slow reduces at each step). So they are bound to collide when there 
+//distance becomes 0. This is only possible when the LL has cycle.
+//That is the reason, we move fast by 2 and slow by 1 position.. so the distance(d) reduces by 1 each time 
+//d % 1 = 0 (d is always divisible by 1)
 
+//TC = O(N), where N is the number of nodes in the linked list. 
+This is because in the worst-case scenario, the fast pointer, which moves quicker, will either reach the end of the list (in case of no loop)
+or meet the slow pointer (in case of a loop) in a linear time relative to the length of the list.
+
+The key insight into why this is O(N) and not something slower is that each step of the algorithm reduces the distance between the fast
+and slow pointers (when they are in the loop) by one. Therefore, the maximum number of steps needed for them to meet is proportional to the 
+number of nodes in the list.
+
+//SC = O(1) : The code uses only a constant amount of additional space, regardless of the linked list's length. 
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        // Since fast pointer moves two steps at a time 
+        //if LL has even no of nodes, then 1st condition will be executed and 
+        //if LL has odd no of nodes, the 2nd condition will get executed
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast){//slow and fast collide here
+                return true;
+            }
+        }
+        return false;
+    }
+}
