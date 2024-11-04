@@ -1,0 +1,31 @@
+https://leetcode.com/problems/reorder-list/description/
+
+//Brute Force - iterative
+//TC = O(n)
+//SC = O(n) 
+
+class Solution {
+    public void reorderList(ListNode head) {
+        if(head == null){
+            return;
+        }
+        List<ListNode> nodeList = new ArrayList<ListNode>();
+        ListNode temp = head;//temp is current node - used to traverse
+        while(temp != null){//traverse the linked lust and add the nodes to the array list
+            nodeList.add(temp);
+            temp = temp.next;
+        }
+        int i = 0; //i is used to traverse from the front of LL
+        int j = nodeList.size()-1;//j is used to traverse from the back of LL
+        while(i < j){
+            nodeList.get(i).next = nodeList.get(j);
+            i++;
+            if(i >= j){// i may exceed j when we increment it
+                break;
+            }
+            nodeList.get(j).next = nodeList.get(i);
+            j--;
+        }
+        nodeList.get(i).next = null;//the last node should point to null
+    }
+}
