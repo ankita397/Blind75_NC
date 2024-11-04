@@ -1,0 +1,28 @@
+https://leetcode.com/problems/linked-list-cycle/description/
+
+//Brute force - Hashing
+
+//TC = O(n) - since we visit each node at most once(while loop goes till through the entire length of the LL) and 
+//hashmap operations take O(1) in java
+//SC = O(n), due to the space needed to store up to n nodes in the HashMap
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        //Use HashMap to remember if the node has been encountered already
+        Map<ListNode, Integer> map = new HashMap<ListNode, Integer>();
+        ListNode temp = head;
+        while(temp != null){
+            if(map.containsKey(temp)){//check if the current node is already present in our map, then we know it has a cycle
+                return true;
+            }
+            map.put(temp, 1);// Keep storing the nodes in the map till we find a node is already present in our map
+            temp = temp.next;
+        }
+        return false;
+    }
+}
+
+//Optimal - 2 pointers
+
+//If slow and fast pointer collide at(point to) any node then we know the LL has a cycle.
+
