@@ -1,0 +1,63 @@
+https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+
+//Brute Force - iterative
+
+//TC = O(L)+O(L-N), We are calculating the length of the linked list and then iterating up to the (L-N)th node of the linked list, where L is the total length of the list.
+//TC = O(2L) in worst case - if N = 1
+//SC =  O(1), as we have not used any extra space.
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        int totalNodes = 0;
+        ListNode temp = head;// for traversal
+        while(temp != null){// count total nodes in the LL
+            totalNodes++;
+            temp = temp.next;
+        }
+        int removeIndex = totalNodes - n;//since we iterate from beginning of LL, we need to know the index of the node we want to remove. 'n'th row from end means from beginning it will be totalNodes - n.
+
+        //Edge case
+        if(removeIndex == 0){// this means the head has been asked to delete, so we return the next node as the new head. Eg: head = [1,2,3,4,5], n = 5, this means node = 1 has been asked to delete. So node = 2 becomes new head.
+            return head.next;
+        }
+
+        temp = head;// for traversal
+        while(temp != null){
+            removeIndex--;// keep reducing index and moving temp to next node till temp reaches the previous node of the one we want to delete. 
+            //For head = [1,2,3,4,5], n = 2 ; we do this till node = 3, so that we can point node = 3 to node = 5.
+            if(removeIndex == 0){
+                //stop here
+                break;
+            }
+            temp = temp.next;
+        }
+        temp.next = temp.next.next;
+        return head;
+    }
+}
+
+//Optimal - 2 pointer
+
+//TC = O(L) since the fast pointer will traverse the entire linked list, where L is the length of the linked list. 
+//From 0 to n in the for loop and then from n+1 to end of LL in while loop -
+//SC = O(1), as we have not used any extra space.
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode fast = head;
+        ListNode slow = head;
+        for(int i = 0; i < n; i++){ // Move the fast pointer by 'n' first
+            fast = fast.next;
+        }
+        if(fast == null){// this means the head has been asked to delete, so we return the next node as the new head. Eg: head = [1,2,3,4,5], n = 5, this means node = 1 has been asked to delete. So node = 2 becomes new head.
+            return head.next;
+        }
+        while(fast.next != null){// Move the fast and  pointer by one-one position till fast pointer reached the end of the LL
+            fast = fast.next;
+            slow = slow.next;
+        }
+        //At this point, slow will point to the previous node of the one we want to delete
+        slow.next = slow.next.next;
+        return head;
+    }
+}
