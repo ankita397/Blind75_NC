@@ -30,7 +30,12 @@ class Solution {
     }
 }
 
+//Recursive - Skip as iterative(above solution) is more intuitive and both take same time and space complexity
 
+//Optimal -  Reverse And Merge
+
+//TC = O(n)
+//SC = O(1)
 
 class Solution {
     public void reorderList(ListNode head) {
