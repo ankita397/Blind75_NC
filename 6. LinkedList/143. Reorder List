@@ -31,3 +31,48 @@ class Solution {
 }
 
 
+
+class Solution {
+    public void reorderList(ListNode head) {
+        // Base case: If the list is empty or has only one node, no reordering is needed.
+        if (head == null || head.next == null) {
+            return;
+        }
+
+        // Step 1: Find the middle of the linked list using the slow and fast pointer technique.
+        // Slow pointer moves one step, and fast pointer moves two steps at a time.
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;       // Move slow pointer by 1 step
+            fast = fast.next.next;   // Move fast pointer by 2 steps
+        }
+        // After the loop, 'slow' will be at the middle of the linked list.
+
+        // Step 2: Reverse the second half of the linked list starting from the middle node.
+        ListNode secondHalfStart = slow; // Middle node, starting point for reversing
+        ListNode prev = null;
+        while (secondHalfStart != null) {
+            ListNode temp = secondHalfStart.next; // Temporarily store the next node
+            secondHalfStart.next = prev;          // Reverse the current node's pointer
+            prev = secondHalfStart;               // Move 'prev' to current node
+            secondHalfStart = temp;               // Move to the next node in the original order
+        }
+        // Now 'prev' is the head of the reversed second half of the list.
+
+        // Step 3: Merge the two halves.
+        ListNode first = head;   // Start from the head of the first half
+        ListNode second = prev;  // Start from the head of the reversed second half
+        while (second.next != null) {  // Continue merging until reaching the end of the second half
+            ListNode temp1 = first.next;  // Temporarily store the next node in the first half
+            ListNode temp2 = second.next; // Temporarily store the next node in the second half
+
+            first.next = second;  // Link current node of first half to current node of second half
+            second.next = temp1;  // Link current node of second half to the next node in the first half
+
+            first = temp1;        // Move to the next node in the first half
+            second = temp2;       // Move to the next node in the reversed second half
+        }
+    }
+}
+
