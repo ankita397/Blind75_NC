@@ -31,7 +31,7 @@ class Solution {
 
     //Common method to Convert the array list into linked list
     private ListNode convertArrToLinkedList(ArrayList<Integer> arrList){
-        // Create a dummy node to serve  as the head of the linked list
+        // Create a dummy node to serve as the dummy head of the linked list
         ListNode dummyNode = new ListNode(-1);
         ListNode temp = dummyNode;
 
