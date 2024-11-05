@@ -46,5 +46,60 @@ class Solution {
         // Return the linked list starting from the next of the dummy node
         return dummyNode.next;  
     }
+}
 
+//Better - similar to 21. Merge Two Sorted Lists  => sort in-place
+
+INTUITION
+
+//TC = N1+N2 + (N1+N2+N3) + (N1+N2+N3+N4) = N(1+2+...+k) = N * ((K * K+1)/2) ~ O(n^3) in worst case
+//SC = O(1) - We just use the existing linked lists and link them in sorted manner. No extra space is used
+
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        // If there are no lists, return null
+        if (lists.length == 0) return null;
+    
+        // Initialize the merged list as the first list in the array
+        ListNode head = lists[0];
+    
+        // Iterate through each list starting from the second list
+        for (int i = 1; i < lists.length; i++) {
+            // Merge the current merged list (head) with the next list in the array
+            // and update head to the result of this merge
+            head = merge2Lists(head, lists[i]);
+        }
+    
+        // Return the final merged list
+        return head;
+    }
+
+    private ListNode merge2Lists(ListNode list1, ListNode list2){// N1+N2 + (N1+N2+N3) + (N1+N2+N3+N4) = N(1+2+...+k) = N * ((K * K+1)/2)
+       // Create a dummy node to serve as the head of the merged list
+        ListNode dummyNode = new ListNode(-1);
+        ListNode temp = dummyNode; //to traverse and link
+
+        // Traverse both lists simultaneously
+        while(list1 != null && list2 != null){
+            // Compare elements of both lists and link the smaller node to the merged list
+            if(list1.val < list2.val){
+                temp.next = list1;
+                list1 = list1.next;
+            }else{
+                temp.next = list2;
+                list2 = list2.next;
+            }
+            // Move the temporary pointer to the next node - traverse
+            temp = temp.next;
+        }
+        // Either list1 has nodes left or list2 has nodes left
+        // If any list still has remaining elements, append them to the merged list
+        if(list1 != null){
+            temp.next = list1;
+        }else if(list2 != null){
+            temp.next = list2;
+        }
+        // Return the merged list starting from the next of the dummy node since dummy node is not that actual head.. second node is the actual start of the linked list
+        return dummyNode.next;
+    }
 }
