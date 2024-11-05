@@ -9,10 +9,17 @@ https://leetcode.com/problems/merge-k-sorted-lists/description/
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
         ArrayList<Integer> nodeList = new ArrayList<Integer>();
-        for(ListNode node: lists){ //O(k) where k = size of lists = no of linked lists
-            while(node != null){//O(n) where n - total nodes across all linked lists
-                nodeList.add(node.val);
-                node = node.next;
+        // for(ListNode node: lists){
+        //     while(node != null){
+        //         nodeList.add(node.val);
+        //         node = node.next;
+        //     }
+        // }
+        for(int i = 0; i < lists.length; i++){
+            ListNode temp =lists[i];
+            while(temp != null){
+                nodeList.add(temp.val);
+                temp = temp.next;
             }
         }
         Collections.sort(nodeList);
