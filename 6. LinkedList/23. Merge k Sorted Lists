@@ -106,3 +106,42 @@ class Solution {
         return dummyNode.next;
     }
 }
+
+//Optimal - min heap (Priotity Queue
+
+//TC ~ O(N log k), where N is the total number of nodes across all lists, and k is the number of lists.
+//SC = O(k) - pq
+
+//TC = O(k log k)[for loop and pq.offer] + O(k * N * log k) - [while loop which runs for pq length which will be k*N assuming 
+//k = no of LLs and and N is size of each LL * pq operations(log k) ]
+
+//pq operations(offer, poll,etc) take O(log K) where size of pq 
+
+
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+         if (lists == null || lists.length == 0) return null;
+         
+        // Create a priority queue that sorts ListNode objects by their values
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
+        for(int i = 0; i < lists.length; i++){// O(k) , k = no of lists
+            if (lists[i] != null) {
+                pq.offer(lists[i]);  // Add each non-null head node directly // O(log K)
+            }
+        }
+        ListNode dummyNode = new ListNode(-1);
+        ListNode temp = dummyNode;
+        // Process the queue until it's empty
+        while(!pq.isEmpty()){
+            // Remove the node with the smallest value from the heap
+            ListNode minNode = pq.poll();
+            temp.next = minNode;// Add it to the merged list
+            temp = temp.next;// Move temp to next position
+            // If the extracted node has a next node, add it to the queue
+            if (minNode.next != null) {
+                pq.offer(minNode.next);
+            }
+        }
+        return dummyNode.next;
+    }
+}
