@@ -1,0 +1,41 @@
+https://leetcode.com/problems/merge-k-sorted-lists/description/
+
+//Brute Force - exactly same as 21. Merge Two Sorted Lists
+
+//TC = O(kn) + O(N log N) + O(N) 
+//SC = O(N)+O(N) where N is the total number of nodes from all lists, N1 + N2 + N3...+Nk. O(N) to store all the nodes of both the lists in an 
+//external array and another O(N) to create a new combined list.
+
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        ArrayList<Integer> nodeList = new ArrayList<Integer>();
+        for(ListNode node: lists){ //O(k) where k = size of lists = no of linked lists
+            while(node != null){//O(n) where n - total nodes across all linked lists
+                nodeList.add(node.val);
+                node = node.next;
+            }
+        }
+        Collections.sort(nodeList);
+        ListNode mergedList = convertArrToLinkedList(nodeList);//O(N)
+
+        return mergedList;
+    }
+
+    private ListNode convertArrToLinkedList(ArrayList<Integer> nodeList){
+        //Create a dummy node to serve as the dummy head of the new LL
+        ListNode dummyNode = new ListNode(-1);
+
+        //Use a temp node for traversal
+        ListNode temp = dummyNode;
+
+        for(int i = 0; i < nodeList.size(); i++){
+            // Create a new node with the array element
+            temp.next = new ListNode(nodeList.get(i));
+            // Move the temporary pointer to the newly created node
+            temp = temp.next;
+        }
+        // Return the linked list starting from the next of the dummy node
+        return dummyNode.next;  
+    }
+
+}
