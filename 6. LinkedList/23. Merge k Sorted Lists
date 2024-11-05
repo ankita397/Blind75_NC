@@ -15,20 +15,20 @@ class Solution {
         //         node = node.next;
         //     }
         // }
-        for(int i = 0; i < lists.length; i++){
+        for(int i = 0; i < lists.length; i++){//O(k) where k = lists.length = size of the given list of LLs
             ListNode temp =lists[i];
-            while(temp != null){
+            while(temp != null){//O(n) where each linked list is of size n
                 nodeList.add(temp.val);
                 temp = temp.next;
             }
         }
-        Collections.sort(nodeList);
+        Collections.sort(nodeList);//O(nlogn)
         ListNode mergedList = convertArrToLinkedList(nodeList);//O(N)
 
         return mergedList;
     }
 
-    private ListNode convertArrToLinkedList(ArrayList<Integer> nodeList){
+    private ListNode convertArrToLinkedList(ArrayList<Integer> nodeList){//O(n)
         //Create a dummy node to serve as the dummy head of the new LL
         ListNode dummyNode = new ListNode(-1);
 
