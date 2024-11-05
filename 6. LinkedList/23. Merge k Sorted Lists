@@ -2,8 +2,10 @@ https://leetcode.com/problems/merge-k-sorted-lists/description/
 
 //Brute Force - exactly same as 21. Merge Two Sorted Lists
 
-//TC = O(kn) + O(N log N) + O(N) 
-//SC = O(N)+O(N) where N is the total number of nodes from all lists, N1 + N2 + N3...+Nk. O(N) to store all the nodes of both the lists in an 
+//TC = O(KN) + O(M log M) + O(M) , K = lists.length = size of the given list of LLs, M = each linked list size, 
+//M = N*K (total no of elements in the nodeList
+
+//SC = O(M)+O(M) where M is the total number of nodes from all lists, N1 + N2 + N3...+Nk. O(M) to store all the nodes of both the lists in an 
 //external array and another O(N) to create a new combined list.
 
 class Solution {
