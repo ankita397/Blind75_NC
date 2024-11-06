@@ -1,0 +1,21 @@
+https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
+
+Approach - DFS
+
+//TC = O(n)
+//SC = O(n)
+
+
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        int maxDepth = 0;
+        int leftHeight = maxDepth(root.left);
+        int rightHeight = maxDepth(root.right);
+
+        maxDepth = 1 + Math.max(leftHeight, rightHeight);
+        return maxDepth;
+    }
+}
