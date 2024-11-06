@@ -3,7 +3,7 @@ https://leetcode.com/problems/invert-binary-tree/description/
 //TC = O(N)
 //SC = O(N) - new node with same length as given node of size N
 
-Approach - DFS
+Approach - DFS (using a 2nd tree)
 
 class Solution {
     public TreeNode invertTree(TreeNode root) {
@@ -15,5 +15,28 @@ class Solution {
         newRoot.right = invertTree(root.left);//left becomes right
 
         return newRoot;
+    }
+}
+
+//TC = O(N)
+//SC = O(N)
+
+Approach - DFS (without using a second tree)
+
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null){
+            return null;
+        }
+        //swap the children
+        TreeNode temp = root.left; 
+        root.left = root.right;
+        root.right = temp;
+
+        //Recursively invert the subtrees
+        invertTree(root.left);
+        invertTree(root.right);
+
+        return root;
     }
 }
