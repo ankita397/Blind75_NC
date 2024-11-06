@@ -3,7 +3,7 @@ https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
 Approach - DFS
 
 //TC = O(n)
-//SC = O(height of tree)
+//SC = O(n) in case of skewed trees
 
 
 class Solution {
