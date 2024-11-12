@@ -1,5 +1,7 @@
 https://leetcode.com/problems/invert-binary-tree/description/
 
+https://www.youtube.com/watch?v=OnSn2XEQ4MY
+
 //TC = O(N)
 //SC = O(N) - new node with same length as given node of size N
 
