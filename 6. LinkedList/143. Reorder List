@@ -1,5 +1,7 @@
 https://leetcode.com/problems/reorder-list/description/
 
+https://www.youtube.com/watch?v=S5bfdUTrKLM
+
 //Brute Force - iterative - 2 pointers
 //TC = O(n)
 //SC = O(n) - arrayList
