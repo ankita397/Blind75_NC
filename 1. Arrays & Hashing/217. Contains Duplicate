@@ -1,4 +1,8 @@
 //https://leetcode.com/problems/contains-duplicate/description/
+
+https://www.youtube.com/watch?v=3OamzN90kPg
+https://www.youtube.com/watch?v=4oZsPXG9B94
+
 //Eg : Input: nums = [1,2,3,1]
 //Output: true
 //Note : hashset to get unique values in array, to check for duplicates easily. first check and then add to set
