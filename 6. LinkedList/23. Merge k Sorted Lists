@@ -1,5 +1,7 @@
 https://leetcode.com/problems/merge-k-sorted-lists/description/
 
+https://www.youtube.com/watch?v=1zktEppsdig
+
 //Brute Force - exactly same as 21. Merge Two Sorted Lists
 
 //TC = O(KN) + O(M log M) + O(M) , K = lists.length = size of the given list of LLs, M = each linked list size, 
