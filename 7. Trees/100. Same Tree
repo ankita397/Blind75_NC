@@ -3,7 +3,7 @@ https://leetcode.com/problems/same-tree/description/
 //Recursive - DFS(Pre-order traversal) - Any traversal will be fine, just both tree traversals should be same
 
 //TC = O(n)
-//SC = O(n)
+//SC = O(n) - Recursion stack space
 
 class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
