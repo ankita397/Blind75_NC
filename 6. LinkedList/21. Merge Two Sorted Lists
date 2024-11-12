@@ -1,5 +1,7 @@
 https://leetcode.com/problems/merge-two-sorted-lists/description/
 
+https://www.youtube.com/watch?v=jXu-H7XuClE
+
 //Brute Force
 
 //TC = O(N1 + N2) + O(N log N) + O(N) 
