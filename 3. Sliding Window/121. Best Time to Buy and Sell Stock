@@ -1,4 +1,7 @@
 //https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+
+https://www.youtube.com/watch?v=excAOvwF_Wk
+
 //INTUITION : If we wanna sell on i'th day, then we have to buy on the minimum price from day 0 to i-1. 
 //So, we need to keep track of the minimum price.
 
