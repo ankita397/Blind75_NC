@@ -1,12 +1,13 @@
 //https://leetcode.com/problems/top-k-frequent-elements/description/
+
+//https://www.youtube.com/watch?v=6iLb_Z-osmQ
+//https://youtu.be/yXGY2srjGpQ - heap is explaned better here
+
 //Input: nums = [1,1,1,2,2,3], k = 2
 //Output: [1,2]
 //Note : PriorityQueue<Map.Entry<Integer,Integer>> to priortise the one that has max freq
 //map to store element in nums as key and its frequency as value
 //minheap that’s kept at size k, if its size exceeds k pop the min, by the end it should be left with k largest;
-
-//https://www.youtube.com/watch?v=6iLb_Z-osmQ
-//https://youtu.be/yXGY2srjGpQ - heap is explaned better here
 
 //TC : O(nlogk)
 //SC : O(n)
