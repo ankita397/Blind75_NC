@@ -1,4 +1,7 @@
 //https://leetcode.com/problems/two-sum/description/
+
+https://www.youtube.com/watch?v=UXDSeD9mN-k
+
 //use hash map to instantly check for difference value, map will add index of last occurrence of a num, don’t use same element twice.
 //if difference between target and current number is present among the map keys
 //if difference between target and current number is not present among the map keys, put the current number and its index in the map
