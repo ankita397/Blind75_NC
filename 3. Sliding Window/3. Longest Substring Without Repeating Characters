@@ -1,5 +1,7 @@
 https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
 
+https://www.youtube.com/watch?v=-zSxTJkcdAo
+
 //brute force - using Set(ignore)
 //Generate all substrings and get the max length
 //keep i constant and move j to right till we encounter a repeating char in our hashSet
