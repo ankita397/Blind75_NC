@@ -11,7 +11,7 @@ class Solution {
         }
         List<ListNode> nodeList = new ArrayList<ListNode>();
         ListNode temp = head;//temp is current node - used to traverse
-        while(temp != null){//traverse the linked lust and add the nodes to the array list
+        while(temp != null){//traverse the linked list and add the nodes to the array list
             nodeList.add(temp);
             temp = temp.next;
         }
