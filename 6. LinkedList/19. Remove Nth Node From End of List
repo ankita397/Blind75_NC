@@ -1,5 +1,7 @@
 https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
 
+https://www.youtube.com/watch?v=3kMKYQ2wNIU
+
 //Brute Force - iterative
 
 //TC = O(L)+O(L-N), We are calculating the length of the linked list and then iterating up to the (L-N)th node of the linked list, where L is the total length of the list.
