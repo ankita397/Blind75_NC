@@ -1,0 +1,31 @@
+//https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+
+//https://www.youtube.com/watch?v=cX_kPV_foZc
+
+//Approach - DFS 
+
+//TC = O(H)
+//SC = O(H) - Recursion stack space
+
+
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null)
+            return null;
+        
+        //if p.val and q.val are both > root.val , this means we move towards right subtree
+        if(p.val > root.val && q.val > root.val){
+            return lowestCommonAncestor(root.right, p, q);
+        }
+        //if p.val and q.val are both > root.val , this means we move towards left subtree
+        if(p.val < root.val && q.val < root.val){
+            return lowestCommonAncestor(root.left, p, q);
+        }
+
+        //At the end, there can be only 2 conditions
+        //1. either p and q will lie to left and right of a node and that node will be out LCA node - like example 1
+        //2. or we will be at a point where we cannot know on which side p and q lie, that means p or q will be our LCA node - like example 2
+        //return the the current root
+        return root;
+    }
+}
