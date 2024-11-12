@@ -1,0 +1,42 @@
+https://leetcode.com/problems/subtree-of-another-tree/description/
+
+https://www.youtube.com/watch?v=E36O5SWp-LE
+
+//Approach - DFS
+
+//TC = O(n * m) where n is size of root tree and m is size of subRoot tree
+//SC = O(n + m)
+
+
+class Solution {
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        // null tree can be a sub tree of 1st tree
+        if(subRoot == null)
+            return true;
+        // if 1st tree is null and 2nd is not, then 2nd cannot be a subtree
+        if(root == null && subRoot != null)
+            return false;
+        
+        //if both trees are exactly the same
+        if(isSameTree(root, subRoot)){
+            return true;
+        }
+
+        // compare 1st tree's left subtree and right subtree with 2nd tree's root
+        //Is subRoot a subtree of left subtree of root
+        //Is subRoot a subtree of right subtree of root
+        //If either is true, then return true;
+        return (isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot));
+    }
+
+    private boolean isSameTree(TreeNode p, TreeNode q){
+        if(p == null && q == null)
+            return true;
+
+        if(p == null || q == null || p.val != q.val){
+            return false;
+        }
+
+        return (isSameTree(p.left,q.left) && isSameTree(p.right,q.right));
+    }
+}
