@@ -1,5 +1,7 @@
 https://leetcode.com/problems/linked-list-cycle/description/
 
+https://www.youtube.com/watch?v=wiOo4DC5GGA
+
 //Brute force - Hashing
 
 //TC = O(n) - since we visit each node at most once(while loop goes till through the entire length of the LL) and 
