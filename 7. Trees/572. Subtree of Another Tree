@@ -5,7 +5,7 @@ https://www.youtube.com/watch?v=E36O5SWp-LE
 //Approach - DFS
 
 //TC = O(n * m) where n is size of root tree and m is size of subRoot tree
-//SC = O(n + m)
+//SC = O(n + m) - Recursion stack space
 
 
 class Solution {
