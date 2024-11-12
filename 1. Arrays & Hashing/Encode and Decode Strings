@@ -1,6 +1,8 @@
 //https://leetcode.com/problems/encode-and-decode-strings - Leetcode Premium
 //Eclipse
 
+https://www.youtube.com/watch?v=B1k_sxOSgv8
+
 //Encode:
 //Use StringBuilder to append length of each string and '#' before the string to encode it.
 
