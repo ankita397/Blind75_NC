@@ -1,0 +1,48 @@
+https://leetcode.com/problems/binary-tree-level-order-traversal/description/
+
+https://www.youtube.com/watch?v=EoAsWbO7sqg
+
+//Approach - BFS
+
+//TC =  O(N) - Each node in the tree is processed once, where N is the total number of nodes.
+
+//SC = O(N) + O(N) ~ O(N) - The queue can hold up to N nodes in the worst case (if all nodes are in a single level) + The result list 
+//also requires O(N) space.
+
+class Solution { //BFS
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        //levelOrderList - main output list with nodes in level order
+        List<List<Integer>> levelOrderList = new ArrayList<>();
+        if(root == null){ // need to handle this as we check root's left and right later and of not handled it will throw NPE
+            return levelOrderList;
+        }
+        // Queue to keep track of nodes at each level
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);// add the root first
+        
+        // Continue until all levels are processed
+        while(!queue.isEmpty()){
+            int levelSize = queue.size();// Number of nodes in current level
+            List<Integer> levelWiseList = new ArrayList();// List for current level nodes
+            // Process each node in the current level
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = queue.poll(); // Get the front node from the queue
+                
+                // If left child exists, add it to the queue
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                // If right child exists, add it to the queue
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+                // Add the current node's value to the current level list
+                levelWiseList.add(node.val);
+            }
+            // Add the current level list to the result
+            levelOrderList.add(levelWiseList);
+        }
+        // Return the final level order list
+        return levelOrderList;
+    }
+}
