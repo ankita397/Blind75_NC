@@ -1,0 +1,95 @@
+https://leetcode.com/problems/kth-smallest-element-in-a-bst/description/
+
+https://www.youtube.com/watch?v=9TJYWh0adfk
+https://takeuforward.org/data-structure/kth-largest-smallest-element-in-binary-search-tree/
+
+//Brute Force - use list and sorting
+
+//TC = O(n) + O(nlog n) - node traversal and sorting
+//SC = O(n) - list
+
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> nodeList = new ArrayList<Integer>();
+        dfs(root,nodeList);
+        Collections.sort(nodeList);
+        return nodeList.get(k-1);//list will be 0-indexed and k will be acc to 1-indexed
+    }
+
+    private void dfs(TreeNode root, List<Integer> nodeList){
+        //Base case
+        if(root == null){
+            return;
+        }
+
+        nodeList.add(root.val);
+        dfs(root.left, nodeList);
+        dfs(root.right, nodeList);
+    }
+}
+
+//Approach - INORDER TRAVERSAL FOR BST - Inorder for every BST is always sorted -> (Little better)
+
+//TC = O(N) - in-order traversal 
+//SC = O(N) - we are storing all the nodes in a list.
+
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        List<Integer> nodeList = new ArrayList<Integer>();
+        inorder(root,nodeList);
+        return nodeList.get(k-1);//list will be 0-indexed and k will be acc to 1-indexed
+        //return nodeList.get(nodeList.size()-k)  // Kth LARGEST Element in a BST
+    }
+
+    private void inorder(TreeNode root, List<Integer> nodeList){
+        //Base case
+        if(root == null){
+            return;
+        }
+
+        inorder(root.left, nodeList);
+        nodeList.add(root.val);
+        inorder(root.right, nodeList);
+    }
+}
+
+
+//Approach - INORDER TRAVERSAL FOR BST - Inorder for every BST is always sorted -> (Better)
+
+//TC = O(N) where N is the number of nodes in the tree. In the worst case, we may visit all the nodes if k is large.
+//SC = O(H) where H is the height of the tree, due to the recursion stack. 
+//In a balanced tree, H would be O(log N), and in the worst case (unbalanced tree), it would be O(N).
+
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        // Initialize a counter to keep track of the nodes visited
+        int[] count = {0};  
+        return inorder(root,k, count);      
+    }
+
+    private int inorder(TreeNode root, int k, int[] count){
+        //Base case
+        if(root == null){
+            return -1;  // Base case: return -1 if no result is found in this path
+        }
+
+       // Traverse the left subtree
+        int leftResult = inorder(root.left, k, count);
+        if (leftResult != -1) {
+            return leftResult;  // If result is found in the left subtree, return it
+        }
+        // Increment the counter (since we've visited this node)
+        count[0]++;
+        // If we've visited 'k' nodes, return the current node's value - as in inorder of BST, we traverse from lowest to highest in order
+        if (count[0] == k) {
+            return root.val;
+        }
+        // Traverse the right subtree
+        return inorder(root.right, k, count);
+    }
+}
+
+//Optimal Approach - Morris traversal
+
+//TC = O(n)
+//SC = O(1)
