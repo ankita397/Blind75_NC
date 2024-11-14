@@ -1,0 +1,85 @@
+//https://leetcode.com/problems/validate-binary-search-tree/description/
+
+https://www.youtube.com/watch?v=f-sj7I5oXEI
+
+//Approach - DFS 
+
+//INTUITION - Need to find the range in which the value of a node can be for the tree to be a BST
+//initial root can be within range -2^31 <= Node.val <= 2^31 - 1 as mentioned in problem statement 
+//values in the left subtree should within the range of (minValue, root.val).
+//values in the left subtree should within the range of (root.val, maxValue).
+
+//TC = O(N) - Every node is visited once.
+
+//SC = O(H) - Where H is the height of the tree (worst-case: O(N) for a skewed tree, best-case: O(log N) for a balanced tree).
+
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        //-2^31 <= Node.val <= 2^31 - 1 - mentioned in problem statement - use Long
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean isValidBST(TreeNode root, long minValue, long maxValue){
+        //When the method is called with a null node, it means that there are no more 
+        //nodes to check, and by default, an empty tree or a single-node tree is considered
+        // a valid binary search tree (BST).
+        if(root == null){
+            return true;
+        }
+        //If the current node's value is greater than or equal to the maximum value or 
+        //less than or equal to the minimum value, it's not a valid BST.
+        if(root.val >= maxValue || root.val <= minValue){
+            return false;
+        }
+
+        boolean leftValid = false;
+        boolean rightValid = false;
+
+        //It recursively checks the left subtree, ensuring that values in the left subtree 
+        //are within the range of (minValue, root.val).
+        if(isValidBST(root.left, minValue, root.val)){
+            leftValid = true;
+        }
+
+        //It recursively checks the right subtree, ensuring that values in the right subtree 
+        //are within the range of (root.val, maxValue).
+        if(isValidBST(root.right, root.val, maxValue)){
+            rightValid = true;
+        }
+
+        //returns true only if both the left and right subtrees are valid BSTs.
+        return leftValid && rightValid;
+    }
+
+-- SAME SOLUTION AS ABOVE - ONLY CHANGE IS THAT WE CHECK AND RETURN AT THE SAME TIME
+
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        //-231 <= Node.val <= 231 - 1 - mentioned in problem statement - use Long
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean isValidBST(TreeNode root, long minValue, long maxValue){
+        //When the method is called with a null node, it means that there are no more 
+        //nodes to check, and by default, an empty tree or a single-node tree is considered
+        // a valid binary search tree (BST).
+        if(root == null){
+            return true;
+        }
+        //If the current node's value is greater than or equal to the maximum value or 
+        //less than or equal to the minimum value, it's not a valid BST.
+        if(root.val >= maxValue || root.val <= minValue){
+            return false;
+        }
+
+        //Check and return at the same step 
+
+        //It recursively checks the left subtree, ensuring that values in the left subtree 
+        //are within the range of (minValue, root.val).
+        //It recursively checks the right subtree, ensuring that values in the right subtree 
+        //are within the range of (root.val, maxValue).
+        return isValidBST(root.left, minValue, root.val) && isValidBST(root.right, root.val, maxValue);
+
+    }
+}
+}
