@@ -2,7 +2,7 @@ https://leetcode.com/problems/binary-tree-level-order-traversal/description/
 
 https://www.youtube.com/watch?v=EoAsWbO7sqg
 
-//Approach - BFS
+//Approach - BFS -- BEST
 
 //TC =  O(N) - Each node in the tree is processed once, where N is the total number of nodes.
 
@@ -44,5 +44,35 @@ class Solution { //BFS
         }
         // Return the final level order list
         return levelOrderList;
+    }
+}
+
+//Approach - DFS -- Can be ignored for Level order as BFS is better
+
+//TC = O(N) because each node is visited once.
+//SC = O(N) for the recursion stack (in the worst case) and the result list.
+
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        dfs(root, 0, result); // Start DFS from root at depth 0
+        return result;
+    }
+
+    private void dfs(TreeNode node, int depth, List<List<Integer>> result) {
+        // Base case: If node is null, end the current path
+        if (node == null) return;
+
+        // If we reach a new depth level, add a new list to hold nodes at this level
+        if (depth == result.size()) {
+            result.add(new ArrayList<>());
+        }
+
+        // Add the current node's value to its corresponding depth level
+        result.get(depth).add(node.val);
+
+        // Recur on the left and right children, increasing depth by 1
+        dfs(node.left, depth + 1, result);
+        dfs(node.right, depth + 1, result);
     }
 }
