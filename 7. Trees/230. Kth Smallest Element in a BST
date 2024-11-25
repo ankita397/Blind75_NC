@@ -54,7 +54,7 @@ class Solution {
 }
 
 
-//Approach - ITERATIVE INORDER TRAVERSAL FOR BST - Inorder for every BST is always sorted -> (Better)
+//Approach - RECURSIVE INORDER TRAVERSAL FOR BST - Inorder for every BST is always sorted -> (Better)
 
 //TC = O(N) where N is the number of nodes in the tree. In the worst case, we may visit all the nodes if k is large.
 //SC = O(H) where H is the height of the tree, due to the recursion stack. 
@@ -93,10 +93,47 @@ class Solution {
 
 //Optimal Approach - MORRIS TRAVERSAL(Threaded Binary Tree) -> https://www.youtube.com/watch?v=80Zug6D1_r4
 
-//TC = O(n)
-//SC = O(1)
+//TC = O(n) - Each node is visited at most twice: once to create the thread and once to remove it.
+//SC = O(1) - Morris Traversal eliminates the need for a stack or recursion.
 
-
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        TreeNode curr = root;
+        int count = 0;
+        while(curr != null){
+            //case 1: if curr has no left, then curr is part of our inorder
+            if(curr.left == null){
+                count++;// Visit the node
+                if(count == k){//inorder is sorted so when count equals k, that is our kth smallest
+                    return curr.val;// Found the kth smallest element
+                } 
+                curr = curr.right; // Move to the right child
+            }else{
+                // Case 2: Left child exists, find the inorder predecessor (righ most in left subtree)
+                TreeNode prev = curr.left;
+                while(prev.right != null && prev.right != curr){
+                    prev = prev.right;
+                }
+                // Case 2a: Thread does not exist, create it
+                if(prev.right == null){
+                    prev.right = curr; // Create thread
+                    curr = curr.left; //Move to left child
+                }
+                // Case 2b: Thread exists, remove it
+                else{
+                    prev.right = null; // remove thread;
+                    count++;// Visit the node in inorder
+                    if(count == k){
+                        return curr.val;// Found the kth smallest element
+                    }
+                    curr = curr.right;
+                }
+            }
+        }
+        // If k is larger than the number of nodes, k is invalid
+        return -1;
+    }
+}
 
 
 Note: If the question is to find the kth largest element in BST -> kth largest = (N-k) smallest where N = no of elements.
