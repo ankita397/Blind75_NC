@@ -1,0 +1,66 @@
+https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
+
+https://www.youtube.com/watch?v=aZNaLrVebKQ&list=PLkjdNRgDmcc0Pom5erUBU4ZayeU9AyRRu&index=34
+
+/*
+ * Root = preorder[0] - so we find the corresponding address of this root in inorder array 
+ * Left of that root will have the left sub tree nodes
+ * Right of that root will have the left sub tree nodes
+ * 
+ * We need to find the preorder and inorder arrays for each left & right subtree  
+ * and construct the tree from those sub arrays by finding the root again(Root = preorder[0])
+ *
+ * TC = O(N) or O(NlogN) - if we consider hashmap
+ * SC = O(N) + O(N) ~ O(N) - map and stack
+ */
+
+
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        //Put inorder array in a HashMap as we need to get the position of each root from 
+        //pre-order array(starting index in preorder array will always be the root) in the
+        //inorder array
+        //key = inorder element, value = index
+        Map<Integer, Integer> inorderMap = new HashMap<Integer, Integer>();
+        for(int i = 0; i < inorder.length; i++){
+            inorderMap.put(inorder[i],i);
+        }
+        TreeNode root = buildTree(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1, inorderMap);
+        return root;
+    }
+    public TreeNode buildTree(int[] preorder, int[] inorder, int preorderStart, int preorderEnd, int inorderStart, int inorderEnd, Map<Integer, Integer> inorderMap){
+        // no more preorder or inorder trees present - eg : for leaf nodes
+        if(preorderStart > preorderEnd || inorderStart > inorderEnd){
+            return null;
+        }
+
+        //start tree construction with root
+        TreeNode root = new TreeNode(preorder[preorderStart]);
+
+        //Find the root in inorder array
+        int inorderRootIndex = inorderMap.get(root.val);
+
+        //Find the total numbers on left of root in inorder array
+        int leftOfInorderLength = inorderRootIndex - inorderStart;
+
+        //Input : inorder = [40,20,50,10,60,30], preorder = [10,20,40,50,30,60]
+
+        //build left subtree
+        //starting of left sub tree preorder = preorderStart + 1 - 2nd node after root(20)
+        //ending of left sub tree preorder = preorderStart + leftOfInorderLength (50)
+        //starting of left sub tree inorder = inorderStart (40)
+        //ending of left sub tree inorder = indexInorderRoot - 1 (50)
+        //left preorder = [20,40,50], left inorder = [40,20,50]
+        root.left = buildTree(preorder, inorder, preorderStart + 1, preorderStart + leftOfInorderLength, inorderStart, inorderRootIndex - 1 , inorderMap);
+
+        //build right subtree
+         //starting of right sub tree preorder = preorderStart + leftOfInorderLength + 1 (30)
+        //ending of right sub tree preorder = preorderEnd (60)
+        //starting of right sub tree inorder = indexInorderRoot + 1 (60)
+        //ending of right sub tree inorder = inorderEnd (30)
+        //right preorder = [30,60], right inorder = [60,30]
+        root.right = buildTree(preorder, inorder,preorderStart + leftOfInorderLength + 1, preorderEnd, inorderRootIndex + 1, inorderEnd, inorderMap) ;
+
+        return root;
+    }
+}
