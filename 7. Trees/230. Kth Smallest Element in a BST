@@ -81,6 +81,8 @@ class Solution {
         // Increment the counter (since we've visited this node)
         count[0]++;
         // If we've visited 'k' nodes, return the current node's value - as in inorder of BST, we traverse from lowest to highest in order
+        //That's the reason we wait till the count becomes equal to k. That means the current root is our kth node. Here, count[0] = 3 means
+        //the value of that root will be the 3rd highest among all the tree nodes.
         if (count[0] == k) {
             return root.val;
         }
