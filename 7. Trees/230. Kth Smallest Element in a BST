@@ -54,7 +54,7 @@ class Solution {
 }
 
 
-//Approach - INORDER TRAVERSAL FOR BST - Inorder for every BST is always sorted -> (Better)
+//Approach - ITERATIVE INORDER TRAVERSAL FOR BST - Inorder for every BST is always sorted -> (Better)
 
 //TC = O(N) where N is the number of nodes in the tree. In the worst case, we may visit all the nodes if k is large.
 //SC = O(H) where H is the height of the tree, due to the recursion stack. 
@@ -91,7 +91,12 @@ class Solution {
     }
 }
 
-//Optimal Approach - Morris traversal
+//Optimal Approach - MORRIS TRAVERSAL(Threaded Binary Tree) -> https://www.youtube.com/watch?v=80Zug6D1_r4
 
 //TC = O(n)
 //SC = O(1)
+
+
+
+
+Note: If the question is to find the kth largest element in BST -> kth largest = (N-k) smallest where N = no of elements.
