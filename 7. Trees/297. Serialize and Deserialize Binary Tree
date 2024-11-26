@@ -2,6 +2,8 @@ https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
 
 https://www.youtube.com/watch?v=-YbXySKJsX8
 
+Note : Use either of the below approaches as both are optimal.
+
 //TC = O(N)
 //SC = O(N)
 
@@ -90,5 +92,73 @@ public class Codec {
         
         // Return the root of the reconstructed tree
         return root;
+    }
+}
+
+//TC = O(N)
+//SC = O(N)
+
+//Approach - DFS (preorder) traversal.
+
+public class Codec {
+
+    // Serializes a binary tree to a string using DFS (preorder) traversal.
+    public String serialize(TreeNode root) {
+        // StringBuilder to accumulate the serialized tree as a string
+        StringBuilder output = new StringBuilder();
+        
+        // Start DFS serialization from the root node
+        dfsSerialize(root, output);
+        
+        // Return the resulting string which represents the serialized tree
+        return output.toString();
+    }
+
+    // Helper function for DFS (preorder) traversal serialization
+    private void dfsSerialize(TreeNode node, StringBuilder sb){
+        // If the node is null, append "null" to the string to represent missing nodes
+        if(node == null){
+            sb.append("null ");
+        } else {
+            // Append the node's value and recursively serialize left and right children
+            sb.append(node.val + " ");
+            dfsSerialize(node.left, sb);  // Left child
+            dfsSerialize(node.right, sb); // Right child
+        }
+    }
+
+    // Deserializes the encoded data string back into the binary tree.
+    public TreeNode deserialize(String data) {
+        // Split the input string by spaces to get node values
+        List<String> nodes = new ArrayList<>(Arrays.asList(data.split(" ")));
+        
+        // Start the DFS deserialization process
+        return dfsDeserialize(nodes);
+    }
+
+    // Helper function to recursively rebuild the tree from the list of node values
+    private TreeNode dfsDeserialize(List<String> nodes){
+        // If the list is empty, we've processed all values (or reached an invalid state)
+        if (nodes.isEmpty()){
+            return null;
+        }
+        
+        // Get and remove the first value from the list, which corresponds to the current node
+        String currNodeVal = nodes.remove(0);
+        
+        // If the current value is "null", it means this node does not exist, so return null
+        if (currNodeVal.equals("null")){
+            return null;
+        }
+        
+        // Otherwise, create a new node with the current value
+        TreeNode node = new TreeNode(Integer.parseInt(currNodeVal));
+        
+        // Recursively build the left and right children of the current node
+        node.left = dfsDeserialize(nodes);
+        node.right = dfsDeserialize(nodes);
+
+        // Return the current node (with its left and right subtrees already set)
+        return node;
     }
 }
