@@ -1,0 +1,94 @@
+https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
+
+https://www.youtube.com/watch?v=-YbXySKJsX8
+
+//TC = O(N)
+//SC = O(N)
+
+//Approach - Level Order Traversal
+
+public class Codec {
+
+    // Serializes a binary tree to a string using level-order traversal.
+    public String serialize(TreeNode root) {
+        // If the tree is empty, return an empty string
+        if (root == null)
+            return "";
+
+        // Use a queue to facilitate level-order traversal
+        Queue<TreeNode> queue = new LinkedList<>();
+        StringBuilder output = new StringBuilder();
+        
+        // Add the root node to the queue to start the traversal
+        queue.add(root);
+        
+        // Process nodes level by level
+        while (!queue.isEmpty()) {
+            // Poll the front of the queue
+            TreeNode node = queue.poll();
+
+            // If the node is null, append "null" to represent a missing child
+            if (node == null) {
+                output.append("null ");
+            } else {
+                // Append the node's value to the string
+                output.append(node.val + " ");
+                
+                // Add the left and right children of the current node to the queue
+                queue.add(node.left);
+                queue.add(node.right);
+            }
+        }
+        
+        // Convert the StringBuilder to a string and return it
+        return output.toString();
+    }
+
+    // Deserializes the encoded data string back into the binary tree.
+    public TreeNode deserialize(String data) {
+        // If the input string is empty, return null (empty tree)
+        if (data.equals(""))
+            return null;
+
+        // Split the input string into an array based on spaces
+        String[] dataArray = data.split(" ");
+        
+        // The first value in the array is the root node
+        TreeNode root = new TreeNode(Integer.parseInt(dataArray[0]));
+        
+        // Use a queue to assist in level-order reconstruction of the tree
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        int i = 1; // Start processing nodes from the second element (dataArray[1]) as we already used dataArray[0] for root
+        
+        // Iterate through the array and reconstruct the tree
+        while (i < dataArray.length) {
+            // Poll the front of the queue (current parent node)
+            TreeNode parentNode = queue.poll();
+            
+            // Process the left child of the parent node
+            if (!dataArray[i].equals("null")) {
+                // Create the left child node and attach it
+                TreeNode leftNode = new TreeNode(Integer.parseInt(dataArray[i]));
+                parentNode.left = leftNode;
+                // Add the left child to the queue for future processing
+                queue.add(leftNode);
+            }
+            i++; // Move to the next element for the right child
+
+            // Process the right child of the parent node
+            if (i < dataArray.length && !dataArray[i].equals("null")) {
+                // Create the right child node and attach it
+                TreeNode rightNode = new TreeNode(Integer.parseInt(dataArray[i]));
+                parentNode.right = rightNode;
+                // Add the right child to the queue for future processing
+                queue.add(rightNode);
+            }
+            i++; // Move to the next element
+        }
+        
+        // Return the root of the reconstructed tree
+        return root;
+    }
+}
