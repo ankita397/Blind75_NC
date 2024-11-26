@@ -1,0 +1,74 @@
+https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
+
+https://www.youtube.com/watch?v=WszrfSwMz58
+
+//TC = O(n)
+//SC = O(H) - recursive stack
+
+//Using a single-element array to store the maximum path sum
+
+class Solution {
+    public int maxPathSum(TreeNode root) {
+        // Use a single-element array to store the maximum path sum as in Java we cannot pass primitive data types like int by reference. Only objects can be passed by reference. So array can be.
+        int maxSum[] = new int[1];
+        maxSum[0] = Integer.MIN_VALUE;
+        
+        // Call the helper function to calculate the maximum path sum
+        calculatePathSum(root, maxSum);
+        // Return the overall maximum path sum
+        return maxSum[0];
+    }
+    // Helper function to calculate the maximum path sum from a node
+    private int calculatePathSum(TreeNode root, int[] maxSum){
+        // Base case: if the node is null, it contributes 0 to the path sum
+        if(root == null){
+            return 0;
+        }
+        // Recursively calculate the maximum path sum from the left and right subtrees
+        int leftSum = Math.max(0, calculatePathSum(root.left, maxSum));// Ignore negative gains (if calculatePathSum returns -ve then we keep the leftSum as 0)
+        int rightSum = Math.max(0, calculatePathSum(root.right, maxSum));// Ignore negative gains (if calculatePathSum returns -ve then we keep the rightSum as 0)
+        
+        // Calculate the maximum path sum passing through the current node
+        int currentPathSum = root.val + leftSum + rightSum;
+        
+        // Update the global maxSum if the current path sum is greater
+        maxSum[0] = Math.max(maxSum[0] , currentPathSum);
+
+        // Return the maximum sum that can be contributed by this node to its parent - longest or maximum sum path for parent node 
+        return root.val + Math.max(leftSum, rightSum);
+    }
+}
+
+//Using global variable maxSum
+
+class Solution {
+    private int maxSum; 
+    public int maxPathSum(TreeNode root) {
+        //maxSum can be taken also be taken as a global variable instead
+        maxSum = Integer.MIN_VALUE;
+
+        // Call the helper function to calculate the maximum path sum
+        calculatePathSum(root);
+        // Return the overall maximum path sum
+        return maxSum;
+    }
+    // Helper function to calculate the maximum path sum from a node
+    private int calculatePathSum(TreeNode root){
+        // Base case: if the node is null, it contributes 0 to the path sum
+        if(root == null){
+            return 0;
+        }
+        // Recursively calculate the maximum path sum from the left and right subtrees
+        int leftSum = Math.max(0, calculatePathSum(root.left));// Ignore negative gains (if calculatePathSum returns -ve then we keep the leftSum as 0)
+        int rightSum = Math.max(0, calculatePathSum(root.right));// Ignore negative gains (if calculatePathSum returns -ve then we keep the rightSum as 0)
+        
+        // Calculate the maximum path sum passing through the current node
+        int currentPathSum = root.val + leftSum + rightSum;
+        
+        // Update the global maxSum if the current path sum is greater
+        maxSum = Math.max(maxSum , currentPathSum);
+
+        // Return the maximum sum that can be contributed by this node to its parent - longest or maximum sum path for parent node 
+        return root.val + Math.max(leftSum, rightSum);
+    }
+}
