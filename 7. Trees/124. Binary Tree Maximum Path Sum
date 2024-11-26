@@ -5,6 +5,8 @@ https://www.youtube.com/watch?v=WszrfSwMz58
 //TC = O(n)
 //SC = O(H) - recursive stack
 
+//Approach - DFS
+
 //Using a single-element array to store the maximum path sum
 
 class Solution {
