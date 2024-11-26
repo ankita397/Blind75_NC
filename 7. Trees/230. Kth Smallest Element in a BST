@@ -63,7 +63,9 @@ class Solution {
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         // Initialize a counter to keep track of the nodes visited
-        int[] count = {0};  
+        //Use a single-element array to store the maximum path sum as in Java we cannot pass primitive data types like int by reference. 
+        //Only objects can be passed by reference. So array can be.
+        int[] count = {0};  // Instead of this, count can be taken as a global valriable and not needed to be passed to the method.
         return inorder(root,k, count);      
     }
 
