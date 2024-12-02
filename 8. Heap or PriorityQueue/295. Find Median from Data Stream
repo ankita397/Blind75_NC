@@ -2,3 +2,90 @@
 //GO THROUGH THE ABOVE PROBLEM FIRST - [Under 1. Arrays & Hashing]
 
 https://leetcode.com/problems/top-k-frequent-elements/description/
+
+https://neetcode.io/solutions/find-median-from-data-stream
+https://www.youtube.com/watch?v=itmhHWaHupI
+
+//Brute Force
+
+//TC = addNum(): 𝑂 ( 1 ) O(1) (just adding to the list). 
+//     findMedian(): 𝑂 ( 𝑛 log ⁡ 𝑛 ) O(nlogn) (sorting the list).
+
+//SC = O(n)
+
+class MedianFinder {
+    private ArrayList<Integer> inputList;
+    public MedianFinder() {
+        inputList = new ArrayList<Integer>();
+    }
+    
+    public void addNum(int num) {
+        inputList.add(num);
+    }
+    
+    public double findMedian() {
+        Collections.sort(inputList); // sort the list to get the median element or elements to calculate median from based on if length is odd or even
+        int length = inputList.size();
+        double median = 0.0;
+        if(length % 2 != 0){// odd length
+            median = inputList.get(length/2);
+        }else{// even length
+            int firstNum = inputList.get(length/2);
+            int secondNum = inputList.get(length/2 - 1);
+            median = (firstNum + secondNum) / 2.0;
+        }
+        return median;
+    }
+}
+
+//Optimal - Priority Queue
+
+//TC = addNum(): O(log n) [add and delete to PQ takes O(logn)]
+//     findMedian(): 𝑂 (1) 
+
+//SC = O(n)
+
+class MedianFinder {
+    private PriorityQueue<Integer> smallHeap;// maxHeap
+    private PriorityQueue<Integer> largeHeap;// minHeap
+    //all elements in smallHeap are always gonna be <= all elements in largeHeap
+    //size of both heaps have to be equal or difference can be max 1
+    public MedianFinder() {
+        smallHeap = new PriorityQueue<Integer>((a,b) -> b-a);//maxHeap
+        largeHeap = new PriorityQueue<Integer>((a,b) -> a-b);//minHeap
+    }
+    
+    public void addNum(int num) {
+        smallHeap.add(num);
+        // Check if smallHeap has too many elements compared to largeHeap
+        // Balance the heaps to ensure all elements in smallHeap <= all elements in largeHeap
+        // If the largest in the smallHeap is smaller than the smallest number in the largeHeap,
+        // transfer the largest from smallHeap to largeHeap.
+        if(smallHeap.size() - largeHeap.size() > 1 || 
+            (!largeHeap.isEmpty() && smallHeap.peek() > largeHeap.peek())){
+                // Move the largest from smallHeap to largeHeap
+                largeHeap.add(smallHeap.poll());
+        }
+        //If largeHeap ends up with more elements than smallHeap, rebalance by moving one back
+        if (largeHeap.size() - smallHeap.size() > 1) {
+            smallHeap.add(largeHeap.poll());// Move the smallest from largeHeap to smallHeap
+        }
+    }
+    
+    public double findMedian() {
+        // If both heaps have the same size, the median is the average of their tops
+        if (smallHeap.size() == largeHeap.size()) {
+            return (double) (largeHeap.peek() + smallHeap.peek()) / 2;
+        } 
+        // If smallHeap has more elements, the median is the top of smallHeap
+        else if (smallHeap.size() > largeHeap.size()) {
+            return (double) smallHeap.peek();
+        } 
+        // Otherwise, the median is the top of largeHeap
+        else {
+            return (double) largeHeap.peek();
+        }
+    }
+}
+
+
