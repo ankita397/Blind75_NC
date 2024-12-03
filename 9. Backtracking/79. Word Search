@@ -2,6 +2,8 @@ https://leetcode.com/problems/word-search/description/
 
 https://www.youtube.com/watch?v=m9TrOL1ETxI
 
+//Approach - Recursion and backtracking
+
 //TC =  O(m × n × 4^k):
 	•	m × n: Iterates through every cell in the grid as a potential starting point.
 	•	4^k: Explores up to 4 directions (down, up, right, left) for each of the k characters in the word. 
