@@ -1,0 +1,72 @@
+https://leetcode.com/problems/word-search/description/
+
+https://www.youtube.com/watch?v=m9TrOL1ETxI
+
+//TC =  O(m × n × 4^k):
+	•	m × n: Iterates through every cell in the grid as a potential starting point.
+	•	4^k: Explores up to 4 directions (down, up, right, left) for each of the k characters in the word. 
+          The recursion depth is proportional to the length of the word.
+//SC = O(m × n):
+	•	The visited array takes O(m × n) space.
+	•	The recursion stack depth is at most O(k) (where k is the word length), but this is typically smaller than the grid size.
+
+
+class Solution {
+    boolean visited[][];// To keep track of visited cells during the search
+    public boolean exist(char[][] board, String word) {
+        int rows = board.length;
+        int columns = board[0].length;
+        visited = new boolean[rows][columns];// Initialize the visited array
+        
+        // Traverse the board to find the starting point(s) of the word
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < columns; j++){
+                // Start searching if the first character matches
+                if(word.charAt(0) == board[i][j]){
+                    if (searchWord(0, i, j, board, word)) { // Call recursive search
+                        return true; // Return true if word is found
+                    }
+                }
+            }
+        }
+        return false;// Return false if no valid path is found
+    }
+
+    public boolean searchWord(int index, int row, int col, char[][] board, String word){
+        // Base case: If we've successfully matched all characters in the word
+        if(index == word.length()){//we are incrementing index each time we recurse to find the next letter
+            return true;// The word has been found
+        }
+
+        // Boundary and validity checks:
+        // 1. Check if the current cell is out of bounds.
+        // 2. Check if the current cell character does not match the current character in the word.
+        // 3. Check if the cell has already been visited in the current path.
+        if(row < 0 || row >= board.length || col < 0 || col >= board[0].length || 
+            word.charAt(index) != board[row][col] || 
+            visited[row][col] == true){
+                return false;// Invalid cell, terminate this path
+        }
+
+        // Mark the current cell as visited to prevent revisiting it in the same path
+        visited[row][col] = true;
+
+        // Recursively explore all 4 possible directions from the current cell:
+        // 1. Down (row + 1, col)
+        // 2. Up (row - 1, col)
+        // 3. Right (row, col + 1)
+        // 4. Left (row, col - 1)
+        if(searchWord(index+1, row+1 , col, board, word) ||
+            searchWord(index+1, row-1 , col, board, word) ||
+            searchWord(index+1, row , col+1, board, word) ||
+            searchWord(index+1, row , col-1, board, word)) {
+                return true;// If any direction finds the word, return true
+        }
+        // Backtracking: Unmark the cell as visited
+        // This allows it to be reused in other potential paths
+        visited[row][col] = false;
+        
+        // Return false if none of the directions lead to a solution
+        return false;
+    }
+}
