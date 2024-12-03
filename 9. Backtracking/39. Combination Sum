@@ -1,0 +1,39 @@
+https://leetcode.com/problems/combination-sum/description/
+
+https://www.youtube.com/watch?v=OyZFFqQtu98
+
+//Approach - Recursion & backtracking - [Take or not take]
+
+TC ~  O(2^(target)) (exponential in terms of target)
+SC =  O(target + 2^(target) (The sc is O(target) for the recursion stack and temporary list, plus O(2^(target)) for storing all valid combinations in the result list.
+
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        //The result list to store all valid combinations.
+        List<List<Integer>> resultList = new ArrayList<List<Integer>>();
+        //Temporary list to store the current combination.
+        List<Integer> tempList = new ArrayList<Integer>();
+        combinationSum(0, target, resultList, candidates, tempList);
+        return resultList;
+    }
+    public void combinationSum(int index, int target, List<List<Integer>> resultList, int[] candidates, List<Integer> tempList){
+        int n = candidates.length;
+        //base case
+        if(index == n){// reached the end of the array
+            if(target == 0){ //If the remaining target is 0, we've found a valid combination.
+                resultList.add(new ArrayList<Integer>(tempList));// Add a copy of the current combination to the result list.
+            }
+            return;//exit recursion
+        }
+        // Check if the current candidate can be included (take decision)
+        if(candidates[index] <= target){
+            tempList.add(candidates[index]);// Include the current candidate in the combination.
+            // Recur with the same index (can reuse the same candidate).
+            combinationSum(index, target - candidates[index], resultList, candidates, tempList);
+            tempList.remove(tempList.size() - 1);// Backtrack: Remove the last added element.
+        }
+        // Skip the current candidate (not-take decision) and move to the next index.
+        combinationSum(index+1, target , resultList, candidates, tempList);
+    }
+}
