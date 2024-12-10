@@ -14,38 +14,37 @@ N: Total number of words added.
 L: Average length of the words.
 
 //Optimal
-class WordDictionary {
-    // Class representing a node in the Trie
-    static class TrieNode {
-        TrieNode[] childrenNode = new TrieNode[26]; // Array to store references to child nodes for each letter ('a' to 'z')
-        boolean endOfWordFlag = false; // Flag to mark if this node represents the end of a word
+// Class representing a node in the Trie
+public class TrieNode {
+    TrieNode[] childrenNode = new TrieNode[26]; // Array to store references to child nodes for each letter ('a' to 'z')
+    boolean endOfWordFlag = false; // Flag to mark if this node represents the end of a word
 
-        // Check if the current node has a child node for the given character
-        boolean containsCharacter(char ch) {
-            return childrenNode[ch - 'a'] != null; // Returns true if the child node exists
-        }
-
-        // Create or store a reference for a child node corresponding to the given character
-        void storeReferenceNode(char ch, TrieNode node) {
-            childrenNode[ch - 'a'] = node;
-        }
-
-        // Move to the child node corresponding to the given character
-        TrieNode moveToReferenceNode(char ch) {
-            return childrenNode[ch - 'a'];
-        }
-
-        // Mark this node as the end of a word
-        void setEndOfWord() {
-            endOfWordFlag = true;
-        }
-
-        // Check if this node is the end of a word
-        boolean isEndOfWord() {
-            return endOfWordFlag;
-        }
+    // Check if the current node has a child node for the given character
+    boolean containsCharacter(char ch) {
+        return childrenNode[ch - 'a'] != null; // Returns true if the child node exists
     }
 
+    // Create or store a reference for a child node corresponding to the given character
+    void storeReferenceNode(char ch, TrieNode node) {
+        childrenNode[ch - 'a'] = node;
+    }
+
+    // Move to the child node corresponding to the given character
+    TrieNode moveToReferenceNode(char ch) {
+        return childrenNode[ch - 'a'];
+    }
+
+    // Mark this node as the end of a word
+    void setEndOfWord() {
+        endOfWordFlag = true;
+    }
+
+    // Check if this node is the end of a word
+    boolean isEndOfWord() {
+        return endOfWordFlag;
+    }
+}
+class WordDictionary {
     private TrieNode root; // Root of the Trie
 
     // Constructor to initialize the WordDictionary
@@ -112,4 +111,3 @@ class WordDictionary {
  * boolean isWordPresent = obj.search("word"); // Checks if "word" exists in the WordDictionary
  * boolean isWildcardMatch = obj.search("wo.d"); // Checks if a word matching "wo.d" exists
  */
-
