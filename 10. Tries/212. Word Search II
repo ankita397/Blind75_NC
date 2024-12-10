@@ -1,0 +1,121 @@
+https://leetcode.com/problems/word-search-ii/description/
+
+//Approach - Backtracking (Trie + Hash Set)
+
+https://www.youtube.com/watch?v=asbcE9mZz_U
+
+//TC = O(W×L)+O(M×N×4K) 
+//SC = O(W×L)+O(M×N)+O(K)
+W is the number of words.
+L is the average length of a word.
+M×N is the size of the board.
+K is the maximum word length (required for dfs recursion)
+
+public class TrieNode {
+    TrieNode[] childrenNode = new TrieNode[26]; // Array to store references to child nodes for each letter
+    boolean endOfWord = false; // Flag to indicate the end of a word
+
+    // Check if the current node contains a child for the given character
+    boolean containsChar(char ch) {
+        return (childrenNode[ch - 'a'] != null);
+    }
+
+    // Store a reference to a child node for the given character
+    void storeReferenceNode(char ch, TrieNode node) {
+        childrenNode[ch - 'a'] = node;
+    }
+
+    // Move to the child node corresponding to the given character
+    TrieNode moveToReferenceNode(char ch) {
+        return childrenNode[ch - 'a'];
+    }
+
+    // Mark the current node as the end of a word
+    void setEndOfWord() {
+        endOfWord = true;
+    }
+
+    // Check if the current node is the end of a word
+    boolean isEndOfWord() {
+        return endOfWord;
+    }
+
+    // Add a word to the Trie
+    void addWord(String word) {
+        TrieNode curr = this; // Start from the root
+        for (int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            // If the character does not exist, create a new node
+            if (!curr.containsChar(ch)) {
+                curr.storeReferenceNode(ch, new TrieNode());
+            }
+            // Move to the next node
+            curr = curr.moveToReferenceNode(ch);
+        }
+        // Mark the end of the word
+        curr.setEndOfWord();
+    }
+}
+
+class Solution {
+    private Set<String> res; // To store the final result (unique words found on the board)
+    boolean[][] visited; // To keep track of visited cells during DFS
+
+    public List<String> findWords(char[][] board, String[] words) {
+        TrieNode node = new TrieNode(); // Create a Trie to store all the words
+        // Add all words to the Trie
+        for (int i = 0; i < words.length; i++) {
+            node.addWord(words[i]);
+        }
+
+        int rows = board.length;
+        int columns = board[0].length;
+
+        res = new HashSet<>(); // Initialize the result set
+        visited = new boolean[rows][columns]; // Initialize the visited array
+
+        // Traverse each cell on the board
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < columns; col++) {
+                // Start DFS from each cell
+                dfs(board, node, row, col, new StringBuilder());
+            }
+        }
+        // Return the result as a list
+        return new ArrayList<>(res);
+    }
+
+    // DFS to find words on the board
+    private void dfs(char[][] board, TrieNode node, int row, int col, StringBuilder word) {
+        // Base conditions: out of bounds, already visited, or character not in the Trie
+        if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || 
+            visited[row][col] || !node.containsChar(board[row][col])) {
+            return;
+        }
+
+        // Mark the cell as visited
+        visited[row][col] = true;
+
+        // Move to the child node corresponding to the current character
+        node = node.moveToReferenceNode(board[row][col]);
+        // Append the character to the current word
+        word.append(board[row][col]);
+
+        // If a valid word is found, add it to the result set
+        if (node.isEndOfWord()) {
+            res.add(word.toString());
+            node.setEndOfWord(); // Prevent revisiting the same word
+        }
+
+        // Explore all 4 possible directions
+        dfs(board, node, row - 1, col, word); // Up
+        dfs(board, node, row + 1, col, word); // Down
+        dfs(board, node, row, col - 1, word); // Left
+        dfs(board, node, row, col + 1, word); // Right
+
+        // Backtracking: unmark the cell as visited
+        // This allows the cell to be used again in another path
+        word.deleteCharAt(word.length() - 1);
+        visited[row][col] = false;
+    }
+}
