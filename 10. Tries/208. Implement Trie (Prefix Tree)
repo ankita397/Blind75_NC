@@ -6,38 +6,38 @@ https://www.youtube.com/watch?v=dBGUmUQhjaM&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG
 //SC = O(L*N*26) for insert where L is the length of the word, N is Total number of words and 26 alphabets
 //SC = O(1) for search and startsWith
 
-class Trie {
-    // Class representing each node in the Trie
-    static class TrieNode {
-        TrieNode[] childrenNodes = new TrieNode[26]; // Array to hold references for each letter ('a' to 'z')
-        boolean endOfWordFlag = false; // Flag to indicate if the current node marks the end of a word
+// Class representing each node in the Trie
+public class TrieNode {
+    TrieNode[] childrenNodes = new TrieNode[26]; // Array to hold references for each letter ('a' to 'z')
+    boolean endOfWordFlag = false; // Flag to indicate if the current node marks the end of a word
 
-        // Check if a character is present as a child node
-        boolean containsCharacter(char ch) {
-            return (childrenNodes[ch - 'a'] != null); // Returns true if the child node exists
-        }
-
-        // Create or store a reference for the given character's node
-        void storeReferenceNode(char ch, TrieNode node) {
-            childrenNodes[ch - 'a'] = node;
-        }
-
-        // Move to the child node corresponding to the given character
-        TrieNode moveToReferenceNode(char ch) {
-            return childrenNodes[ch - 'a'];
-        }
-
-        // Mark this node as the end of a word
-        void setEndOfWord() {
-            endOfWordFlag = true;
-        }
-
-        // Check if this node is the end of a word
-        boolean isEndOfWord() {
-            return endOfWordFlag;
-        }
+    // Check if a character is present as a child node
+    boolean containsCharacter(char ch) {
+        return (childrenNodes[ch - 'a'] != null); // Returns true if the child node exists
     }
 
+    // Create or store a reference for the given character's node
+    void storeReferenceNode(char ch, TrieNode node) {
+        childrenNodes[ch - 'a'] = node;
+    }
+
+    // Move to the child node corresponding to the given character
+    TrieNode moveToReferenceNode(char ch) {
+        return childrenNodes[ch - 'a'];
+    }
+
+    // Mark this node as the end of a word
+    void setEndOfWord() {
+        endOfWordFlag = true;
+    }
+
+    // Check if this node is the end of a word
+    boolean isEndOfWord() {
+        return endOfWordFlag;
+    }
+}
+
+class Trie {
     private TrieNode root; // Root of the Trie
 
     // Constructor to initialize the Trie
