@@ -1,1 +1,104 @@
+https://leetcode.com/problems/implement-trie-prefix-tree/description/
+
+https://www.youtube.com/watch?v=dBGUmUQhjaM&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp
+
+//TC = O(L) for insert, search, startsWith where L is the length of the word/prefix
+//SC = O(L*N*26) for insert where L is the length of the word, N is Total number of words and 26 alphabets
+//SC = O(1) for search and startsWith
+
+class Trie {
+    // Class representing each node in the Trie
+    static class TrieNode {
+        TrieNode[] childrenNodes = new TrieNode[26]; // Array to hold references for each letter ('a' to 'z')
+        boolean endOfWordFlag = false; // Flag to indicate if the current node marks the end of a word
+
+        // Check if a character is present as a child node
+        boolean containsCharacter(char ch) {
+            return (childrenNodes[ch - 'a'] != null); // Returns true if the child node exists
+        }
+
+        // Create or store a reference for the given character's node
+        void storeReferenceNode(char ch, TrieNode node) {
+            childrenNodes[ch - 'a'] = node;
+        }
+
+        // Move to the child node corresponding to the given character
+        TrieNode moveToReferenceNode(char ch) {
+            return childrenNodes[ch - 'a'];
+        }
+
+        // Mark this node as the end of a word
+        void setEndOfWord() {
+            endOfWordFlag = true;
+        }
+
+        // Check if this node is the end of a word
+        boolean isEndOfWord() {
+            return endOfWordFlag;
+        }
+    }
+
+    private TrieNode root; // Root of the Trie
+
+    // Constructor to initialize the Trie
+    public Trie() {
+        root = new TrieNode();
+    }
+
+    // Insert a word into the Trie
+    public void insert(String word) {
+        TrieNode curr = root; // Start at the root node
+        for (int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            // If the character is not already present, create a new node for it
+            if (!curr.containsCharacter(ch)) {
+                curr.storeReferenceNode(ch, new TrieNode());
+            }
+            // Move to the child node corresponding to the character
+            curr = curr.moveToReferenceNode(ch);
+        }
+        // Mark the last node as the end of the word
+        curr.setEndOfWord();
+    }
+
+    // Search for a word in the Trie
+    public boolean search(String word) {
+        TrieNode curr = root; // Start at the root node
+        for (int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            // If the character is not found, the word doesn't exist in the Trie
+            if (!curr.containsCharacter(ch)) {
+                return false;
+            }
+            // Move to the child node corresponding to the character
+            curr = curr.moveToReferenceNode(ch);
+        }
+        // Return true only if the last node marks the end of a word
+        return curr.isEndOfWord();
+    }
+
+    // Check if any word in the Trie starts with the given prefix
+    public boolean startsWith(String prefix) {
+        TrieNode curr = root; // Start at the root node
+        for (int i = 0; i < prefix.length(); i++) {
+            char ch = prefix.charAt(i);
+            // If the character is not found, the prefix doesn't exist in the Trie
+            if (!curr.containsCharacter(ch)) {
+                return false;
+            }
+            // Move to the child node corresponding to the character
+            curr = curr.moveToReferenceNode(ch);
+        }
+        // If we've traversed all characters in the prefix, return true
+        return true;
+    }
+}
+
+/**
+ * Example usage:
+ * Trie obj = new Trie();
+ * obj.insert("word"); // Insert "word" into the Trie
+ * boolean isWordPresent = obj.search("word"); // Check if "word" exists in the Trie
+ * boolean hasPrefix = obj.startsWith("wo"); // Check if any word starts with "wo"
+ */
 
