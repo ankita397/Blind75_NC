@@ -1,7 +1,115 @@
 https://leetcode.com/problems/design-add-and-search-words-data-structure/description/
 
+https://www.youtube.com/watch?v=BTf05gs_8iU
 
 A brute force solution would be to store each added word in a list and search linearly through the list for a word every time. 
 This would be an O(m * n) solution, where m is the size of the list and n is the length of the string. Can you think of a better way? 
 Maybe there is a tree-like data structure.
+
+//TC for addWord = O(L), SC = O(L * N * 26)
+//TC for search(no wildcards) = O(L) and SC = O(L)
+//TC for search(with wildcards) = O(26^L) and SC = O(L) for recursion
+
+N: Total number of words added.
+L: Average length of the words.
+
+//Optimal
+class WordDictionary {
+    // Class representing a node in the Trie
+    static class TrieNode {
+        TrieNode[] childrenNode = new TrieNode[26]; // Array to store references to child nodes for each letter ('a' to 'z')
+        boolean endOfWordFlag = false; // Flag to mark if this node represents the end of a word
+
+        // Check if the current node has a child node for the given character
+        boolean containsCharacter(char ch) {
+            return childrenNode[ch - 'a'] != null; // Returns true if the child node exists
+        }
+
+        // Create or store a reference for a child node corresponding to the given character
+        void storeReferenceNode(char ch, TrieNode node) {
+            childrenNode[ch - 'a'] = node;
+        }
+
+        // Move to the child node corresponding to the given character
+        TrieNode moveToReferenceNode(char ch) {
+            return childrenNode[ch - 'a'];
+        }
+
+        // Mark this node as the end of a word
+        void setEndOfWord() {
+            endOfWordFlag = true;
+        }
+
+        // Check if this node is the end of a word
+        boolean isEndOfWord() {
+            return endOfWordFlag;
+        }
+    }
+
+    private TrieNode root; // Root of the Trie
+
+    // Constructor to initialize the WordDictionary
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+
+    // Adds a word to the WordDictionary
+    public void addWord(String word) {
+        TrieNode curr = root; // Start from the root node
+        for (int i = 0; i < word.length(); i++) {
+            char ch = word.charAt(i); // Get the current character
+            // If the current character is not already present, create a new node for it
+            if (!curr.containsCharacter(ch)) {
+                curr.storeReferenceNode(ch, new TrieNode());
+            }
+            // Move to the child node corresponding to the current character
+            curr = curr.moveToReferenceNode(ch);
+        }
+        // Mark the last node as the end of the word
+        curr.setEndOfWord();
+    }
+
+    // Searches for a word in the WordDictionary. Supports '.' as a wildcard character
+    public boolean search(String word) {
+        // Start the search using Depth-First Search (DFS) from the root node
+        return dfs(word, 0, root);// 0 is for first index of the word
+    }
+
+    // Helper method to perform a recursive Depth-First Search (DFS) for word matching
+    private boolean dfs(String word, int index, TrieNode root) {
+        TrieNode curr = root; // Start at the given root node
+        for (int i = index; i < word.length(); i++) {
+            char ch = word.charAt(i); // Get the current character
+
+            // If the current character is a '.', it can match any child node
+            if (ch == '.') {
+                // Iterate over all possible child nodes
+                for (TrieNode child : curr.childrenNode) {
+                    // Perform DFS for each non-null child node
+                    if (child != null && dfs(word, i + 1, child)) {
+                        return true; // If any child node leads to a valid match, return true
+                    }
+                }
+                return false; // If no child nodes lead to a match, return false
+            } else {
+                // If the current character is not a wildcard, check if it exists in the children
+                if (!curr.containsCharacter(ch)) {
+                    return false; // Character not found, so the word does not exist
+                }
+                // Move to the child node corresponding to the current character
+                curr = curr.moveToReferenceNode(ch);
+            }
+        }
+        // Return true if the current node marks the end of a valid word
+        return curr.isEndOfWord();
+    }
+}
+
+/**
+ * Example usage:
+ * WordDictionary obj = new WordDictionary();
+ * obj.addWord("word"); // Adds the word "word" to the WordDictionary
+ * boolean isWordPresent = obj.search("word"); // Checks if "word" exists in the WordDictionary
+ * boolean isWildcardMatch = obj.search("wo.d"); // Checks if a word matching "wo.d" exists
+ */
 
