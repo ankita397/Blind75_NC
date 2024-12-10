@@ -1,0 +1,7 @@
+https://leetcode.com/problems/design-add-and-search-words-data-structure/description/
+
+
+A brute force solution would be to store each added word in a list and search linearly through the list for a word every time. 
+This would be an O(m * n) solution, where m is the size of the list and n is the length of the string. Can you think of a better way? 
+Maybe there is a tree-like data structure.
+
