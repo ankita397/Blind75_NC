@@ -1,0 +1,77 @@
+https://leetcode.com/problems/pacific-atlantic-water-flow/description/
+
+https://www.youtube.com/watch?v=s-VkcjHqkGI
+
+//Brute Force
+A brute force solution would be to traverse each cell in the grid and run a BFS from each cell to check if it can reach both oceans. 
+This would result in an O((m * n)^2) solution. Can you think of a better way? Maybe you should consider a reverse way of traversing.
+TC : O((m * n)^2)
+
+//Approach : DFS
+
+//TC = O(m*n)
+//SC = O(m*n)
+
+import java.util.*;
+
+public class Solution {
+    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        int rows = heights.length;  // Number of rows in the grid
+        int cols = heights[0].length;  // Number of columns in the grid
+
+        // Two boolean arrays to track which cells can reach the Pacific and Atlantic oceans
+        boolean[][] pacVisited = new boolean[rows][cols]; 
+        boolean[][] atlVisited = new boolean[rows][cols];
+
+        // Step 1: Perform DFS for cells that can reach the Pacific and Atlantic oceans
+        // Traverse Pacific Ocean (top row and left column)
+        for (int c = 0; c < cols; c++) {
+            dfs(heights, 0, c, pacVisited);  // Top row (Pacific)
+            dfs(heights, rows - 1, c, atlVisited);  // Bottom row (Atlantic)
+        }
+
+        // Traverse Atlantic Ocean (right column and bottom row)
+        for (int r = 0; r < rows; r++) {
+            dfs(heights, r, 0, pacVisited);  // Left column (Pacific)
+            dfs(heights, r, cols - 1, atlVisited);  // Right column (Atlantic)
+        }
+
+        // Step 2: Collect the cells that can reach both the Pacific and Atlantic oceans
+        List<List<Integer>> res = new ArrayList<>();
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                // If the cell can reach both oceans, add it to the result
+                if (pacVisited[r][c] && atlVisited[r][c]) {
+                    res.add(Arrays.asList(r, c));
+                }
+            }
+        }
+        return res;  // Return the list of cells that can reach both oceans
+    }
+
+    // Helper DFS function to mark cells that can reach the specified ocean
+    private void dfs(int[][] heights, int row, int col, boolean[][] commonVisited) {
+        // Mark the current cell as visited
+        commonVisited[row][col] = true;
+
+        int rows = heights.length;  // Number of rows in the grid
+        int cols = heights[0].length;  // Number of columns in the grid
+
+        // Direction arrays for moving in four possible directions (up, down, left, right)
+        int[] delRow = {-1, 1, 0, 0};  // Row offsets for up/down movement
+        int[] delCol = {0, 0, -1, 1};  // Column offsets for left/right movement
+
+        // Explore all four directions from the current cell
+        for (int i = 0; i < 4; i++) {
+            int newRow = row + delRow[i];  // New row after moving in the current direction
+            int newCol = col + delCol[i];  // New column after moving in the current direction
+
+            // Check if the new cell is within bounds, not visited yet, and can flow to the current cell (height >= current height)
+            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && !commonVisited[newRow][newCol] && heights[newRow][newCol] >= heights[row][col]) {
+                // If valid, perform DFS to visit this cell
+                dfs(heights, newRow, newCol, commonVisited);
+            }
+        }
+    }
+}
+
