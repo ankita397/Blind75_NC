@@ -2,7 +2,7 @@ https://leetcode.com/problems/clone-graph/description/
 
 https://www.youtube.com/watch?v=Nki9V1tD5_I
 
-TC : O(N+E), where N is the number of nodes and E is the number of edges.
+TC : O(N+E), where N is the number of nodes and E is the number of edges.(DFS)
 SC : O(N) + O(N), where N is the number of nodes (due to the HashMap and recursion stack).
 
 class Solution {
