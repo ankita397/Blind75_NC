@@ -1,1 +1,126 @@
+https://leetcode.com/problems/number-of-islands/description/
+
+https://www.youtube.com/watch?v=muncqlKJrH0&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=8
+
+Input: grid = [
+  ["1","1","1","1","0"],
+  ["1","1","0","1","0"],
+  ["1","1","0","0","0"],
+  ["0","0","0","0","0"]
+]
+Output: 1
+
+//BFS
+
+//TC = O(m*n) + O(m*n)*4 - the nested loops +  overall BFS of the matrix(neighbours
+//SC = O(m*n)
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        int m = grid.length; // Get the number of rows in the grid
+        int n = grid[0].length; // Get the number of columns in the grid
+        int count = 0; // Variable to keep track of the number of islands
+        boolean[][] vis = new boolean[m][n]; // Visited array to track which cells have been explored
+
+        // Iterate through every cell in the grid
+        for(int row = 0; row < m; row++){
+            for(int col = 0; col < n; col++){
+                // If the current cell is part of an island ('1') and has not been visited
+                if(!vis[row][col] && grid[row][col] == '1'){
+                    count++; // We have found a new island, so increment the count
+                    bfs(grid, vis, row, col, m, n); // Perform BFS to mark all cells connected to this island
+                }
+            }
+        }
+        return count; // Return the total number of islands
+    }
+
+    private void bfs(char[][] grid, boolean[][] vis, int row, int col, int m, int n){
+        vis[row][col] = true; // Mark the starting cell as visited
+        Queue<Pair> q = new LinkedList<Pair>(); // Queue to perform BFS
+        q.add(new Pair(row, col)); // Add the starting cell to the queue
+
+        // Directions for moving in the grid: up, down, left, right
+        int[] delrow = {-1, 1, 0, 0}; // Direction for row movement (up and down)
+        int[] delcol = {0, 0, -1, 1}; // Direction for column movement (left and right)
+
+        // While there are still cells to explore in the queue
+        while(!q.isEmpty()){
+            int r = q.peek().first; // Get the row of the current cell from the front of the queue
+            int c = q.peek().second; // Get the column of the current cell from the front of the queue
+            q.remove(); // Remove the current cell from the queue
+
+            // Explore the four neighboring cells (up, down, left, right)
+            for(int x = 0; x < 4; x++){
+                int nrow = r + delrow[x]; // New row after moving in the current direction
+                int ncol = c + delcol[x]; // New column after moving in the current direction
+
+                // Check if the new cell is within bounds, part of the island ('1'), and not visited yet
+                if(nrow >= 0 && nrow < m && ncol >= 0 && ncol < n && grid[nrow][ncol] == '1' && !vis[nrow][ncol]){
+                    vis[nrow][ncol] = true; // Mark the new cell as visited
+                    q.add(new Pair(nrow, ncol)); // Add the new cell to the queue to explore its neighbors later
+                }
+            }
+        }
+    }
+}
+
+class Pair{
+    int first; // The row index of the cell
+    int second; // The column index of the cell
+    public Pair(int first, int second){
+        this.first = first; // Set the row value
+        this.second = second; // Set the column value
+    }
+}
+
+==============================================================================================================================
+
+//DFS
+
+//TC = O(m*n) + O(m*n)*4 - the nested loops +  overall BFS of the matrix(neighbours
+//SC = O(m*n)
+
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        int m = grid.length; // Get the number of rows in the grid
+        int n = grid[0].length; // Get the number of columns in the grid
+        int count = 0; // Variable to keep track of the number of islands
+        boolean[][] vis = new boolean[m][n]; // Visited array to track which cells have been visited
+
+        // Iterate through every cell in the grid
+        for (int row = 0; row < m; row++) {
+            for (int col = 0; col < n; col++) {
+                // If the current cell is part of an island ('1') and has not been visited
+                if (!vis[row][col] && grid[row][col] == '1') {
+                    count++; // We have found a new island, so increment the count
+                    dfs(grid, vis, row, col, m, n); // Perform DFS to mark all cells connected to this island
+                }
+            }
+        }
+        return count; // Return the total number of islands
+    }
+
+    // DFS function to mark all the cells of the current island as visited
+    private void dfs(char[][] grid, boolean[][] vis, int row, int col, int m, int n) {
+        vis[row][col] = true; // Mark the current cell as visited
+
+        // Directions for moving in the grid: up, down, left, right
+        int[] delrow = {-1, 1, 0, 0}; // Direction for row movement (up and down)
+        int[] delcol = {0, 0, -1, 1}; // Direction for column movement (left and right)
+
+        // Explore the four neighboring cells (up, down, left, right)
+        for (int x = 0; x < 4; x++) {
+            int nrow = row + delrow[x]; // New row after moving in the current direction
+            int ncol = col + delcol[x]; // New column after moving in the current direction
+
+            // Check if the new cell is within bounds, part of the island ('1'), and not visited yet
+            if (nrow >= 0 && nrow < m && ncol >= 0 && ncol < n && !vis[nrow][ncol] && grid[nrow][ncol] == '1') {
+                dfs(grid, vis, nrow, ncol, m, n); // Recursively explore the neighboring cell
+            }
+        }
+    }
+}
+
 
