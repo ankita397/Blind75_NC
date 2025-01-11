@@ -78,7 +78,7 @@ class Pair{
 
 //DFS
 
-//TC = O(m*n) + O(m*n)*4 - the nested loops +  overall BFS of the matrix(neighbours
+//TC = O(m*n) + O(m*n)*4 - the nested loops +  overall DFS of the matrix(neighbours
 //SC = O(m*n)
 
 
