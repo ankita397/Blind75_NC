@@ -7,12 +7,17 @@ This repository contains my solutions to the **Blind 75** list of Data Structure
 ## Problem List
 
 The repository includes solutions for the following problem categories:
-- Arrays
-- Strings
+- Arrays & Hashing
+- Two Pointers
+- Sliding Window
+- Stack
+- Binary Search
 - Linked Lists
-- Trees & Graphs
-- Dynamic Programming
-- Searching & Sorting
+- Trees
+- Heaps & Priority Queue
 - Backtracking
+- Graphs
+- Dynamic Programming
+- Greedy & Interval
 - Math
-etc
+- Bit Manipulation
