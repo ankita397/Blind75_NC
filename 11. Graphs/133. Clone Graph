@@ -1,1 +1,53 @@
+https://leetcode.com/problems/clone-graph/description/
+
 https://www.youtube.com/watch?v=Nki9V1tD5_I
+
+TC : O(N+E), where N is the number of nodes and E is the number of edges.
+SC : O(N) + O(N), where N is the number of nodes (due to the HashMap and recursion stack).
+
+class Solution {
+    // Main function to clone the graph starting from the given node.
+    public Node cloneGraph(Node node) {
+        // If the given node is null, there is no graph to clone, so return null.
+        //this is checked in this method and not in the dfs method because only the given node can be null.. neighbors can never be null
+        if (node == null) 
+            return null;
+
+        // HashMap to store mapping from original nodes to their cloned counterparts.
+        // This will help in reusing cloned nodes and prevent cycles during the DFS traversal.
+        HashMap<Node, Node> map = new HashMap<Node, Node>();
+        
+        // Start the depth-first search (DFS) cloning process.
+        return cloneDfs(node, map);
+    }
+
+    // Helper function to perform the DFS and clone the graph.
+    private Node cloneDfs(Node oldNode, HashMap<Node, Node> map){
+        // If this node has already been cloned (i.e., exists in the map), return the cloned node.
+        // This ensures that nodes are cloned only once, preventing infinite recursion in case of cycles.
+        if (map.containsKey(oldNode)) {
+            return map.get(oldNode);
+        }
+
+        // Create a new node that is a clone of the old node.
+        Node newNode = new Node(oldNode.val);
+        
+        // Add the newly created node to the map, so we can refer to it later.
+        map.put(oldNode, newNode);
+
+        // Iterate through each neighbor of the old node.
+        for (Node neighbor : oldNode.neighbors) {
+            // If the neighbor has not been cloned yet, clone it recursively.
+            if (!map.containsKey(neighbor)) {
+                // Recursively clone the neighbor and add it to the new node's neighbors list.
+                newNode.neighbors.add(cloneDfs(neighbor, map));
+            } else {
+                // If the neighbor has already been cloned, simply add the cloned node to the neighbors list.
+                newNode.neighbors.add(map.get(neighbor));
+            }
+        }
+        
+        // Return the newly created node which represents the cloned version of the old node.
+        return newNode;
+    }
+}
