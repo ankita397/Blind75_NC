@@ -1,0 +1,27 @@
+https://leetcode.com/problems/reverse-bits/description/
+
+https://www.youtube.com/watch?v=j5ImjESLcuc
+
+//TC = O(1)
+//SC = O(1)
+
+public class Solution {
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        int ans = 0;
+        int mask = 1;// Mask is used to isolate each individual bit of n in each iteration
+        
+        // Loop through all 32 bits of the integer (assuming 32-bit integer representation)
+        for(int i = 0; i < 32; i++){
+            // Check if the current bit in n (at position i) is 1 using the AND operation
+            if((n & mask) != 0){
+                // If the current bit is 1, set the corresponding bit in the answer variable ans.
+                // The position of the bit to set in ans is (31 - i), because we are reversing the bits.
+                ans = ans + (1 << 31 - i); // 31 - 1 is the position when reversed
+            }
+            // Shift the mask left by 1 to check the next bit in n in the next iteration
+            mask = mask << 1;
+        }
+        return ans;
+    }
+}
