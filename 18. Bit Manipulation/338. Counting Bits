@@ -1,0 +1,25 @@
+https://leetcode.com/problems/counting-bits/description/
+
+https://www.youtube.com/watch?v=J1hCybwTVVE
+
+//TC = O(n)
+//SC = O(n)
+class Solution {
+    public int[] countBits(int n) {
+        int res[] = new int[n+1];
+        for(int i = 0; i <=n; i++){ //for each i (0 <= i <= n)
+            int bitCount = 0;
+            int mask = 1;
+            for(int j = 0; j < 32; j++){ // 32 bits in integers
+                if((i & mask) != 0){// // If the result is non-zero, it means the current bit is 1, so increment bitcount
+                    bitCount++;
+                }
+                // Left shift the mask by 1 to move to the next bit position
+                // This will create a new mask for the next bit to check
+                mask = mask << 1;
+            }
+            res[i] = bitCount;
+        }
+        return res;
+    }
+}
