@@ -1,0 +1,97 @@
+https://leetcode.com/problems/course-schedule-ii/description/
+
+https://www.youtube.com/watch?v=WAOfKpxYHR8&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=24
+
+//Refer 207. Course Schedule - https://github.com/ankita397/Blind75_NC/blob/main/11.%20Graphs/207.%20Course%20Schedule
+
+//TC = O(V+E)
+//SC = O(V+E)
+
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        // numCourses = total number of courses (vertices)
+        // prerequisites[] = array of course pairs where [a, b] means "course a depends on course b"
+        // Eg: prerequisites = [[1, 0], [2, 1], [3, 2]], numCourses = 4
+        // This means: 
+        // Course 1 depends on course 0,
+        // Course 2 depends on course 1,
+        // Course 3 depends on course 2.
+        
+        // Step 1: Initialize the adjacency list to represent the graph
+        List<List<Integer>> adj = new ArrayList<>();
+        
+        // Create an empty adjacency list for each course (each course initially has no dependencies)
+        for (int i = 0; i < numCourses; i++) {
+            adj.add(new ArrayList<>());
+        }
+        // After the loop, adj = [[], [], [], []]
+
+        // Step 2: Populate the adjacency list based on the given prerequisites
+        // Each course `b` has a directed edge to course `a` because `a` depends on `b`
+        for (int i = 0; i < prerequisites.length; i++) {
+            int course = prerequisites[i][0];      // The course that depends on another
+            int prerequisite = prerequisites[i][1]; // The prerequisite course
+            adj.get(prerequisite).add(course);      // Add course to the adjacency list of its prerequisite
+        }
+        // After this step, adj = [[1], [2], [3], []]
+        // Course 0 leads to 1, Course 1 leads to 2, and Course 2 leads to 3
+
+        // Step 3: Create the indegree array to track the number of prerequisites (incoming edges) for each course
+        int[] indegree = new int[numCourses];
+        
+        // Traverse the adjacency list to populate the indegree array
+        for (int i = 0; i < numCourses; i++) {
+            for (int course : adj.get(i)) {
+                indegree[course]++;  // Increment indegree for each course that depends on course i
+            }
+        }
+        // After the loop, indegree = [0, 1, 1, 1]
+        // Course 0 has no prerequisites, Course 1 has 1 prerequisite (course 0), 
+        // Course 2 has 1 prerequisite (course 1), Course 3 has 1 prerequisite (course 2)
+
+        // Step 4: Initialize a queue to perform a topological sort (Kahn's algorithm)
+        Queue<Integer> q = new LinkedList<>();
+        
+        // Add all courses with no prerequisites (indegree 0) to the queue
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);  // Course with no prerequisites can be taken first
+            }
+        }
+        // After this step, q = [0]
+        // Course 0 has no prerequisites, so it's the first course to take
+
+        // Step 5: Perform topological sort by processing the courses in the queue
+        int[] topoList = new int[numCourses]; // Array to store the topological order
+        int index = 0; // To track the current position in topoList
+        
+        while (!q.isEmpty()) {
+            int course = q.poll();  // Take the course with no prerequisites (indegree 0)
+            topoList[index++] = course;  // Add it to the topological order
+            
+            // Decrease the indegree of all courses that depend on the current course
+            for (int dependentCourse : adj.get(course)) {
+                indegree[dependentCourse]--;  // One less prerequisite for the dependent course
+                
+                // If a dependent course now has no prerequisites (indegree 0), add it to the queue
+                if (indegree[dependentCourse] == 0) {
+                    q.add(dependentCourse);
+                }
+            }
+        }
+        // Queue after each iteration (assuming no cycle): 
+        // q = [1], topoList = [0]
+        // q = [2], topoList = [0, 1]
+        // q = [3], topoList = [0, 1, 2]
+        // q = [], topoList = [0, 1, 2, 3]
+
+        // Step 6: Check if all courses have been processed (i.e., if a valid topological order exists)
+        // If we've processed exactly `numCourses`, then there's no cycle, and we can return the topological order
+        if (index == numCourses) {
+            return topoList;  // Return the valid topological order of courses
+        }
+        
+        // If not all courses have been included in the order, it means a cycle exists, so return an empty array
+        return new int[0]; // No valid order exists due to a cycle
+    }
+}
