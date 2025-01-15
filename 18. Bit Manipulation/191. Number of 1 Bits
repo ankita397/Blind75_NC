@@ -39,7 +39,7 @@ class Solution {
 
 //Approach 2
 
-//TC = O(n)
+//TC = O(1) - while loop does not run through all numbers till n as we modify n
 //SC = O(1)
 
 class Solution {
