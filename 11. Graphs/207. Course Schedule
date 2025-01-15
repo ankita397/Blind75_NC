@@ -1,0 +1,97 @@
+https://leetcode.com/problems/course-schedule/description/
+
+https://www.youtube.com/watch?v=WAOfKpxYHR8&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=24
+
+//Approach - Cycle Detection - Topological sort (BFS)
+
+Can use DFS Cycle detection as well - but we cannot find the order of the courses taken - only isCycle can be checked
+
+Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge u-v, 
+vertex u comes before v in the ordering.
+
+Example 1:
+
+Input: numCourses = 2, prerequisites = [[1,0]]
+Output: true
+Explanation: There are a total of 2 courses to take. 
+To take course 1 you should have finished course 0. So it is possible.
+Example 2:
+
+Topo sort - 1 -> 0 (vertex 1 should come before vertex 0) => no cycle
+
+Input: numCourses = 2, prerequisites = [[1,0],[0,1]]
+Output: false
+Explanation: There are a total of 2 courses to take. 
+To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
+
+Topo sort - 1 -> 0 (vertex 1 should come before vertex 0) 
+           0 -> 1 (vertex 0 should come before vertex 1)  ====> Cycle
+
+TC : O(V+E)
+C : O(V+E)
+
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // numCourses = total number of courses (vertices)
+        // prerequisites[] = array of course pairs where [a, b] means "course a depends on course b"
+        
+        // Step 1: Initialize the adjacency list to represent the graph
+        List<List<Integer>> adj = new ArrayList<>();
+        
+        // Create an empty adjacency list for each course
+        for (int i = 0; i < numCourses; i++) {
+            adj.add(new ArrayList<Integer>());
+        }
+
+        // Step 2: Populate the adjacency list based on the given prerequisites
+        // Each course `b` has a directed edge to course `a` because `a` depends on `b`
+        for (int i = 0; i < prerequisites.length; i++) {
+            int course = prerequisites[i][0];
+            int prerequisite = prerequisites[i][1];
+            adj.get(prerequisite).add(course);
+        }
+
+        // Step 3: Create the indegree array to track the number of prerequisites (incoming edges) for each course
+        int[] indegree = new int[numCourses];
+        
+        // Traverse the adjacency list to populate the indegree array
+        for (int i = 0; i < numCourses; i++) {
+            for (int course : adj.get(i)) {
+                indegree[course]++;  // Increment indegree for each course that depends on course i
+            }
+        }
+
+        // Step 4: Initialize a queue to perform a topological sort (Kahn's algorithm)
+        Queue<Integer> q = new LinkedList<Integer>();
+        
+        // Add all courses with no prerequisites (indegree 0) to the queue
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+
+        // Step 5: Perform topological sort by processing the courses in the queue
+        List<Integer> topoList = new ArrayList<Integer>();  // List to store the topological order
+        
+        while (!q.isEmpty()) {
+            int course = q.poll();  // Take the course with no prerequisites (indegree 0)
+            topoList.add(course);   // Add it to the topological order
+            
+            // Decrease the indegree of all courses that depend on the current course
+            for (int s : adj.get(course)) {
+                indegree[dependentCourse]--;  // One less prerequisite for the dependent course
+                
+                // If a dependent course now has no prerequisites (indegree 0), add it to the queue
+                if (indegree[dependentCourse] == 0) {
+                    q.add(dependentCourse);
+                }
+            }
+        }
+
+        // Step 6: Check if all courses have been processed (i.e., if a valid topological order exists)
+        // If we have processed exactly `numCourses`, it means there is no cycle and we can finish all courses
+        return topoList.size() == numCourses;
+    }
+}
+
