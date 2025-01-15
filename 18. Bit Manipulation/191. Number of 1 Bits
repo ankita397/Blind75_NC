@@ -14,22 +14,22 @@ class Solution {
         // Initialize count to 0, which will keep track of the number of set bits
         int count = 0;
 
-        // Initialize a helper variable to represent the bit mask
+        // Initialize a mask variable to represent the bit mask
         // This mask will be used to check each individual bit of the number
-        int helper = 1;  // Binary: 00000000000000000000000000000001 (represents the least significant bit)
+        int mask = 1;  // Binary: 00000000000000000000000000000001 (represents the least significant bit)
 
         // Loop through each of the 32 bits (since an integer is 32 bits in Java)
         for (int i = 1; i <= 32; i++) {
-            // Perform bitwise AND between the helper and n
+            // Perform bitwise AND between the mask and n
             // This checks if the current bit in n is set (i.e., 1)
-            if ((helper & n) != 0) {
+            if ((mask & n) != 0) {
                 // If the result is non-zero, it means the current bit is 1, so increment count
                 count++;
             }
 
-            // Left shift the helper by 1 to move to the next bit position
+            // Left shift the mask by 1 to move to the next bit position
             // This will create a new mask for the next bit to check
-            helper = helper << 1;
+            mask = mask << 1;
         }
 
         // Return the total count of set bits (1s) in the binary representation of n
