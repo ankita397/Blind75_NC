@@ -6,3 +6,83 @@ https://www.youtube.com/watch?v=U3N_je7tWAs
 
 //Approach - Topological sort
 
+TC : O(N * M + K + E)
+Graph Construction: O(N * M), where N is the number of words and M is the average word length.
+Topological Sort: O(K + E), where K is the number of characters and E is the number of edges in the graph.
+Thus, the overall time complexity is O(N * M + K + E).
+
+SC : O(K + E) for storing the adjacency list and in-degree array.
+
+class Solution {
+    public String findOrder(String[] dict, int k) {
+        // Step 1: Build the graph
+        List<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < k; i++) {
+            adj.add(new ArrayList<>());
+        }
+        
+        // Step 2: Build the graph based on the dictionary
+        for (int i = 0; i < dict.length - 1; i++) {
+            String s1 = dict[i];
+            String s2 = dict[i + 1];
+            int len = Math.min(s1.length(), s2.length());
+            
+            // Find the first character where they differ and add an edge
+            for (int j = 0; j < len; j++) {
+                if (s1.charAt(j) != s2.charAt(j)) {
+                    adj.get(s1.charAt(j) - 'a').add(s2.charAt(j) - 'a');
+                    break;
+                }
+            }
+        }
+        
+        // Step 3: Perform topological sort
+        List<Integer> topoList = topoSort(adj, k);
+        
+        // Step 4: If topoList contains all characters, return the order as a string
+        if (topoList.size() == k) {
+            StringBuilder result = new StringBuilder();
+            for (int node : topoList) {
+                result.append((char)(node + 'a'));
+            }
+            return result.toString();
+        } else {
+            return "";  // Cycle detected or invalid order
+        }
+    }
+
+    // Perform topological sort using Kahn's algorithm (BFS approach)
+    private List<Integer> topoSort(List<ArrayList<Integer>> adj, int k) {
+        int[] indegree = new int[k];
+        
+        // Step 1: Calculate in-degrees for all nodes
+        for (int i = 0; i < k; i++) {
+            for (int neighbor : adj.get(i)) {
+                indegree[neighbor]++;
+            }
+        }
+        
+        // Step 2: Initialize queue with nodes having zero in-degree
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < k; i++) {
+            if (indegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+        
+        // Step 3: Perform the topological sort
+        List<Integer> topoList = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            int currNode = queue.poll();
+            topoList.add(currNode);
+            for (int neighbor : adj.get(currNode)) {
+                indegree[neighbor]--;
+                if (indegree[neighbor] == 0) {
+                    queue.add(neighbor);
+                }
+            }
+        }
+        
+        return topoList;
+    }
+}
