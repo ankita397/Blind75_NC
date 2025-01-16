@@ -1,4 +1,4 @@
-#If array list is given
+#If array list is given - ArrayList<ArrayList<Integer>> edges
 
 boolean[] vis = new boolean[n];
 List<ArrayList<Integer>> adj = new ArrayList<>();
@@ -10,7 +10,7 @@ for(int i = 0; i < m; i++){//undirected graph
     adj.get(edges.get(i).get(1)).add(edges.get(i).get(0));//v to u
 }
 
-#If array is given
+#If array is given - int[][] edges
 
 boolean vis[] = new boolean[n];
 ArrayList<ArrayList<Integer>> adj = new ArrayList<>(n);
@@ -26,13 +26,13 @@ for(int i=0; i<m; i++){
 
 //DFS
 
-void dfs( ArrayList<ArrayList<Integer>> adj, boolean vis[], int st)
+void dfs( ArrayList<ArrayList<Integer>> adj, boolean vis[], int node)
 {
-    vis[st] =true;
-    for(int nei : adj.get(st)){
-        if(!vis[nei]){
+    vis[node] =true;
+    for(int neighbor : adj.get(node)){
+        if(!vis[neighbor]){
                 cnt++;
-               dfs(adj,vis, nei);
+               dfs(adj,vis, neighbor);
             }
     }
 }
@@ -41,13 +41,13 @@ void dfs( ArrayList<ArrayList<Integer>> adj, boolean vis[], int st)
 
 int st=0;
 Queue<Integer> q = new LinkedList<>();
-vis[st]=true;
-q.add(st);
+vis[node]=true;
+q.add(node);
 while(!q.isEmpty()){
     int curr=q.poll();
-    for(int nei : adj.get(curr)){
-        if(!vis[nei]){
-            vis[nei] = true;
+    for(int neighbor : adj.get(curr)){
+        if(!vis[neighbor]){
+            vis[neighbor] = true;
             cnt++;
             q.add(nei);
         }
