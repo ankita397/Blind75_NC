@@ -2,10 +2,14 @@ Leetcode Premium - https://leetcode.com/problems/graph-valid-tree/description/
 
 https://www.geeksforgeeks.org/problems/is-it-a-tree/0
 
-https://www.youtube.com/watch?v=bXsUuownnoQ
+https://www.youtube.com/watch?v=NBSXzs8mrOQ
 
 //Approach - DFS or BFS - Graph should have no cycle + N nodes or N-1 edges + it should be a connected graph
 //If we check for N-1 edges and connected graph , then that should be enough as that automatically means Graph has no cycle
+
+
+//TC : O(E+V)
+//SC : O(V)
 
 
 //DFS
