@@ -1,0 +1,124 @@
+Leetcode Premium - https://leetcode.com/problems/graph-valid-tree/description/
+
+https://www.geeksforgeeks.org/problems/is-it-a-tree/0
+
+https://www.youtube.com/watch?v=bXsUuownnoQ
+
+//Approach - DFS or BFS - Graph should have no cycle + N nodes or N-1 edges + it should be a connected graph
+//If we check for N-1 edges and connected graph , then that should be enough as that automatically means Graph has no cycle
+
+
+//DFS
+
+//If array list is given
+
+class Solution {
+    int count = 0;
+    public boolean isTree(int n, int m, ArrayList<ArrayList<Integer>> edges) 
+    {
+        // code here
+        if(m != n-1){ // no of of edges should be 1 less than no of vertices
+            return false;
+        }
+        
+        boolean[] vis = new boolean[n];
+        List<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i = 0; i < n; i++){
+            adj.add(new ArrayList<Integer>());
+        }
+        for(int i = 0; i < m; i++){//undirected graph
+            adj.get(edges.get(i).get(0)).add(edges.get(i).get(1)); //u to v
+            adj.get(edges.get(i).get(1)).add(edges.get(i).get(0));//v to u
+        }
+        
+        count = 1;
+        dfs(adj, vis, 0);//pass the 1st node
+        
+        return count == n;
+    }
+    
+    private void dfs(List<ArrayList<Integer>> adj, boolean[] vis, int node){
+        vis[node] = true;
+        for(int neighbor : adj.get(node)){
+            if(!vis[neighbor]){
+                count++;
+                dfs(adj, vis, neighbor);
+            }
+        }
+    }
+}
+
+//If array is given
+
+class Solution {
+     int cnt;
+    public boolean validTree(int n, int[][] edges) {
+        int m = edges.length;
+        if(m!= n-1)
+        return false;
+
+        boolean vis[] = new boolean[n];
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>(n);
+         for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+       
+        for(int i=0; i<m; i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+            adj.get(edges[i][1]).add(edges[i][0]);
+        }
+        
+        cnt=1;
+        dfs(adj, vis, 0);
+        return cnt==n;
+        
+
+    }
+    void dfs( ArrayList<ArrayList<Integer>> adj, boolean vis[], int st)
+    {
+        vis[st] =true;
+        for(int nei : adj.get(st)){
+            if(!vis[nei]){
+                    cnt++;
+                   dfs(adj,vis, nei);
+                }
+        }
+    }
+}
+
+//BFS
+class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        int m = edges.length;
+        if(m!= n-1)
+        return false;
+        
+        boolean vis[] = new boolean[n];
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>(n);
+         for (int i = 0; i < n; i++) {
+            adj.add(new ArrayList<>());
+        }
+       
+        for(int i=0; i<m; i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+            adj.get(edges[i][1]).add(edges[i][0]);
+        }
+        
+        int cnt=1;
+        int st=0;
+        Queue<Integer> q = new LinkedList<>();
+        vis[st]=true;
+        q.add(st);
+        while(!q.isEmpty()){
+            int curr=q.poll();
+            for(int nei : adj.get(curr)){
+                if(!vis[nei]){
+                    vis[nei] = true;
+                    cnt++;
+                    q.add(nei);
+                }
+            }
+        }
+        return cnt==n ? true: false;
+    }
+}
