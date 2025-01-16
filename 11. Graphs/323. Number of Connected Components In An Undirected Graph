@@ -1,0 +1,43 @@
+Leetcode Premium
+
+https://neetcode.io/problems/count-connected-components
+
+https://www.youtube.com/watch?v=lea-Wl_uWXY
+
+//Approach - DFS or BFS - Loop over all vertices before calling traversal logis(bfs or dfs) for checking connected components
+
+//TC : O(V+E)
+//SC : O(V)
+
+class Solution {
+    public int countComponents(int n, int[][] edges) {
+        List<ArrayList<Integer>> adj = new ArrayList<>();
+        boolean[] vis = new boolean[n];
+
+        for(int i = 0; i < n; i++){
+            adj.add(new ArrayList<Integer>());
+        }
+
+        for(int i = 0; i < edges.length; i++){
+            adj.get(edges[i][0]).add(edges[i][1]);
+            adj.get(edges[i][1]).add(edges[i][0]);
+        }
+
+        int count = 0;
+        for(int i = 0; i < n; i++){
+            if(!vis[i]){
+                dfs(adj, vis, i);
+                count++;
+            }
+        }
+        return count;
+    }
+    private void dfs(List<ArrayList<Integer>> adj, boolean[] vis, int node){
+        vis[node] = true;
+        for(int neighbor : adj.get(node)){
+            if(!vis[neighbor]){
+                dfs(adj, vis, neighbor);
+            }
+        }
+    }
+}
