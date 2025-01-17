@@ -6,7 +6,7 @@ Approach - DP - Recursion -> Memoization -> Tabulation -> Space optimization
 
 class Solution {
     public int climbStairs(int n) {
-        //Recursion // TLE
+        //Recursion // TLE - O(2^n)
         //return climbing(n);
 
         //Memoization // TC = O(n), SC = O(n) + O(n) - recursion stack space + dp array
