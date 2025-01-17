@@ -1,0 +1,165 @@
+https://leetcode.com/problems/house-robber-ii/description/
+
+https://www.youtube.com/watch?v=3WaxQMELSkw - refer 198. House Robber first
+
+
+class Solution {
+    public int rob(int[] nums) {
+        //Recursion - TC = O(2^n) - TLE
+        /*int n = nums.length;
+        if(n == 1)// if the array has only 1 element/the row has only one house 
+            return nums[0];
+        int[] nums_leavingFirstHouse = new int[n];
+        int[] nums_leavingLastHouse = new int[n];
+
+        for(int i = 0; i < n; i++){
+            if(i != 0){
+                nums_leavingFirstHouse[i] = nums[i];
+            }
+            if(i != n-1){
+                nums_leavingLastHouse[i] = nums[i];
+            }
+        }
+
+        return Math.max(maxAmountRobbed(n-1, nums_leavingFirstHouse), maxAmountRobbed(n-1, nums_leavingLastHouse));//start from n-1 always for recursion - top down
+        */
+
+        //Memoization - TC = O(n), SC = O(n)+ O(n)
+        /*int n = nums.length;
+        if(n == 1)// if the array has only 1 element
+            return nums[0];
+        int[] nums_leavingFirstHouse = new int[n];
+        int[] nums_leavingLastHouse = new int[n];
+
+        for(int i = 0; i < n; i++){
+            if(i != 0){
+                nums_leavingFirstHouse[i] = nums[i];
+            }
+            if(i != n-1){
+                nums_leavingLastHouse[i] = nums[i];
+            }
+        }
+
+        // Separate dp arrays for both cases
+        int[] dp1 = new int[n];
+        int[] dp2 = new int[n];
+        for (int i = 0; i < n; i++) {
+            dp1[i] = -1;
+            dp2[i] = -1;
+        }
+        return Math.max(maxAmountRobbed(dp1, n-1, nums_leavingFirstHouse), maxAmountRobbed(dp2, n-1, nums_leavingLastHouse));*/
+
+        //Tabulation - TC = O(n), SC = O(n)
+        /*int n = nums.length;
+        if(n == 1)// if the array has only 1 element
+            return nums[0];
+        int[] nums_leavingFirstHouse = new int[n];
+        int[] nums_leavingLastHouse = new int[n];
+
+        for(int i = 0; i < n; i++){
+            if(i != 0){
+                nums_leavingFirstHouse[i] = nums[i];
+            }
+            if(i != n-1){
+                nums_leavingLastHouse[i] = nums[i];
+            }
+        }
+
+        return Math.max(maxAmountRobbed(nums_leavingFirstHouse), maxAmountRobbed( nums_leavingLastHouse));
+    */
+
+        //Space Optimization // TC = O(n), SC = O(1)
+        //exactly same code as tabulation for this method
+        int n = nums.length;
+        if(n == 1)// if the array has only 1 element
+            return nums[0];
+        int[] nums_leavingFirstHouse = new int[n];
+        int[] nums_leavingLastHouse = new int[n];
+
+        for(int i = 0; i < n; i++){
+            if(i != 0){
+                nums_leavingFirstHouse[i] = nums[i];
+            }
+            if(i != n-1){
+                nums_leavingLastHouse[i] = nums[i];
+            }
+        }
+
+        return Math.max(maxAmountRobbed(nums_leavingFirstHouse), maxAmountRobbed(           nums_leavingLastHouse));
+    }
+
+    //Recursion
+    /*public int maxAmountRobbed(int ind, int[] nums){
+        //base
+        if(ind == 0){// we pick 0 only if 1 has not been picked
+            return nums[ind];
+        }
+        if(ind < 0){
+            return 0;
+        }
+        int robbed = nums[ind] + maxAmountRobbed(ind-2, nums);
+        int notRobbed = 0 + maxAmountRobbed(ind-1, nums);
+
+        return Math.max(robbed, notRobbed);
+    }*/
+
+    //Memoization
+    /*public int maxAmountRobbed(int[] dp, int ind, int[] nums){
+        //base
+        if(ind == 0) 
+            return nums[ind];
+        if(ind < 0)
+            return 0;
+        if(dp[ind] != -1){
+            return dp[ind];
+        }
+
+        int robbed = nums[ind] + maxAmountRobbed(dp, ind-2, nums);
+        int notRobbed = 0 + maxAmountRobbed(dp, ind-1, nums);
+
+        return dp[ind] = Math.max(robbed, notRobbed);
+    }*/
+
+    //Tabulation
+    /*public int maxAmountRobbed(int[] nums){
+         int n = nums.length;
+        int[] dp = new int[n+1];
+        dp[0] = nums[0];
+        // if ind < 0, we cannot handle it here.. we do it later
+        int robbed = 0;
+        int notRobbed = 0 ;
+        for(int ind = 1; ind < n; ind++){
+            
+            //if negative i.e., i <= 1, dp[1-2]=dp[-1] should not be added
+            robbed = nums[ind];
+            if(ind > 1){
+                robbed = robbed + dp[ind-2];
+            }
+            notRobbed = 0 + dp[ind-1]; 
+            dp[ind] = Math.max(robbed, notRobbed);
+        }
+        return dp[n-1];
+    }*/
+
+    //Space Optimization
+    public int maxAmountRobbed(int[] nums){
+        int n = nums.length;
+        int prev = nums[0];
+        int prev2 = 0;
+
+        int robbed = 0;
+        int notRobbed = 0;
+        for(int ind = 1; ind < n; ind++){
+            int curr = 0;
+            robbed = nums[ind];
+            if(ind > 1){
+                robbed = robbed + prev2;
+            }
+            notRobbed = 0 + prev;
+            curr = Math.max(robbed, notRobbed);
+            prev2 = prev;
+            prev = curr;
+        }
+        return prev;
+    }
+}
