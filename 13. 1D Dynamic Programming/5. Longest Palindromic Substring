@@ -1,0 +1,163 @@
+https://leetcode.com/problems/longest-palindromic-substring/description/
+
+https://www.youtube.com/watch?v=qhFCfYr2XOc
+
+//Brute Force -  no need to code
+//Generate all substrings and check for palindromes. Time Complexity: O(n³), Space Complexity: O(n)
+
+//TC: O(n³), 
+//SC: O(n)
+
+public class Solution {
+    public String longestPalindrome(String s) {
+        // Initialize result string and its length
+        String res = "";
+        int resLen = 0;
+
+        // Iterate through each character in the string
+        for (int i = 0; i < s.length(); i++) {
+            // Expand around the center for odd-length palindromes
+            for (int j = i; j < s.length(); j++) {
+                // Check if the substring s[i:j+1] is a palindrome
+                if (isPalindrome(s, i, j)) {
+                    // If the palindrome is longer than the current result, update it
+                    if (j - i + 1 > resLen) {
+                        res = s.substring(i, j + 1);
+                        resLen = j - i + 1;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    // Helper function to check if a substring is a palindrome
+    private boolean isPalindrome(String s, int left, int right) {
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false; // If characters don't match, it's not a palindrome
+            }
+            left++;
+            right--;
+        }
+        return true; // Substring is a palindrome
+    }
+}
+
+
+//Approach - DP - Memoization
+//TC = O(n^2) 
+//SC = O(n^2)
+
+public class Solution {
+    public String longestPalindrome(String s) {
+        // Edge case: If the string is empty, return an empty string
+        if (s == null || s.length() == 0) return "";
+
+        int n = s.length();
+        // dp[i][j] will be true if the substring s[i:j+1] is a palindrome
+        boolean[][] dp = new boolean[n][n];
+        // Initialize the result string to hold the longest palindrome
+        String res = "";
+
+        // Base case: Single characters are always palindromes
+        // For all i, dp[i][i] will be true because each character is a palindrome
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = true; // Single characters are palindromes
+            res = s.substring(i, i + 1); // Initialize the result with the first character
+        }
+
+        // Check for palindromes of length 2 to n
+        for (int len = 2; len <= n; len++) {
+            // Iterate through all possible starting indices of substrings of length 'len'
+            for (int i = 0; i <= n - len; i++) {
+                int j = i + len - 1; // Calculate the ending index of the substring
+
+                // Check if the first and last characters match, and if the inner substring is a palindrome
+                if (s.charAt(i) == s.charAt(j) && (len == 2 || dp[i + 1][j - 1])) {
+                    dp[i][j] = true; // Mark the substring as a palindrome
+                    
+                    // If the length of the current palindrome is greater than the result, update the result
+                    if (len > res.length()) {
+                        res = s.substring(i, j + 1); // Update the result substring
+                    }
+                }
+            }
+        }
+
+        // Return the longest palindrome substring found
+        return res;
+    }
+}
+
+
+//Approach - 2 pointers
+// Start from center and move to left and right to check for palindromes 
+// For odd-length palindromes: Consider the current character as the center
+// For even-length palindromes: Consider the current and next character as the center
+
+//TC = O(n^2)
+//SC = O(1)
+
+public class Solution {
+    public String longestPalindrome(String s) {
+        // Initialize result string and its length
+        String res = "";
+        
+        // Length of the input string
+        int len = s.length();
+        
+        // Variables to store the length of the longest palindrome found
+        int resLen = 0;
+        
+        // Index to store the start position of the longest palindrome
+        int resIdx = 0;
+        
+        // Loop through each character in the string
+        for (int i = 0; i < len; i++) {
+            // For odd-length palindromes: Consider the current character as the center
+            int left = i;
+            int right = i;
+            
+            // Expand around the center for odd-length palindromes
+            while (left >= 0 && right < len && s.charAt(left) == s.charAt(right)) {
+                // Calculate the length of the current palindrome substring
+                int substrLen = right - left + 1;
+                
+                // If the current palindrome is longer than the previously found one, update the result
+                if (substrLen >= resLen) {
+                    resIdx = left;
+                    resLen = substrLen;
+                }
+                
+                // Move the pointers to expand around the center
+                left--;
+                right++;
+            }
+            
+            // For even-length palindromes: Consider the current and next character as the center
+            left = i;
+            right = i + 1;
+            
+            // Expand around the center for even-length palindromes
+            while (left >= 0 && right < len && s.charAt(left) == s.charAt(right)) {
+                // Calculate the length of the current palindrome substring
+                int substrLen = right - left + 1;
+                
+                // If the current palindrome is longer than the previously found one, update the result
+                if (substrLen >= resLen) {
+                    resIdx = left;
+                    resLen = substrLen;
+                }
+                
+                // Move the pointers to expand around the center
+                left--;
+                right++;
+            }
+        }
+        
+        // Return the longest palindromic substring
+        return s.substring(resIdx, resIdx + resLen);
+    }
+}
+
