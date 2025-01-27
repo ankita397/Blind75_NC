@@ -3,9 +3,12 @@ https://leetcode.com/problems/palindromic-substrings/description/
 
 //Brute Force -  no need to code
 //Same logic as 5. Longest Palindromic Substring
-//Generate all substrings and check for palindromes. Time Complexity: O(n³), Space Complexity: O(n)
+//Generate all substrings and check for palindromes. 
 //The key idea behind checking if a string (or a substring) is a palindrome is to compare the characters at the outermost positions first, 
 and then move inward to check the next pair of characters, and so on.
+
+
+Time Complexity: O(n³), Space Complexity: O(1) 
 
 class Solution {
     public int countSubstrings(String s) {
