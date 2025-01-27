@@ -70,3 +70,52 @@ class Solution {
     }
 }
 
+//Approach - 2 pointers - optimal
+// Start from center and move to left and right to check for palindromes 
+// For odd-length palindromes: Consider the current character as the center
+// For even-length palindromes: Consider the current and next character as the center
+
+//TC = O(n^2)
+//SC = O(1)
+
+class Solution {
+    public int countSubstrings(String s) {
+        int count = 0;    
+
+        for(int i = 0; i < s.length(); i++){
+            //odd length
+            /*int left = i;
+            int right = i;
+            count += countPalindrome(s, left, right);*/
+            count += countPalindrome(s, i, i);
+
+            //for even length
+            /*left = i;
+            right = i+1;
+            count += countPalindrome(s, left, right);*/
+            count += countPalindrome(s, i, i+1);
+        }    
+        return count;
+    }
+
+    private int countPalindrome(String s, int left, int right){
+        int count = 0;
+        // while(left < right){ // this was in the brutr force as we check for false case
+        //     if(s.charAt(left) != s.charAt(right)){
+                
+        //     }
+        //     left++;
+        //     right--;
+        // }
+        // return true;
+        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+            count++;
+            // Move the pointers to expand around the center - outwards
+            left--;
+            right++;
+        }
+        return count;
+    }
+}
+
+
