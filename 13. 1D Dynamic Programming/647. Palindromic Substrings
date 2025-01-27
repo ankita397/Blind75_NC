@@ -8,7 +8,8 @@ https://leetcode.com/problems/palindromic-substrings/description/
 and then move inward to check the next pair of characters, and so on.
 
 
-Time Complexity: O(n³), Space Complexity: O(1) 
+Time Complexity: O(n³), 
+Space Complexity: O(1)  // we just return count and not substring
 
 class Solution {
     public int countSubstrings(String s) {
