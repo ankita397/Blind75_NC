@@ -36,3 +36,37 @@ class Solution {
         return true;
     }
 }
+
+//Approach - DP - Memoization
+//TC = O(n^2) 
+//SC = O(n^2)
+
+class Solution {
+    public int countSubstrings(String s) {
+        int n = s.length();
+        
+        // dp[i][j] will be true if s[i...j] is a palindrome
+        boolean[][] dp = new boolean[n][n];
+        
+        int count = 0;
+        
+        // Outer loop: Iterate over all possible starting indices (i)
+        for (int i = n - 1; i >= 0; i--) {
+            // Inner loop: Iterate over all possible ending indices (j) starting from i
+            for (int j = i; j < n; j++) {
+                // If the characters at the start and end are the same
+                if (s.charAt(i) == s.charAt(j)) {
+                    // If the length of the substring is 1 or 2, it's a palindrome
+                    // Or if the inner substring (s[i+1...j-1]) is a palindrome, it's a palindrome
+                    if (j - i <= 1 || dp[i + 1][j - 1]) {
+                        dp[i][j] = true;  // Mark this substring as a palindrome
+                        count++;  // Increment count of palindromic substrings
+                    }
+                }
+            }
+        }
+        
+        return count;
+    }
+}
+
