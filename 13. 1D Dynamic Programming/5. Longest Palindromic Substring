@@ -95,7 +95,7 @@ public class Solution {
 }
 
 
-//Approach - 2 pointers
+//Approach - 2 pointers - optimal
 // Start from center and move to left and right to check for palindromes 
 // For odd-length palindromes: Consider the current character as the center
 // For even-length palindromes: Consider the current and next character as the center
