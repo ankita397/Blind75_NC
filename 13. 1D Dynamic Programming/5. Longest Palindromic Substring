@@ -3,7 +3,7 @@ https://leetcode.com/problems/longest-palindromic-substring/description/
 https://www.youtube.com/watch?v=qhFCfYr2XOc
 
 //Brute Force -  no need to code
-//Generate all substrings and check for palindromes. Time Complexity: O(n³), Space Complexity: O(n)
+//Generate all substrings and check for palindromes. 
 //The key idea behind checking if a string (or a substring) is a palindrome is to compare the characters at the outermost positions first, 
 and then move inward to check the next pair of characters, and so on.
 
