@@ -15,6 +15,7 @@ public class Solution {
         int resLen = 0;
 
         // Iterate through each character in the string
+        // for each combination of i (start) and j (end), you get a substring s[i...j].
         for (int i = 0; i < s.length(); i++) {
             // Expand around the center for odd-length palindromes
             for (int j = i; j < s.length(); j++) {
