@@ -1,0 +1,151 @@
+
+
+//Recursion
+//TC = O(2^n) - TLE
+//SC = O(n)
+
+class Solution {
+    public int numDecodings(String s) {
+        int n = s.length();
+        return countDecodings(s, n, 0);
+    }
+
+    public int countDecodings(String s, int len, int pos) {
+        // Base case: if we reached the end of the string, there's one way to decode (an empty string).
+        if (pos == len) {
+            return 1;
+        }
+
+        // Base case: if the current position is leading to an invalid string, return 0.
+        if (s.charAt(pos) == '0') {
+            return 0;
+        }
+
+        int count = 0;
+        // One step forward
+        count += countDecodings(s, len, pos + 1);
+
+        // Two steps forward if possible (check two-digit number from pos)
+        if (pos + 1 < len && Integer.parseInt(s.substring(pos, pos + 2)) <= 26) {
+            count += countDecodings(s, len, pos + 2);
+        }
+
+        return count;
+    }
+}
+
+
+// Memoization
+//TC = O(n)
+//SC = O(n)+ O(n)
+
+class Solution {
+    public int numDecodings(String s) {
+        int n = s.length();
+        int[] dp = new int[n+1];
+        for(int i = 0; i < n; i++){
+            dp[i] = -1;
+        }
+        return countDecodings(s, n, 0, dp);
+    }
+
+    public int countDecodings(String s, int len, int pos, int[] dp) {
+        // Base case: if we reached the end of the string, there's one way to decode (an empty string).
+        if (pos == len) {
+            return 1;
+        }
+
+        // Base case: if the current position is leading to an invalid string, return 0.
+        if (s.charAt(pos) == '0') {
+            return 0;
+        }
+
+        if(dp[pos] != -1){
+            return dp[pos];
+        }
+
+        int count = 0;
+        // One step forward
+        count += countDecodings(s, len, pos + 1, dp);
+
+        // Two steps forward if possible (check two-digit number from pos)
+        if (pos + 1 < len && Integer.parseInt(s.substring(pos, pos + 2)) <= 26) {
+            count += countDecodings(s, len, pos + 2, dp);
+        }
+
+        return dp[pos] = count;
+    }
+}
+
+//Tabulation
+//TC = O(n)
+//SC = O(n) - dp array only (no recursion stack)
+
+class Solution {
+    public int numDecodings(String s) {
+        int n = s.length();
+        int[] dp = new int[n+1];
+        if(n == 0)
+            return 0;
+
+        // Base case: There's one way to decode an empty string.
+        dp[0] = 1;
+
+        // Base case: For the first character, it can only be decoded if it's not '0'
+        dp[1] = s.charAt(0) != '0' ? 1 : 0;
+
+        // Fill the dp array from 2 to n
+        for (int pos = 2; pos <= n; pos++) {
+            // Check the one-character decode (s[i-1]) - One step forward
+            if (s.charAt(pos - 1) != '0') {
+                dp[pos] += dp[pos - 1];
+            }
+
+            // Check the two-character decode (s[i-2] + s[i-1]) - two steps forward
+            if (s.charAt(pos - 2) != '0' && Integer.parseInt(s.substring(pos - 2, pos)) <= 26) {
+                dp[pos] += dp[pos - 2];
+            }
+        }
+
+        // The answer is in dp[n]
+        return dp[n];
+    }
+}
+
+
+//Space Optimization
+//TC = O(n)
+//SC = O(1)
+
+class Solution {
+    public int numDecodings(String s) {
+        int n = s.length();
+        if(n == 0) // Edge case: if the string is empty, no decoding is possible.
+            return 0;
+
+        // Base case: There's one way to decode an empty string.
+        int prev2 = 1;
+
+        // Base case: For the first character, it can only be decoded if it's not '0'
+        int prev = s.charAt(0) != '0' ? 1 : 0;
+
+        // Fill the dp array from 2 to n
+        for (int pos = 2; pos <= n; pos++) {
+            int curr = 0;
+            // Check the one-character decode (s[i-1]) - One step forward
+            if (s.charAt(pos - 1) != '0') {
+                curr += prev;
+            }
+
+            // Check the two-character decode (s[i-2] + s[i-1]) - two steps forward
+            if (s.charAt(pos - 2) != '0' && Integer.parseInt(s.substring(pos - 2, pos)) <= 26) {
+                curr += prev2;
+            }
+
+            prev2 = prev;
+            prev = curr;
+        }
+
+        return prev;
+    }
+}
