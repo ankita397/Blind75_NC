@@ -33,6 +33,7 @@ public class Solution {
     }
 
     // Helper function to check if a substring is a palindrome
+    //left starts at the beginning of the substring and right starts at the end of the substring.
     private boolean isPalindrome(String s, int left, int right) {
         while (left < right) {
             if (s.charAt(left) != s.charAt(right)) {
