@@ -1,0 +1,36 @@
+//Recursion
+//TC = O(2^n) - TLE
+//SC = O(n)
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        int res = coinChangeCombo(n-1, coins, amount);
+        return res == Integer.MAX_VALUE ? -1 : res;
+    }
+
+    public int coinChangeCombo(int ind, int[] coins, int amount){
+        //base case
+        if(amount == 0){
+            return 0;
+        }
+        if(ind == 0){
+            if (amount % coins[0] == 0) {
+                return amount / coins[0];
+            } else {
+                return Integer.MAX_VALUE;
+            }
+        }
+        
+        int pickCoin = Integer.MAX_VALUE;
+        int notPickCoin = coinChangeCombo(ind-1, coins, amount);
+        if(coins[ind] <= amount ){
+            // pickCoin = 1 + coinChangeCombo(ind, coins, amount-coins[ind]);
+            // the above can cause integer overflow if the recursive call returns Integer.MAX_VALUE. Adding 1 to it wraps it around to a negative number.
+            int res = coinChangeCombo(ind, coins, amount-coins[ind]);
+            if(res != Integer.MAX_VALUE)
+                pickCoin = 1 + res;
+        }
+        return Math.min(pickCoin, notPickCoin);
+    }
+}
