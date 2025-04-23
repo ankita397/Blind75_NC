@@ -1,4 +1,4 @@
-This can be solved using 1D as well as 2D DP.
+This can be solved using 1D as well as 2D DP as this is Unbounded Knapsack.
 
 2D :
 
@@ -166,3 +166,49 @@ class Solution {
         return res == Integer.MAX_VALUE ? -1 : res;
     }
 }
+
+1D:
+
+// Memoization (using 1D array)
+// TC = O(n * amount)
+// SC = O(amount) + recursion stack
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        int n = coins.length;
+        for(int i = 0; i <= amount; i++){
+            dp[i]= -1;
+        }
+        int res = coinChangeCombo(coins, amount, dp);
+        return res == Integer.MAX_VALUE ? -1 : res;
+    }
+
+    public int coinChangeCombo(int[] coins, int amount, int[] dp){
+        // base cases
+        if(amount == 0){
+            return 0;
+        }
+        if(amount < 0)
+            return -1;
+        
+        if(dp[amount] != -1) 
+            return dp[amount];
+
+         int minCoins = Integer.MAX_VALUE;
+
+        for(int coin : coins){
+            int pick = Integer.MAX_VALUE;
+            if(coin <= amount){
+                int res = coinChangeCombo(coins, amount - coin, dp);
+                if(res != Integer.MAX_VALUE){
+                    pick = 1 + res;
+                }
+            }
+            // notPick is implicit in loop by trying other coins
+            minCoins = Math.min(minCoins, pick);
+        }
+        return dp[amount] = minCoins;
+    }
+}
+
