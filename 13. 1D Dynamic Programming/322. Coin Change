@@ -1,3 +1,5 @@
+This isn 2D DP problem - move later
+
 //Recursion
 //TC = O(2^n) - TLE
 //SC = O(n)
@@ -32,5 +34,51 @@ class Solution {
                 pickCoin = 1 + res;
         }
         return Math.min(pickCoin, notPickCoin);
+    }
+}
+
+// Memoization
+//TC = O(n * amount)
+//SC =  O(n × amount)
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        int[][] dp = new int[n+1][amount+1];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j <= amount; j++){
+                dp[i][j] = -1;
+            }
+        }
+        int res = coinChangeCombo(n-1, coins, amount, dp);
+        return res == Integer.MAX_VALUE ? -1 : res;
+    }
+
+    public int coinChangeCombo(int ind, int[] coins, int amount, int[][] dp){
+        //base case
+        if(amount == 0){
+            return 0;
+        }
+        if(ind == 0){
+            if (amount % coins[0] == 0) {
+                return amount / coins[0];
+            } else {
+                return Integer.MAX_VALUE;
+            }
+        }
+        if(dp[ind][amount] != -1){
+            return dp[ind][amount];
+        }
+        
+        int pickCoin = Integer.MAX_VALUE;
+        int notPickCoin = coinChangeCombo(ind-1, coins, amount, dp);
+        if(coins[ind] <= amount ){
+            // pickCoin = 1 + coinChangeCombo(ind, coins, amount-coins[ind]);
+            // the above can cause integer overflow if the recursive call returns Integer.MAX_VALUE. Adding 1 to it wraps it around to a negative number.
+            int res = coinChangeCombo(ind, coins, amount-coins[ind], dp);
+            if(res != Integer.MAX_VALUE)
+                pickCoin = 1 + res;
+        }
+        return dp[ind][amount] = Math.min(pickCoin, notPickCoin);
     }
 }
