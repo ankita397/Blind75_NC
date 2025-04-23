@@ -39,7 +39,7 @@ class Solution {
 
 // Memoization
 //TC = O(n * amount)
-//SC =  O(n × amount)
+//SC =  O(n) + O(n × amount)
 
 class Solution {
     public int coinChange(int[] coins, int amount) {
