@@ -1,8 +1,45 @@
 This can be solved using 1D as well as 2D DP as this is Unbounded Knapsack. [Use 1D]
 
-
-
 1D:
+
+//Recursion
+//TC = O(n^amount) - TLE
+//SC = O(amount)
+
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        int res = coinChangeCombo(coins, amount);
+        return res == Integer.MAX_VALUE ? -1 : res;
+    }
+
+    public int coinChangeCombo(int[] coins, int amount){
+        // base cases
+        if(amount == 0){
+            return 0;
+        }
+        if(amount < 0)
+            return -1;
+        
+        int minCoins = Integer.MAX_VALUE;
+        
+        // Try every coin and choose the one with the minimum coins required
+        for(int coin : coins){
+            int pick = Integer.MAX_VALUE;
+            if(coin <= amount){
+                // pickCoin = 1 + coinChangeCombo(ind, coins, amount-coins[ind]);
+                // the above can cause integer overflow if the recursive call returns Integer.MAX_VALUE. Adding 1 to it wraps it around to a negative number.
+                int res = coinChangeCombo(coins, amount - coin);
+                if(res != Integer.MAX_VALUE){
+                    pick = 1 + res;
+                }
+            }
+            // notPick is implicit in loop by trying other coins
+            minCoins = Math.min(minCoins, pick);
+        }
+        return minCoins;
+    }
+}
 
 // Memoization (using 1D array)
 // TC = O(n * amount)
@@ -47,9 +84,46 @@ class Solution {
     }
 }
 
+// Tabulation (using 1D array)
+// TC = O(n * amount)
+// SC = O(amount)
 
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        // Create a DP array where dp[i] will hold the minimum number of coins
+        // needed to make amount 'i'. Initialize it with a large value (infinity).
+        int[] dp = new int[amount + 1];
+        int n = coins.length;
+        for(int i = 0; i <= amount; i++){
+            dp[i]= amount+1;
+        }
 
+        // Base case: To make amount 0, we need 0 coins.
+        dp[0] = 0;
 
+        // Build the solution for all amounts from 1 to 'amount'
+        for(int amt = 1; amt <= amount; amt++){
+            // Try every coin and update dp[i] accordingly
+            for(int coin : coins){
+                // Only proceed if the current coin is less than or equal to i
+                if(coin <= amt){ 
+                    dp[amt] = Math.min(dp[amt], dp[amt-coin]+1);
+                    //dp[amt - coin] → coins needed to make the remaining amount
+                    ///+1 → for the coin you're using now
+                }
+            }
+        }
+         // If dp[amount] is still "infinity", it means we can't form the amount
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+}
+
+//Space Optimization Not needed
+//dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+//This update only relies on previous values from the same 1D array, not from a prior "row."
+//We only need one previous state in Coin Change
+
+//So there's no need for separate prev[] and curr[] arrays like in 2D DP problems.
 
 
 2D :
