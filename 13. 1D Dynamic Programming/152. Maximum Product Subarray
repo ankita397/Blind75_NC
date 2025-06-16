@@ -38,3 +38,34 @@ class Solution {
         return maxProd;
     }
 }
+
+//Optimal - Prefix & suffix product
+//Case 1: all elements are positive -> maxProd will be product of all elements
+//Case 2: even number of negative elements in nums -> maxProd will be product of all elements
+//Case 3: odd number of negative elements in nums -> maxProd will be the maximum product after removing one negative number (either prefix up to first negative or suffix after last negative) - removing one negative number will make the product positive since there will be even number of negatives left
+//Case 4: One or more elements are 0 -> reset product to 1 when 0 is encountered to start a new subarray, as any product involving 0 is 0 and cannot contribute to max product
+
+//TC = O(n), SC = 1
+class Solution {
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        int maxProd = Integer.MIN_VALUE;
+        int prefixProd = 1; // running product from beginning of array
+        int suffixProd = 1; // running product from end of array
+        for(int i = 0; i < n; i++){
+            // Reset to 1 if product becomes 0 (due to a zero in the array)
+            if(prefixProd == 0){// reset prefixProd to 1
+                prefixProd = 1;
+            }
+            if(suffixProd == 0){// reset suffixProd to 1
+                suffixProd = 1;
+            }
+            prefixProd = prefixProd * nums[i];
+            suffixProd = suffixProd * nums[n-i-1];
+
+            // Update the maximum product found so far
+            maxProd = Math.max(maxProd, Math.max(prefixProd, suffixProd));
+        }
+        return maxProd;
+    }
+}
