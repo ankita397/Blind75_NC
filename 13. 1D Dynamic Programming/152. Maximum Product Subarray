@@ -39,7 +39,7 @@ class Solution {
     }
 }
 
-//Optimal - Prefix & suffix product
+//Optimal - Prefix & suffix product [BEST]
 //Case 1: all elements are positive -> maxProd will be product of all elements
 //Case 2: even number of negative elements in nums -> maxProd will be product of all elements
 //Case 3: odd number of negative elements in nums -> maxProd will be the maximum product after removing one negative number (either prefix up to first negative or suffix after last negative) - removing one negative number will make the product positive since there will be even number of negatives left
@@ -67,5 +67,46 @@ class Solution {
             maxProd = Math.max(maxProd, Math.max(prefixProd, suffixProd));
         }
         return maxProd;
+    }
+}
+
+//Optimal - Kedane's algo - not needed
+//TC = O(n), SC = O(1)
+class Solution {
+    public static int maxProduct(int[] nums) {
+        // Edge case: if array is empty, return 0
+        if (nums == null || nums.length == 0) 
+            return 0;
+
+        // Initialize variables:
+        // maxProd stores the maximum product ending at the current index
+        // minProd stores the minimum product ending at the current index (important when negative numbers are involved)
+        // result keeps track of the maximum product found so far
+        int maxProd = nums[0];
+        int minProd = nums[0];
+        int result = nums[0];
+
+        // Traverse the array starting from the second element
+        for (int i = 1; i < nums.length; i++) {
+            int current = nums[i];
+
+            // If the current number is negative, swap maxProd and minProd
+            // because multiplying by a negative flips the sign
+            if (current < 0) {
+                int temp = maxProd;
+                maxProd = minProd;
+                minProd = temp;
+            }
+
+            // Compute max and min product ending at current index
+            // Either start fresh from current or extend the previous subarray
+            maxProd = Math.max(current, maxProd * current);
+            minProd = Math.min(current, minProd * current);
+
+            // Update the result with the maximum product found so far
+            result = Math.max(result, maxProd);
+        }
+
+        return result;
     }
 }
