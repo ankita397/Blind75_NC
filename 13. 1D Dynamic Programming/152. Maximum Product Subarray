@@ -2,7 +2,7 @@ https://leetcode.com/problems/maximum-product-subarray/description/
 
 https://www.youtube.com/watch?v=hnswaLJvr6g
 
-//Brute Force - TLE O(n^3)
+//Brute Force - TLE TC = O(n^3) , SC = O(1)
 class Solution {
     public int maxProduct(int[] nums) {
         int n = nums.length;
@@ -14,6 +14,25 @@ class Solution {
                     prod = prod * nums[k];
                 }
                 maxProd = Math.max(maxProd, prod);
+            }
+        }
+        return maxProd;
+    }
+}
+
+//Brute Force - - TC O(n^2) , SC = O(1)
+class Solution {
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        int maxProd = Integer.MIN_VALUE;
+        for(int i = 0; i < n; i++){
+            int prod = 1;
+            for(int j = i; j < n; j++){// j starts from i as 1st index is the first subarray from i = 0 to j = 0
+                prod = prod * nums[j]; // no need for another loop since we can remember prod. So everytime only the new element needs to get multiplied to the already calculated prod.
+                //Eg: for j = 3, prod = 2*3*-2=-12
+                //prod = -12 * nums[j] = -12 * 4 = -48
+                maxProd = Math.max(maxProd, prod);
+
             }
         }
         return maxProd;
