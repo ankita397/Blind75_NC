@@ -1,0 +1,21 @@
+https://leetcode.com/problems/maximum-product-subarray/description/
+
+https://www.youtube.com/watch?v=hnswaLJvr6g
+
+//Brute Force - TLE O(n^3)
+class Solution {
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        int maxProd = Integer.MIN_VALUE;
+        for(int i = 0; i < n; i++){
+            for(int j = i; j < n; j++){// j starts from i as 1st index is the first subarray from i = 0 to j = 0
+                int prod = 1;
+                for(int k = i; k <= j; k++){// our sub array will be from i to j
+                    prod = prod * nums[k];
+                }
+                maxProd = Math.max(maxProd, prod);
+            }
+        }
+        return maxProd;
+    }
+}
