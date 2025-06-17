@@ -1,0 +1,40 @@
+https://leetcode.com/problems/word-break/description/
+
+
+//Recursion - TLE
+//TC - O(n^2)
+//SC - O(n)
+
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordSet = new HashSet<String>(wordDict);// Convert list to set for O(1) lookups
+        return canBreak(0, s, wordSet);
+    }
+    /**
+     * Recursively checks if the substring from current index 'start' can be broken using valid words.
+     * Tries all prefix–suffix splits at each position.
+     */
+    private boolean canBreak(int start, String s, Set<String> wordSet){
+        // Base Case: If start reached end of string, successful segmentation - empty segmentation possible
+        if(start == s.length()){
+            return true;
+        }
+        // Try every possible prefix word from starting at index
+        for(int end = start+1; end <= s.length(); end++){ // end=start+1 - l,le,lee,leet,...leetcode
+            // Get the substring from start to end 
+            String prefix = s.substring(start, end);// prefix = current word candidate
+            // suffix = s[end..] (we will check this by recursive call)
+
+            if(wordSet.contains(prefix)){
+                // If prefix is valid and suffix can be segmented, return true
+                // So, for suffix, we check segmentation possibility using recursion
+                if (canBreak(end, s, wordSet)) {
+                    return true;
+                }
+            }
+        }
+        // No valid segmentation found
+        return false;
+    }
+}
+
