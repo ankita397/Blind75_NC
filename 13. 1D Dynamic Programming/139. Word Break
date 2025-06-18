@@ -2,8 +2,8 @@ https://leetcode.com/problems/word-break/description/
 
 
 //Recursion - TLE
-//TC - O(n^2)
-//SC - O(n)
+//TC - O(2^n)
+//SC - O(n) - recursive stack
 
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
@@ -35,6 +35,94 @@ class Solution {
         }
         // No valid segmentation found
         return false;
+    }
+}
+
+//Memoization
+//TC - O(n*n) = O(n^2) - loop length * recursion stack length
+//SC - O(n) - recursive stack
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordSet = new HashSet<>(wordDict);
+        Boolean[] dp = new Boolean[s.length()];// can't be boolean as we need comparison with null
+        return canBreak(0,s, wordSet, dp);
+    }
+    private boolean canBreak(int start, String s, Set<String> wordSet, Boolean[] dp){
+        //end of string s
+        if(start == s.length()){
+            return true;
+        }
+        // If already computed, return cached result
+        if(dp[start] != null){
+            return dp[start];
+        }
+        // Try all possible prefixes starting at xv
+        for(int end = start+1; end <= s.length(); end++){
+            String prefix = s.substring(start, end);// prefix = current word
+            if(wordSet.contains(prefix)){
+                // If prefix is valid and suffix can be segmented
+                if(canBreak(end, s, wordSet, dp)){
+                    dp[start] = true;
+                    return true;
+                }
+            }
+        }
+        // Mark as false if no segmentation possible
+        dp[start] = false;
+        return false;
+    }
+}
+
+//Tabulation - may not be needed, good to know
+//TC - O(n^2) - loops
+//SC - O(n) - dp array
+class Solution {
+    /* 💡 Dry Run (s = "applepenapple", wordDict = ["apple", "pen"]):
+     * dp[0] = true  → base case: empty string is segmentable
+     *
+     * i = 1:
+     *   Try s[0..1) = "a" → not in wordDict → dp[1] = false
+     *
+     * i = 5:
+     *   Try s[0..5) = "apple" ∈ wordDict, dp[0] = true → dp[5] = true
+     *
+     * i = 8:
+     *   Try s[5..8) = "pen" ∈ wordDict, dp[5] = true → dp[8] = true
+     *
+     * i = 13:
+     *   Try s[8..13) = "apple" ∈ wordDict, dp[8] = true → dp[13] = true
+     *
+     * Final Answer: dp[13] = true → The string can be segmented*/
+    public boolean wordBreak(String s, List<String> wordDict) {
+        Set<String> wordSet = new HashSet<>(wordDict);
+        //Create a dp array where dp[i] is true if s[0..i) can be segmented
+        // into dictionary words.
+        boolean[] dp = new boolean[s.length()+1]; // can be boolean as we do not need comparison with null
+        
+        // Base case: Empty string can always be segmented (dp[0] = true)
+        dp[0] = true;
+        
+        //Fill the dp array from left to right
+        // Loop through all prefixes s[0..i)
+        for(int i = 1; i <= s.length(); i++){
+            // Check all possible split points j such that s[0..j) + s[j..i)
+            // Try every possible word ending at index i
+            // So j goes from 0 to i-1
+            for(int j = 0; j < i; j++){
+                // s[j..i) is the current word to check
+                String currentWord = s.substring(j, i);
+               
+                // Now check:
+                // 1. dp[j] is true → means s[0..j) can be broken using dictionary
+                // 2. wordSet.contains(word) → means s[j..i) is a valid word
+                if(dp[j] && wordSet.contains(currentWord)){
+                    dp[i] = true;  // So s[0..i) can also be segmented
+                    break;         // No need to check further j values for this i
+                }
+            }
+        }
+        //The answer is whether the full string s[0..n) can be segmented
+        return dp[s.length()] ;
     }
 }
 
