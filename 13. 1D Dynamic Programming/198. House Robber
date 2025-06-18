@@ -4,6 +4,11 @@ https://www.youtube.com/watch?v=GrMBfJNk_NY
 
 Approach - DP - Recursion -> Memoization -> Tabulation -> Space optimization
 
+//1. Express everything in terms of index
+//2. Try all possible ways
+//3. Find max amount robbed
+
+
 class Solution {
     public int rob(int[] nums) {
         //Recursion - TC = O(2^n) - TLE
