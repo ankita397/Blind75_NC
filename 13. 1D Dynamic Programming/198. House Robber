@@ -7,7 +7,7 @@ Approach - DP - Recursion -> Memoization -> Tabulation -> Space optimization
 //1. Express everything in terms of index
 //2. Try all possible ways
 //3. Find max amount robbed
-
+//4. Base case
 
 class Solution {
     public int rob(int[] nums) {
