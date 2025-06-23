@@ -1,5 +1,20 @@
 Recurrence
-//1. Express everything in terms of index
-//2. Try all possible ways
-//3. Find max length or count, etc
-//4. Base case
+1. Express everything in terms of index
+2. Try all possible ways
+3. Find max length or count, etc
+4. Base case
+
+Recursion to Memoization :
+1. declare dp array - 1D or 2D depends on the number of changing parameters
+2. if(dp[ind] != -1) return dp[ind]; // if dp[ind] has been computed already, return the same
+3. assign dp[ind] to the result and return [Eg: return dp[ind] = maxLen]
+
+Tabulation :
+1. Handle base case
+2. Express the changing parameters as loop
+        - opposite manner (make sure to follow coordinate shift)
+4. Copy the recurrence and make sure to follow coordinate shift
+
+BASE CASE : 
+        whenever recursion is started from n-1, our base case will always be for index 0 - tabulation from 0 to n-1
+        whenever recursion is started from 0, our base case will always be for index n - tabulation from n-1 to 0
