@@ -1,0 +1,72 @@
+https://leetcode.com/problems/longest-increasing-subsequence/
+
+https://www.youtube.com/watch?v=ekcwMsSIzVc&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=42
+
+//Recursion
+//1. Express everything in terms of index
+//2. Try all possible ways
+//3. Find max length
+
+//Approach - Take/Not take
+//For taking current index element, one must know what was taken previously(previous index).
+
+//TC - O(2^n)
+//SC - O(n) - recursive stack
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        return longestLength(0, -1, nums);//f(3,0) - length of LISarting from ind = 3, whose prevInd = 0
+        //In example 1: if we "take" the first element 10, prevIndex becomes 0.
+        //Here f(3,0) means max length of LIS we can get from ind = 3 if we take 10.
+    }
+    private int longestLength(int ind, int prevInd, int[] nums){
+       //base case
+        if(ind == nums.length){
+            return 0;
+        }
+        int maxLen = 1;// at least 1 element can be taken
+        int notTake = 0 + longestLength(ind+1, prevInd,nums);//current index moves to next element but prevIndex remains same since we did "not take".
+        int take = 0;
+        if(prevInd == -1 || nums[ind] > nums[prevInd]){// We "take" an element only when current element is greater that prev element or when we are at the starting index.
+            take = 1 + longestLength(ind+1, ind,nums);// current index becomes previous index as we take the element in current index
+        }
+        maxLen = Math.max(take, notTake);
+        return maxLen;
+    }
+}
+
+//Memoization
+//TC = O(n*n)
+//SC = O(n*n) + O(n) - dp array + recursion stack space
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int[][] dp = new int[n][n+1];// 2D as our variables are ind and prevInd
+        //n+1 = because we need to do a coordinate shift since we cannot start prevInd from -1. It used to start from -1 and go till n-1 in recursion. Now, we start it from 0 and go till n;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                dp[i][j] = -1;
+            }
+        }
+        return longestLength(0, -1, nums, dp);//f(3,0) - length of LISarting from ind = 3, whose prevInd = 0
+        //In example 1: if we "take" the first element 10, prevIndex becomes 0.
+        //Here f(3,0) means max length of LIS we can get from ind = 3 if we take 10.
+    }
+    private int longestLength(int ind, int prevInd, int[] nums, int[][] dp){
+       //base case
+        if(ind == nums.length){
+            return 0;
+        }
+        if(dp[ind][prevInd+1] != -1){
+            return dp[ind][prevInd+1];
+        }
+        int maxLen = 1;// at least 1 element can be taken
+        int notTake = 0 + longestLength(ind+1, prevInd,nums, dp);//current index moves to next element but prevIndex remains same since we did "not take".
+        int take = 0;
+        if(prevInd == -1 || nums[ind] > nums[prevInd]){// We "take" an element only when current element is greater that prev element or when we are at the starting index.
+            take = 1 + longestLength(ind+1, ind, nums, dp);// current index becomes previous index as we take the element in current index
+        }
+        maxLen = Math.max(take, notTake);
+        return dp[ind][prevInd+1] = maxLen;
+    }
+}
+
