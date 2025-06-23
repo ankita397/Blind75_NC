@@ -108,3 +108,32 @@ class Solution {
         
     }
 }
+
+//Space Optimization
+//TC = O(n*n)
+//SC = O(n) * 2 - curr + next arrays
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        
+        int[] curr = new int[n+1];
+        int[] next = new int[n+1];
+
+
+        for(int ind = n-1; ind >= 0; ind--){
+            for(int prevInd = ind-1; prevInd >= -1; prevInd--){
+                int maxLen = 1;// at least 1 element can be taken
+                //Remember to do coordinate shift for 2nd parameter
+                int notTake = 0 + next[prevInd+1];//current index moves to next element but prevIndex remains same since we did "not take".
+                int take = 0;
+                if(prevInd == -1 || nums[ind] > nums[prevInd]){// We "take" an element only when current element is greater that prev element or when we are at the starting index.
+                    take = 1 + next[ind+1];// current index becomes previous index as we take the element in current index
+                }
+                maxLen = Math.max(take, notTake);
+                curr[prevInd+1] = maxLen;
+            }
+            next = curr;     
+        }
+        return curr[-1+1];
+    }
+}
