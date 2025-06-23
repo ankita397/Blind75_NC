@@ -70,3 +70,41 @@ class Solution {
     }
 }
 
+//Tabulation
+//TC = O(n*n)
+//SC = O(n*n) dp array
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int[][] dp = new int[n+1][n+1];// 2D as our variables are ind and prevInd
+        //ind goes from n-1 to 0 in the loop, but we still need to access dp[ind + 1][...]
+        // → when ind = n-1, we access dp[n][...]
+        // → so we need dp[n + 1][...] to safely handle dp[ind + 1][...] without out of bounds
+
+        // prevInd goes from -1 to n-1, so we shift by +1
+        // → range becomes 0 to n, so we need n + 1 columns
+
+       //base case - no need to handele base case as dp[n][n+1] is already 0
+        // if(ind == nums.length){
+        //     return 0;
+        // }
+
+
+        for(int ind = n-1; ind >= 0; ind--){
+            for(int prevInd = ind-1; prevInd >= -1; prevInd--){
+                int maxLen = 1;// at least 1 element can be taken
+                //Remember to do coordinate shift for 2nd parameter
+                int notTake = 0 + dp[ind+1] [prevInd+1];//current index moves to next element but prevIndex remains same since we did "not take".
+                int take = 0;
+                if(prevInd == -1 || nums[ind] > nums[prevInd]){// We "take" an element only when current element is greater that prev element or when we are at the starting index.
+                    take = 1 + dp[ind+1][ind+1];// current index becomes previous index as we take the element in current index
+                }
+                maxLen = Math.max(take, notTake);
+                dp[ind][prevInd+1] = maxLen;
+            }
+        }
+        return dp[0][-1+1];// coordinate shift
+        
+        
+    }
+}
