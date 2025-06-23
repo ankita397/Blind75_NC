@@ -137,3 +137,39 @@ class Solution {
         return curr[-1+1];
     }
 }
+
+//Binary Search - optimal
+//TC = O(n log n)
+//SC = O(n) 
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] lis = new int[n];// stores the smallest tail for increasing subsequence of each length
+        int length = 0; // current length of LIS
+        for (int num : nums) {
+            if (length == 0 || num > lis[length - 1]) {
+                lis[length++] = num; // extend LIS directly - attach element to end of lis array
+            } else {
+                // Binary search only when num is not greater than last element
+                int index = binarySearch(lis, 0, length - 1, num);
+                lis[index] = num; // replace to maintain smallest possible tail
+            }
+        }
+        return length;
+    }
+
+    // Custom binary search: finds first index where lis[idx] >= target
+    private int binarySearch(int[] arr, int low, int high, int target) {
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] >= target) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return low; // insertion point
+    }
+}
+
+
