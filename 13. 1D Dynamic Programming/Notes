@@ -9,6 +9,8 @@ Recursion to Memoization :
 2. size of dp array depends on the changing parameters - Eg: 2 changes -> 2D dp -> size should be enough to accomodate the changing params.
         If n is size of array and that is the only changing param, then it will be 1D dp array - size dp[n+1] - as we need 
         to store values till n. 
+        Think of it like having n floors in a building, and you're making a chart to record how to get to each one. 
+        Since you start on floor 0, your chart needs space for 0, 1, 2, ..., n. That’s n+1 floors!
 3. if(dp[ind] != -1) return dp[ind]; // if dp[ind] has been computed already, return the same
 4. assign dp[ind] to the result and return [Eg: return dp[ind] = maxLen]
 
