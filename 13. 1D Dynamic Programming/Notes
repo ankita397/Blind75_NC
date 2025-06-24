@@ -2,7 +2,7 @@ Recurrence
 1. Express everything in terms of index
 2. Try all possible ways
 3. Find max length or count, etc
-4. Base case
+4. Base case - Think of the smallest valid input (IMPORTANT)
 
 Recursion to Memoization :
 1. declare dp array - 1D or 2D depends on the number of changing parameters
