@@ -5,9 +5,12 @@ Recurrence
 4. Base case - Think of the smallest valid input (IMPORTANT)
 
 Recursion to Memoization :
-1. declare dp array - 1D or 2D depends on the number of changing parameters
-2. if(dp[ind] != -1) return dp[ind]; // if dp[ind] has been computed already, return the same
-3. assign dp[ind] to the result and return [Eg: return dp[ind] = maxLen]
+1. declare dp array - 1D or 2D depends on the number of changing parameters.
+2. size of dp array depends on the changing parameters - Eg: 2 changes -> 2D dp -> size should be enough to accomodate the changing params.
+        If n is size of array and that is the only changing param, then it will be 1D dp array - size dp[n+1] - as we need 
+        to store values till n. 
+3. if(dp[ind] != -1) return dp[ind]; // if dp[ind] has been computed already, return the same
+4. assign dp[ind] to the result and return [Eg: return dp[ind] = maxLen]
 
 Tabulation :
 1. Handle base case
