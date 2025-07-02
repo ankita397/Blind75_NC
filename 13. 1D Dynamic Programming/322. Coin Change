@@ -4,7 +4,7 @@ This can be solved using 1D as well as 2D DP as this is Unbounded Knapsack. [Use
 This is a variation of unbounded knapsack.
 
 
-1D:
+1D: Better
 
 //Recursion
 //TC = O(n^amount) - TLE
@@ -130,8 +130,7 @@ class Solution {
 //So there's no need for separate prev[] and curr[] arrays like in 2D DP problems.
 
 
-2D : This may be better.. check
-
+2D:
 //Recursion
 //TC = O(2^n) - TLE
 //SC = O(n)
@@ -224,7 +223,7 @@ class Solution {
         int n = coins.length;
         int[][] dp = new int[n+1][amount+1];
         
-        //base case - need to initialize 1st and 2nd row and 1st col of the dp matrix [This is the only problem where 2nd row is also filled 
+        //base case
         //during initialization]
         for(int amt = 0; amt <= amount; amt++){
             if (amt % coins[0] == 0) {
