@@ -1,4 +1,8 @@
+https://leetcode.com/problems/coin-change/description/
+
 This can be solved using 1D as well as 2D DP as this is Unbounded Knapsack. [Use 1D]
+This is a variation of unbounded knapsack.
+
 
 1D:
 
@@ -220,7 +224,8 @@ class Solution {
         int n = coins.length;
         int[][] dp = new int[n+1][amount+1];
         
-        //base case
+        //base case - need to initialize 1st and 2nd row and 1st col of the dp matrix [This is the only problem where 2nd row is also filled 
+        //during initialization]
         for(int amt = 0; amt <= amount; amt++){
             if (amt % coins[0] == 0) {
                 dp[0][amt] =  amt / coins[0];
