@@ -224,7 +224,6 @@ class Solution {
         int[][] dp = new int[n+1][amount+1];
         
         //base case
-        //during initialization]
         for(int amt = 0; amt <= amount; amt++){
             if (amt % coins[0] == 0) {
                 dp[0][amt] =  amt / coins[0];
