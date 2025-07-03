@@ -1,3 +1,7 @@
+IMP : 
+For recursion to space optimization flow - Striver
+For choice diagram and dp matrix - Adiyta Verma
+
 Recurrence
 1. Express everything in terms of index
 2. Try all possible ways
@@ -23,3 +27,5 @@ Tabulation :
 BASE CASE : 
         whenever recursion is started from n-1, our base case will always be for index 0 - tabulation from 0 to n-1
         whenever recursion is started from 0, our base case will always be for index n - tabulation from n-1 to 0
+
+
