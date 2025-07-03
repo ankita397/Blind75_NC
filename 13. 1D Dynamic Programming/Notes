@@ -4,8 +4,9 @@ For choice diagram for recursion and dp matrix - Aditya Verma [At least go throu
 
 DP = Enhanced recursion [Parent of DP is Recursion]
 DP = Recursion + Overlapping subproblems
-Memoization = Recursion + dp matrix
-Tabulation = dp matrix (no recursion)
+Memoization - Top-down (recursion + memoization)
+Tabulation - Bottom-up (iterative table)
+Space-optimized (1D or 2D compression)
 
 Recurrence
 1. Express everything in terms of index
