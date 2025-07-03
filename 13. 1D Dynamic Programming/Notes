@@ -2,6 +2,11 @@ IMP :
 For recursion to space optimization flow - Striver
 For choice diagram for recursion and dp matrix - Aditya Verma [At least go through 1st video in each pattern of DP] 
 
+DP = Enhanced recursion [Parent of DP is Recursion]
+DP = Recursion + Overlapping subproblems
+Memoization = Recursion + dp matrix
+Tabulation = dp matrix (no recursion)
+
 Recurrence
 1. Express everything in terms of index
 2. Try all possible ways
