@@ -1,0 +1,121 @@
+https://leetcode.com/problems/unique-paths/description/
+https://www.youtube.com/watch?v=sdE0A2Oxofw&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=9
+
+Approach - Start from last index m-1,n-1 and travel up and left
+
+//Recursion
+//TC = O(2^ (m+n)) [depth of recursion stack is m+n]
+//SC = O(m+n)
+class Solution {
+    public int uniquePaths(int m, int n) {
+        // Start the recursive path counting from the bottom-right corner (m-1, n-1)
+        return countUniquePaths(m-1, n-1);
+    }
+
+    public int countUniquePaths(int i, int j){
+        //i and j are for current position
+        // Base case: if out of bounds, return 0 (no path)
+        if(i < 0 || j < 0){
+            return 0;
+        }
+        // Base case: if at the starting point (0, 0), return 1 (one unique path)
+        if(i == 0 && j == 0){
+            return 1;
+        }
+        int up = countUniquePaths(i-1, j);
+        int left = countUniquePaths(i, j-1);
+        return up + left;
+    }
+}
+
+//Memoization
+//TC = O(m*n), SC = O(m*n) + O(m+n)
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m+1][n+1];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                dp[i][j] = -1;
+            }
+        }
+        return countUniquePaths(m-1, n-1, dp);
+    }
+
+    public int countUniquePaths(int i, int j, int[][] dp){
+        //i and j are for current position
+        // Base case: if out of bounds, return 0 (no path)
+        if(i < 0 || j < 0){
+            return 0;
+        }
+        // Base case: if at the starting point (0, 0), return 1 (one unique path)
+        if(i == 0 && j == 0){
+            return 1;
+        }
+
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        int up = countUniquePaths(i-1, j, dp);
+        int left = countUniquePaths(i, j-1, dp);
+        return dp[i][j] = up + left;
+    }
+}
+
+//Tabulation
+//TC = O(m*n)
+//SC = O(m*n)
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for(int i = 0; i < m ; i++){
+            for(int j = 0; j < n; j++){
+                //Base : If i,j is the starting position, then we have only 1 path
+                if(i == 0 && j == 0){
+                    dp[i][j] = 1;
+                }else{
+                    int up = 0; 
+                    int left = 0;
+                    if(i > 0){ // for boundary check
+                        up = dp[i-1][j];
+                    }
+                    if(j > 0){ // for boundary check
+                        left = dp[i][j-1];
+                    }
+                    dp[i][j] = up + left;
+                }
+            }
+        }
+        return dp[m-1][n-1]; // start from last index
+    }
+}
+
+
+//Space Optimization
+//TC = O(m*n)
+//SC = O(n)
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[] prev = new int[n];
+        for(int i = 0; i < m ; i++){
+            int[] curr = new int[n];
+            for(int j = 0; j < n; j++){
+                //Base : If i,j is the starting position, then we have only 1 path
+                if(i == 0 && j == 0){
+                    curr[j] = 1;
+                }else{
+                    int up = 0; 
+                    int left = 0;
+                    if(i > 0){ // for boundary check
+                        up = prev[j];
+                    }
+                    if(j > 0){ // for boundary check
+                        left = curr[j-1];
+                    }
+                    curr[j] = up + left;
+                }
+            }
+            prev = curr;
+        }
+        return prev[n-1]; // start from last index
+    }
+}
