@@ -29,7 +29,8 @@ class Solution {
 }
 
 //Memoization
-//TC = O(m*n), SC = O(m*n) + O(m+n)
+//TC = O(m*n)
+//SC = O(m*n) + O(m+n)
 class Solution {
     public int uniquePaths(int m, int n) {
         int[][] dp = new int[m+1][n+1];
