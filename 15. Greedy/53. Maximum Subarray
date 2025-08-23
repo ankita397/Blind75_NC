@@ -39,7 +39,7 @@ class Solution {
     }
 }
 
-//Optimal
+//Optimal - Kadane's algorithm
 //TC = O(n)
 //SC = O(1)
 class Solution {
