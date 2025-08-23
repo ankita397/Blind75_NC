@@ -66,3 +66,42 @@ class Solution {
     }
 }
 
+
+//Follow up - if asked to print the subarray
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int max = Integer.MIN_VALUE;  // Maximum subarray sum found so far
+        int sum = 0;                  // Current running sum of the subarray
+
+        int start = 0;      // Potential start of the subarray
+        int maxStart = 0;   // Start index of the max sum subarray
+        int maxEnd = 0;     // End index of the max sum subarray
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];  // Add current element to running sum
+
+            // Update max if the current sum is greater and track the subarray's start/end
+            if (sum > max) {
+                max = sum;
+                maxStart = start;  // `start` is where the subarray begins (how it was last reset/extended)
+                maxEnd = i;        // `i` marks the endpoint of the subarray with max sum
+            }
+
+            // If sum drops below 0, reset sum and start a new subarray
+            if (sum < 0) {
+                sum = 0;
+                start = i + 1;  // Start a new subarray from the next index - everytime sum is reset, we get a new start
+            }
+        }
+
+        // Print the maximum subarray
+        System.out.print("Max Subarray: [");
+        for (int k = maxStart; k <= maxEnd; k++) {
+            System.out.print(nums[k]);
+            if (k < maxEnd) System.out.print(", ");
+        }
+        System.out.println("]");
+
+        return max;  // Return the maximum subarray sum
+    }
+}
