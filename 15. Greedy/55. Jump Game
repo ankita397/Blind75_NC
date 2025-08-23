@@ -1,11 +1,14 @@
 https://leetcode.com/problems/jump-game/description/
 https://www.youtube.com/watch?v=tZAa_jJ3SwQ
 
-
 Intuition:
 You track the farthest index you can reach from each index.
 If at any point you can't move forward (i.e., i > maxIndex), return false.
 If you can reach or exceed the last index, return true.
+
+Key observation:
+If array does not have any 0's, we can definitely reach the end.
+If array has 0's then we just need to see if we can cross 0's index.
 
 //TC = O(n)
 //SC = O(1)
