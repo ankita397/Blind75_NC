@@ -1,0 +1,68 @@
+https://leetcode.com/problems/maximum-subarray/description/
+
+https://www.youtube.com/watch?v=AHZpyENo7k4
+
+
+//Brute Force
+//TC = O(n^3)
+//SC = O(1)
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        for(int i = 0; i < nums.length; i++){
+            for(int j = i; j < nums.length; j++){
+                int sum = 0;
+                for(int k = i; k <= j; k++){ //loop to calculate the sum of subarray from i to j
+                    sum = sum + nums[k];
+                }
+                max = Math.max(sum, max);
+            }
+        }
+        return max;
+    }
+}
+
+//Better
+//TC = O(n^2)
+//SC = O(1)
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        for(int i = 0; i < nums.length; i++){
+            int sum = 0;// Adds elements starting from i
+            for(int j = i; j < nums.length; j++){
+                sum += nums[j]; // Add current element to the sum and extend the subarray instead of adding overlapping subarrays repeatedly
+                max = Math.max(sum, max);
+            }
+        }
+        return max;
+    }
+}
+
+//Optimal
+//TC = O(n)
+//SC = O(1)
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        int sum = 0;
+        for(int i = 0; i < nums.length; i++){
+            sum += nums[i];
+
+            if(sum > max){
+                max = sum;
+            }
+
+            if(sum < 0){
+                sum = 0;
+            }
+
+            //Note: In some cases, the question might say to consider the sum of the empty subarray while solving this problem.
+            // if(max < 0) 
+            //     max = 0;
+
+        }
+        return max;
+    }
+}
+
