@@ -1,0 +1,57 @@
+https://leetcode.com/problems/insert-interval/description/
+
+https://www.youtube.com/watch?v=xxRE-46OCC8
+
+
+Approach - Greedy
+
+//TC = O(n)
+//SC = O(n)
+
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        List<int[]> result = new ArrayList<>();
+        int i = 0;
+        int n = intervals.length;
+
+        // Add all the intervals ending before newInterval starts
+        // These are completely to the left of newInterval with no overlap
+        // Eg: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
+        // Only [1,2] ends before 4, so result = [[1,2]]
+        while (i < n && intervals[i][1] < newInterval[0]) {
+            result.add(intervals[i]);
+            i++;
+        }
+        //intervals[i][1] - end of all intervals
+        //newInterval[0] - start odf newInterval
+        //We continue until current interval ends before newInterval starts
+
+        // Merge all intervals that overlap with newInterval
+        // These intervals start before newInterval ends, so they overlap
+        // We'll expand newInterval to cover the union of all overlapping intervals
+        // Eg: [3,5], [6,7], [8,10] all overlap with [4,8], so newInterval becomes [3,10]
+        while (i < n && intervals[i][0] <= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
+        }
+        //newInterval[0] - start of newInterval
+        //intervals[i][0] - start of all intervals
+        //we need to take the minimum as start of the merge/overlap part
+
+        //newInterval[1] - end of newInterval
+        //intervals[i][1] - end of all intervals
+        //we need to take the maximum as end of the merge/overlap part
+        result.add(newInterval); // Add the merged interval to the result
+
+        // Add all intervals that come after newInterval
+        // These are completely to the right and do not overlap
+        // Eg: remaining interval is [12,16], so result becomes [[1,2],[3,10],[12,16]]
+        while (i < n) {
+            result.add(intervals[i]);
+            i++;
+        }
+
+        return result.toArray(new int[result.size()][]);
+    }
+}
