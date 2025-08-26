@@ -96,6 +96,16 @@ class Solution {
 }
 
 //Optimal - Learn this only
+
+1. Sort intervals by start time.
+2. Create result = [].
+3. For each interval:
+      - If result is empty OR current.start > result[-1].end:
+            → push current
+      - Else:
+            → merge (result[-1].end = max(result[-1].end, current.end))
+4. Return result.
+
 //TC = O(nlogn) - sort and single loop
 //SC = O(n)
 import java.util.*;
