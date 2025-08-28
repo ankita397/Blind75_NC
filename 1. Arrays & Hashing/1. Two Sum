@@ -50,7 +50,7 @@ class Solution {
                resArr[1] = i;
            }
            //if difference between target and current number is not present among the map keys, put the current number and its index in the map
-           map.put(nums[i],i);// key = actual number(second_index_val) and value = number index
+           map.put(nums[i],i);// key = actual number(second_index_val) and value = number index - VVIMP
        }
        return resArr; 
     }
