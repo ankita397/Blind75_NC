@@ -1,0 +1,54 @@
+https://neetcode.io/problems/meeting-schedule?list=blind75
+
+
+//Brute Force - Check every pair of meetings to see if their times overlap; if any do, return false.
+//TC = O(n^2)
+//SC = O(1)
+class Solution {
+    public boolean canAttendMeetings(List<Interval> intervals) {
+        int n = intervals.size(); // number of meetings
+
+        // Compare every pair of intervals (brute force O(n^2))
+        for(int i = 0; i < n; i++){
+            Interval currInterval = intervals.get(i); // pick the i-th meeting
+            for(int j = i+1; j < n; j++){ // compare with every later meeting
+                Interval nextInterval = intervals.get(j);
+
+                // Condition for overlap:
+                // If the later start time is before the earlier end time,
+                // it means the two meetings overlap.
+                if (Math.max(currInterval.start, nextInterval.start) <
+                    Math.min(currInterval.end, nextInterval.end)) {
+                        return false; // overlap found → cannot attend all
+                }
+            }
+        }
+
+        // No overlaps found → all meetings can be attended
+        return true;
+    }
+}
+
+//Optimal - Sort meetings by start time and check if any meeting starts before the previous one ends.
+//TC = O(nlog n)
+//SC = O(1)
+class Solution {
+    public boolean canAttendMeetings(List<Interval> intervals) {
+        int n = intervals.size(); // number of meetings
+
+        //Sort meetings by their start times
+        intervals.sort((a, b) -> a.start - b.start);
+
+        //Compare each meeting with the next one
+        for(int i = 0; i < n-1; i++){
+            Interval currInterval = intervals.get(i);
+            Interval nextInterval = intervals.get(i+1);
+            // If the next meeting starts before the current one ends,
+            // there is an overlap → cannot attend all meetings
+            if(nextInterval.start < currInterval.end){
+                return false;
+            }
+        }
+        return true;
+    }
+}
