@@ -1,0 +1,113 @@
+https://neetcode.io/problems/meeting-schedule-ii?list=blind75
+https://www.youtube.com/watch?v=FdzJmTCVyJU
+
+
+//Bruteforce - For each meeting, check how many meetings are happening at its start time, and keep track of the maximum count. 
+//This maximum is the minimum number of rooms required.
+//TC = O(n^2)
+//SC = O(n)
+class Solution {
+    public int minMeetingRooms(List<Interval> intervals) {
+        // If there are no meetings, no rooms are needed
+        if (intervals == null || intervals.size() == 0) return 0;
+
+        int n = intervals.size();
+        int[] starts = new int[n]; // Start times of all meetings
+        int[] ends = new int[n];   // End times of all meetings
+
+        // Fill the start and end arrays
+        for (int i = 0; i < n; i++) {
+            starts[i] = intervals.get(i).start;
+            ends[i] = intervals.get(i).end;
+        }
+
+        int maxRooms = 0; // Maximum number of rooms needed at any point in time
+
+        // For each meeting, check how many meetings are happening at the same time
+        for (int i = 0; i < n; i++) {
+            int currentTime = starts[i]; // Check at the start of this meeting
+            int roomsNeeded = 0;         // Count meetings overlapping this time
+
+            for (int j = 0; j < n; j++) {
+                // If meeting j is happening at currentTime, it counts
+                // A meeting is happening if it started at or before currentTime
+                // and ends after currentTime
+                if (starts[j] <= currentTime && currentTime < ends[j]) {
+                    roomsNeeded++;
+                }
+            }
+
+            // Keep track of the maximum number of overlapping meetings
+            maxRooms = Math.max(maxRooms, roomsNeeded);
+        }
+
+        return maxRooms; // This is the minimum number of rooms required
+    }
+}
+
+//Optimal - 2 pointers
+//Sort all start and end times.
+//Move through the meetings in chronological order.
+//If a meeting starts before the earliest ending meeting, we need a new room.
+//If a meeting starts after or at the same time as a meeting ends, one room gets freed.
+//Keep track of the maximum rooms used → that’s the answer.
+
+Time: 0   5    10   15   20   25   30   35   40
+-------------------------------------------------
+M1   [-----------------------------]
+M2       [---]
+M3             [---]
+
+Rooms used:
+Time 0-5   : 1 (M1)
+Time 5-10  : 2 (M1 + M2) ← max overlap
+Time 10-15 : 1 (M1)
+Time 15-20 : 2 (M1 + M3)
+Time 20-40 : 1 (M1)
+
+
+//TC = O(nlogn)
+//SC = O(n)
+class Solution {
+    public int minMeetingRooms(List<Interval> intervals) {
+        // If there are no meetings, no rooms are needed
+        if (intervals == null || intervals.size() == 0) return 0;
+
+        int n = intervals.size();
+        int[] starts = new int[n]; // Array to store start times of all meetings
+        int[] ends = new int[n];   // Array to store end times of all meetings
+
+        // Fill the start and end arrays
+        for (int i = 0; i < n; i++) {
+            starts[i] = intervals.get(i).start;
+            ends[i] = intervals.get(i).end;
+        }
+
+        // Sort start times and end times
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+
+        int rooms = 0;    // Current number of rooms in use
+        int maxRooms = 0; // Maximum rooms needed at any time
+        int i = 0;        // Pointer for start times
+        int j = 0;        // Pointer for end times
+
+        // Go through all meetings in order of start times
+        while (i < n) {
+            if (starts[i] < ends[j]) {
+                // A new meeting starts before the previous one ends → need a new room
+                rooms++;
+                i++;
+            } else {
+                // A meeting has ended → free a room
+                rooms--;
+                j++;
+            }
+            // Update the maximum rooms needed
+            maxRooms = Math.max(maxRooms, rooms);
+        }
+
+        return maxRooms; // Minimum number of rooms required
+    }
+}
+
