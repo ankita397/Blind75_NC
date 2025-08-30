@@ -1,0 +1,51 @@
+https://leetcode.com/problems/spiral-matrix/description/
+https://www.youtube.com/watch?v=3Zv-s9UUrFM
+
+//Optimal - This has only optimal solution.
+//TC = O(m*n)
+//SC = O(m*n)
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        //00 -> 01 -> 02 -> 12 -> 22 -> 21 -> 20 -> 10 -> 11
+
+        //right -> bottom -> left -> top
+
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        // set the 4 boundaries of the matrix
+        int left = 0, top = 0;
+        int right = n - 1, bottom = m - 1;
+        List<Integer> result = new ArrayList<Integer>();
+
+        // keep looping as long as there is still a valid rectangle (not crossed over)
+        while(top <= bottom && left <= right){
+            //right - go left to right
+            for(int i = left ; i <= right; i++){
+                result.add(matrix[top][i]);
+            }
+            top++; // top row is done, move top boundary towards down for inner spiral
+            //bottom - go top to bottom
+            for(int i = top; i <= bottom; i++){
+                result.add(matrix[i][right]);
+            }
+            right--;// right column is done, move right boundary towards left
+            //left - go right to left
+            if(top <= bottom){ // only traverse the bottom row if it's still left (not already covered)
+                for(int i = right; i >= left; i--){
+                    result.add(matrix[bottom][i]);
+                }
+                bottom--;// bottom row is done, move bottom boundary towards up
+            }
+            
+            //top - go bottom to top
+            if(left <= right){// only traverse the left column if it's still left (not already covered)
+                for(int i = bottom; i >= top; i--){
+                    result.add(matrix[i][left]);
+                }
+                left++;// left row is done, move bottom boundary towards right
+            }
+        }
+        return result;
+    }
+}
