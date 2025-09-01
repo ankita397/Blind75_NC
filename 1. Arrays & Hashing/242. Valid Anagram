@@ -4,6 +4,39 @@ https://www.youtube.com/watch?v=IRN1VcA8CGc
 
 //Input: s = "anagram", t = "nagaram"
 //Output: true
+
+//Brute force
+//TC : O(n^2)
+//SC : O(1)
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length()){
+            return false;
+        }
+        // For each character in s, check if its frequency matches in t
+        for(char c : s.toCharArray()){
+            int countForCharsInS = countOccurences(s, c);// Count occurrences of c in s
+            int countForCharsInT = countOccurences(t, c);// Count occurrences of c in t
+            if(countForCharsInS != countForCharsInT){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Helper method to count how many times character c appears in str
+    private int countOccurences(String str, char c){
+        int count = 0;
+        for(char ch : str.toCharArray()){
+            if(ch == c){
+                count++;
+            }
+        }
+        return count;
+    }
+}
+
+//Optimal
 //increment count of each char in str1, decrement for str2. 
 //after increment and decrement , count should be 0 for all letters if both are anagrams
 
@@ -17,12 +50,39 @@ class Solution {
         for(char ch : s.toCharArray()){
             freq[ch-'a'] += 1;
         }
-        // increment count of each char for t
+        // decrement count of each char for t
         for(char ch : t.toCharArray()){
             freq[ch-'a'] -= 1;
         }
         // after increment + decremtnt , count should be 0 for all letters if both are anagrams(since same array is used to store count 
         //of alphabet for both strings)
+        for(int count : freq){
+            if(count!=0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+//same as above (just used loops differently)
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length()){
+            return false;
+        }
+        int[] freq = new int[26];
+
+        // increment count of each char for s
+        for(int i = 0; i < s.length(); i++){
+            freq[s.charAt(i) - 'a']++;
+        }
+         // decrement count of each char for t
+        for(int i = 0; i < s.length(); i++){
+            freq[t.charAt(i) - 'a']--;
+        }
+
+        //count of each charcter in freq array should be 0
         for(int count : freq){
             if(count!=0){
                 return false;
