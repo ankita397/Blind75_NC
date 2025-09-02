@@ -7,6 +7,24 @@ https://www.youtube.com/watch?v=jJXJ16kPFWg
 //Explanation: "amanaplanacanalpanama" is a palindrome.
 
 //Brute force - Remove non-alphanumeric characters and then reverse the string to check if palindrome.
+//TC = O(n)
+//SC = O(n) 
+class Solution {
+    public boolean isPalindrome(String s) {
+        StringBuilder cleanedSB = new StringBuilder();
+        String lowerCaseS = s.toLowerCase();
+        for(char c : lowerCaseS.toCharArray()){
+            if((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')){
+                cleanedSB.append(c);
+            }
+        }
+
+        String cleanString = cleanedSB.toString();
+        String reverseString = cleanedSB.reverse().toString();
+
+        return cleanString.equals(reverseString);
+    }
+}
 
 //Optimal Approach - Two pointers
 
