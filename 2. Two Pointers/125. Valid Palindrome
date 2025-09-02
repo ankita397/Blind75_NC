@@ -15,24 +15,28 @@ https://www.youtube.com/watch?v=jJXJ16kPFWg
 
 class Solution {
     public boolean isPalindrome(String s) {
+        int n = s.length();
         int left = 0;
-        int right = s.length()-1;
+        int right = n-1;
         s = s.toLowerCase();
-        
+
+        // Loop while the left pointer is less than the right pointer 
         while(left < right){
             char leftChar = s.charAt(left);
             char rightChar = s.charAt(right);
             
-            //if a character not alpha numeric
+            // If the left character is not a letter or digit, skip it by moving the left pointer
             if(!(leftChar >= 'a' && leftChar <= 'z') && !(leftChar >= '0' && leftChar <= '9')){
                 left++;
                 continue;
             }
+            // If the right character is not a letter or digit, skip it by moving the right pointer
             if(!(rightChar >= 'a' && rightChar <= 'z') && !(rightChar >= '0' && rightChar <= '9')){
                 right--;
                 continue;
             }
-            if(leftChar != rightChar){ // return false as soon as one char mismatch happens
+            // return false as soon as one char mismatch happens
+            if(leftChar != rightChar){
                 return false;
             }
             //keep incrementing left and decrementing right as long as the characters match
