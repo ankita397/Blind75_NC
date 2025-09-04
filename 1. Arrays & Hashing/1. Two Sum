@@ -29,9 +29,9 @@ class Solution {
 
 
 //Eg : nums = [2,7,11,15], target = 13
-//i = 0 , second_index_val = 13 - 2 = 11 , map.put(2,0)
-//i = 1 , second_index_val = 13 - 7 = 6 , map.put(7,1)
-//i = 2, second_index_val = 13 - 11 = 2 , 2 is already present in map as key - map.containsKey(second_index_val) == true
+//i = 0 , neededValue = 13 - 2 = 11 , map.put(2,0)
+//i = 1 , neededValue = 13 - 7 = 6 , map.put(7,1)
+//i = 2, neededValue = 13 - 11 = 2 , 2 is already present in map as key - map.containsKey(neededValue) == true
 //true -> resArr[0] = map.get(2) = 11 , resArr[1] = 2
 //map<element, index>
 
@@ -43,14 +43,15 @@ class Solution {
        int[] resArr = new int[2];
        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
        for(int i = 0 ; i < nums.length; i++){
-            int second_index_val = target - nums[i];
+            int neededValue = target - nums[i];
            //if difference between target and current number is present among the map keys
-           if(map.containsKey(second_index_val)){
-               resArr[0] = map.get(second_index_val);//stores index of second_index_val
+           if(map.containsKey(neededValue)){
+               resArr[0] = map.get(neededValue);//stores index of neededValue
                resArr[1] = i;
+               return resArr;
            }
            //if difference between target and current number is not present among the map keys, put the current number and its index in the map
-           map.put(nums[i],i);// key = actual number(second_index_val) and value = number index - VVIMP
+           map.put(nums[i],i);// key = actual number(neededValue) and value = number index - VVIMP
        }
        return resArr; 
     }
