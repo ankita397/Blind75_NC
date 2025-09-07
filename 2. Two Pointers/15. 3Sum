@@ -35,7 +35,7 @@ class Solution {
 Sort the array first.
 Fix one element (say at index i).
 Use two pointers (left[i+1] and right[n-1]) to find pairs that sum to -nums[i].
-Skip duplicates to avoid repeated triplets.
+Skip duplicates to avoid repeated triplets [V.V.IMP] - ############   ############   ############   ############   ############   
 
 //TC : O(n^2) + O(nlogn) ~ O(n^2)
 //SC : O(k) where k is the no. of unique triplets) - This space is only used to store the answer. We are not using any extra space to solve this problem.
