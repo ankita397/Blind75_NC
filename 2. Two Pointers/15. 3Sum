@@ -32,7 +32,7 @@ class Solution {
     }
 }
 
-//2 pointer approach
+//Optimal : 2 pointer approach
 //sort the array
 //Fix i and look for the value of j and k starting from j = i + 1(left) and k = n - 1(right).
 //we add to triplet if nums[i] + nums[j] + nums[k] = sum = 0
