@@ -2,6 +2,36 @@
 
 //https://www.youtube.com/watch?v=DhFh8Kw7ymk&t=1186s
 
+Pattern : No duplicate => HashSet (Bruteforce)
+
+Constraint : 3 <= nums.length <= 3000 
+
+
+//Bruteforce - Check all combinations of 3 elements using 3 nested loops.
+             - Use a Set to avoid duplicate triplets.
+//TC = O(n^3) + O(klogk) ~ O(n^3)
+//SC = O(k), where k is the number of unique triplets found.
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> result = new HashSet<>();
+        int n = nums.length;
+        
+        for(int i = 0; i < n; i++){
+            for(int j = i+1; j < n; j++){
+                for(int k = j+1; k < n; k++){
+                    if(nums[i] + nums[j] + nums[k] == 0){
+                        List<Integer> tripletList = Arrays.asList(nums[i], nums[j], nums[k]);
+                        //sort before adding the triplets to set so that set will know when there is a duplicate triplet
+                        Collections.sort(tripletList);
+                        result.add(tripletList);
+                    }
+                }
+            }
+        }
+        return new ArrayList<>(result);
+    }
+}
+
 //2 pointer approach
 //sort the array
 //Fix i and look for the value of j and k starting from j = i + 1(left) and k = n - 1(right).
