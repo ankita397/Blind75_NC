@@ -6,27 +6,48 @@ https://www.youtube.com/watch?v=UuiTKBwPgAo
 //Output: 49
 //Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
 
+
+
+//Bruteforce - 2 loops
+TC = O(n^2)
+class Solution {
+    public int maxArea(int[] height) {
+        int n = height.length;
+        int maxArea = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = i + 1; j < n ; j++){
+                int currentHeight = Math.min(height[i], height[j]);
+                int currentWidth = j - i;
+                int area = currentHeight * currentWidth;
+                maxArea = Math.max(area, maxArea);
+            }
+        }
+        return maxArea;
+    }
+}
+
 //Optimal Approach - Two pointers
 
 //TC = O(n)
 //SC = O(1)
 class Solution {
     public int maxArea(int[] height) {
-        int length = height.length;
+        int n = height.length;
         int left = 0;
-        int right = length - 1;
-        int area = 0;
+        int right = n - 1;
+        int maxArea = 0;
         while(left < right){
-        //we have calculate to calculate area according the lesser height for y axis
-        //and right - left for x axis
-            if(height[left] < height[right]){ // height[left] is lesser 
-                area = Math.max(area, height[left] * (right-left));
+            int currentHeight = Math.min(height[left], height[right]);
+            int currentWidth = right - left;
+            int area = currentHeight * currentWidth;
+            maxArea = Math.max(maxArea, area);
+
+             // Move the pointer with the smaller height
+            if(height[left] < height[right])
                 left++;
-            }else{ // height[right] is lesser 
-                area = Math.max(area, height[right] * (right-left));
-                right--;
-            }
+            else
+                right--;            
         }
-        return area;
+        return maxArea;
     }
 }
