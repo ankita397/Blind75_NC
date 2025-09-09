@@ -7,21 +7,29 @@ https://www.youtube.com/watch?v=-zSxTJkcdAo
 //keep i constant and move j to right till we encounter a repeating char in our hashSet
 
 //TC = O(n^2) // O(n*n*1) - O(1) for for accessing set
-//O(256)
+//O(n) // set will have size n if all characters are unique in the string
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        int len = s.length();
+        int n = s.length();
         int maxLen = 0;
-        if(len==0)
+
+        if(n == 0)
             return 0;
-        for(int i = 0; i < len; i++){
-            Set<Character> set = new HashSet();
-            for(int j = i; j < len; j++){
-                if(set.contains(s.charAt(j))){
-                    maxLen = Math.max(maxLen, j-i); //in sliding window,our string len is from i to j
+
+        //try every possible starting index 'i'
+        for(int i = 0; i < n; i++){
+            Set<Character> set = new HashSet<Character>();
+            //extend the substring from index 'i' to 'j'
+            for(int j = i; j < n; j++){
+                char c = s.charAt(j);
+                // If the character is already in the set, we found a repeat
+                if(set.contains(c)){
                     break;
                 }
-                set.add(s.charAt(i));
+                // Add the unique characters only to the set
+                set.add(c);
+                //update maxLen
+                maxLen = Math.max(maxLen, j - i + 1);
             }
         }
         return maxLen;
@@ -49,6 +57,41 @@ class Solution {
                 }
                 maxLen = Math.max(maxLen, length);
                 visited[s.charAt(j)] = 1; // mark it a seen before - so it will become repeating char next time
+            }
+        }
+        return maxLen;
+    }
+}
+
+//Better but slow (Interviewers do not prefer this)
+//TC = O(n)
+//SC = O(n) // set will have size n if all characters are unique in the string
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int maxLen = 0;
+        int left = 0;
+        int right = 0;
+        Set<Character> set = new HashSet<>();
+
+        if(n == 0)
+            return 0;
+
+        //Expand the window by moving 'right' pointer
+        while(right < n){
+            char c = s.charAt(right);
+
+            // If character 'c' not in set, add it and update maxLen
+            if(!set.contains(c)){
+                set.add(c);
+                maxLen = Math.max(maxLen, right -  left + 1);
+                right++;
+            }else{
+                // If 'c' is duplicate, shrink window from the left
+                // Remove character at 'left' and move left pointer forward
+                set.remove(s.charAt(left));
+                left++;
             }
         }
         return maxLen;
