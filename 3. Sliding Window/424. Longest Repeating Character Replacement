@@ -25,12 +25,13 @@ class Solution {
                 freq[s.charAt(j)-'A']++;// increament freq of character appearing
                 length = j-i+1;
                 maxCharFreq = Math.max(maxCharFreq,freq[s.charAt(j)-'A']);// find the max occuring character's length in current substring
-                //in substring A , maxCharFreq = 1, length = 1 => 1-1 <=k , so maxLen = 1
-                //in substring A , maxCharFreq = 2, length = 2 => 2-2 <=k , so maxLen = 2
-                //in substring B , maxCharFreq = 2, length = 3 => 3-2 <=k , so maxLen = 3
-                //in substring A , maxCharFreq = 3, length = 4 => 4-3 <=k , so maxLen = 4
-                //in substring B , maxCharFreq = 3, length = 5 => 5-3 <=k , so maxLen = 4
-                //in substring B , maxCharFreq = 3, length = 6 => 6-3 <=k , break - i++
+                //i = 0
+                //j = 0, in substring A , maxCharFreq = 1, length = 1 => 1-1 <=k , so maxLen = 1
+                //j = 1, in substring AA , maxCharFreq = 2, length = 2 => 2-2 <=k , so maxLen = 2
+                //j = 2, in substring AAB , maxCharFreq = 2, length = 3 => 3-2 <=k , so maxLen = 3
+                //j = 3, in substring AABA , maxCharFreq = 3, length = 4 => 4-3 <=k , so maxLen = 4
+                //j = 4, in substring AABAB , maxCharFreq = 3, length = 5 => 5-3 <=k , so maxLen = 4
+                //j = 5, in substring AABABB , maxCharFreq = 3, length = 6 => 6-3 <=k , break - i++
                 if(length - maxCharFreq <= k){
                     maxLen = Math.max(maxLen,length);
                 }else{
