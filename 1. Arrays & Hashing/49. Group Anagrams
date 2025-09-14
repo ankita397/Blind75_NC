@@ -40,6 +40,7 @@ class Solution {
     }
 }
 
+//BEST
 //Optimal 2: for each of 26 chars, use count of each char in each word. Use StringBuilder to create unique hash that acts as key of map 
 //and value will be the list of anagrams
 
