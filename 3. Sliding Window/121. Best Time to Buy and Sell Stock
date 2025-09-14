@@ -2,6 +2,25 @@
 
 https://www.youtube.com/watch?v=excAOvwF_Wk
 
+
+//Bruteforce
+//TC = O(n^2)
+//SC = O(1)
+class Solution {
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        int n = prices.length;
+
+        for(int i = 0; i < n; i++){
+            for(int j = i+1; j < n; j++){
+                int profit = prices[j] - prices[i];
+                maxProfit = Math.max(maxProfit, profit);
+            }
+        }
+        return maxProfit;
+    }
+}
+
 //INTUITION : If we wanna sell on i'th day, then we have to buy on the minimum price from day 0 to i-1. 
 //So, we need to keep track of the minimum price.
 
