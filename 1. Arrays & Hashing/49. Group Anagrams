@@ -5,7 +5,42 @@
 //Input: strs = ["eat","tea","tan","ate","nat","bat"]
 //Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
 
-//for each of 26 chars, use count of each char in each word. Use StringBuilder to create unique hash that acts as key of map 
+
+//Optimal 1 : Sort each word acc to characters — if two words have the same sorted form, they are anagrams, so we put them in the same group.
+//TC = O(n * klogk) - sorting is done
+//SC = O(n*k)
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<>();
+        
+        // Loop through each word in the input array
+        for (String word : strs) {
+            // Convert the word to a char array to sort its characters
+            char[] chars = word.toCharArray();
+
+            // Sort the characters in the word
+            Arrays.sort(chars);
+            
+           // Convert the sorted char array back to a string
+            String sortedWord = new String(chars);
+
+            // Example:
+            // word = "eat" → chars = ['e','a','t'] → sorted = ['a','e','t'] → sortedWord = "aet"
+            // word = "tea" → sortedWord = "aet"
+            // word = "tan" → sortedWord = "ant"
+            
+            if (!map.containsKey(sortedWord)) {
+                map.put(sortedWord, new ArrayList<>());
+            }
+            
+            map.get(sortedWord).add(word);
+        }
+        
+        return new ArrayList<>(map.values());
+    }
+}
+
+//Optimal 2: for each of 26 chars, use count of each char in each word. Use StringBuilder to create unique hash that acts as key of map 
 //and value will be the list of anagrams
 
 //TC : O(NK) ; N = length of strs array , K = max length of a string in strs
