@@ -21,22 +21,21 @@ class Solution {
     }
 }
 
-//INTUITION : If we wanna sell on i'th day, then we have to buy on the minimum price from day 0 to i-1. 
+//Optimal : INTUITION : If we wanna sell on i'th day, then we have to buy on the minimum price from day 0 to i-1. 
 //So, we need to keep track of the minimum price.
 
-//TC = O(n), SC = O(1)
+//TC = O(n) 
+//SC = O(1)
 class Solution {
     public int maxProfit(int[] prices) {
         int maxProfit = 0;
-        int minimum = prices[0];//we need to keep track of the minimum price so say we buy at 
-        for(int i = 1; i < prices.length; i++){
-            //find the profit
-            int profit = prices[i] - minimum;
-            //find the maximun profit
-            maxProfit = Math.max(maxProfit,profit);
-            //re-assign mini for next iteration
-            minimum = Math.min(minimum, prices[i]);
-        }
+        int n = prices.length;
+        int minPrice = Integer.MAX_VALUE;
+        for(int price : prices){
+            minPrice = Math.min(minPrice, price);  // Update minPrice if we find a lower price
+            int profit = price - minPrice;  // Calculate potential profit
+            maxProfit = Math.max(maxProfit, profit);  //Calculate maxProfit
+        } 
         return maxProfit;
     }
 }
