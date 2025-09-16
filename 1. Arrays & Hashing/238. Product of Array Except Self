@@ -9,6 +9,29 @@ Read this - https://leetcode.com/problems/product-of-array-except-self/solutions
 //right = [12,12,4,1]
 //ans = [12,24,8,6]
 
+//Brute force - Go over all elements and multiplying unless i == j
+//TC = O(n^2)
+//SC = O(n)
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int answer[] = new int[n];
+
+        for(int i = 0; i < n; i++){
+            int product = 1;
+            for(int j = 0; j < n; j++){
+                if(i != j){
+                    product = product * nums[j];
+                }
+            }
+            answer[i] = product;
+        }
+        return answer;
+    }
+}
+
+//Optimal - Prefix / suffix product
+
 //TC = O(n)
 //SC = O(n)
 class Solution {
