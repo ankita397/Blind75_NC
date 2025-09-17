@@ -2,6 +2,21 @@ https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/
 
 https://www.youtube.com/watch?v=nhEMDKMB44g
 
+//Bruteforce - Traverse all elements and find min
+//TC = O(n)
+//SC = O(1)
+class Solution {
+    public int findMin(int[] nums) {
+        int min = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            if(nums[i] < min){
+                min = nums[i];
+            }
+        }
+        return min;
+    }
+}
+
 //TC = O(log n)
 //SC = O(1)
 
