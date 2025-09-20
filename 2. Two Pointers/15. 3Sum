@@ -68,10 +68,14 @@ class Solution {
                     result.add(Arrays.asList(nums[i], nums[left], nums[right]));
 
                     // Skip duplicates for the left pointer
+                    // Immediately after adding a triplet to the result.
+                    // Only if the next value on the left (nums[left + 1]) is the same as current nums[left] — meaning duplicates adjacent to left.
                     while(left < right && nums[left] == nums[left+1]){
                         left++;
                     }
                     // Skip duplicates for the right pointer
+                    //Immediately after adding a triplet to the result.
+                    //Only if the next value on the right (nums[right - 1]) is the same as current nums[right] — meaning duplicates adjacent to right.
                     while(left < right && nums[right] == nums[right-1]){
                         right--;
                     }
