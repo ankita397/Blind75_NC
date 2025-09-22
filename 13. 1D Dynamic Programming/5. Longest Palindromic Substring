@@ -101,67 +101,43 @@ public class Solution {
 // For even-length palindromes: Consider the current and next character as the center
 
 //TC = O(n^2)
-//SC = O(1)
+//SC = O(n)
 
-public class Solution {
+class Solution {
     public String longestPalindrome(String s) {
-        // Initialize result string and its length
-        String res = "";
-        
-        // Length of the input string
-        int len = s.length();
-        
-        // Variables to store the length of the longest palindrome found
-        int resLen = 0;
-        
-        // Index to store the start position of the longest palindrome
-        int resIdx = 0;
-        
-        // Loop through each character in the string
-        for (int i = 0; i < len; i++) {
-            // For odd-length palindromes: Consider the current character as the center
-            int left = i;
-            int right = i;
-            
-            // Expand around the center for odd-length palindromes
-            while (left >= 0 && right < len && s.charAt(left) == s.charAt(right)) {
-                // Calculate the length of the current palindrome substring
-                int substrLen = right - left + 1;
-                
-                // If the current palindrome is longer than the previously found one, update the result
-                if (substrLen >= resLen) {
-                    resIdx = left;
-                    resLen = substrLen;
-                }
-                
-                // Move the pointers to expand around the center
-                left--;
-                right++;
+        int n = s.length();
+        if (s == null || n == 0) 
+            return "";
+
+        String longestPalindrome = "";  // store the longest palindrome found
+
+        for (int center = 0; center < n; center++) {
+            // Odd-length palindrome
+            String palindromeOdd = expandAndGetPalindrome(s, center, center);
+            if (palindromeOdd.length() > longestPalindrome.length()) {
+                longestPalindrome = palindromeOdd;
             }
-            
-            // For even-length palindromes: Consider the current and next character as the center
-            left = i;
-            right = i + 1;
-            
-            // Expand around the center for even-length palindromes
-            while (left >= 0 && right < len && s.charAt(left) == s.charAt(right)) {
-                // Calculate the length of the current palindrome substring
-                int substrLen = right - left + 1;
-                
-                // If the current palindrome is longer than the previously found one, update the result
-                if (substrLen >= resLen) {
-                    resIdx = left;
-                    resLen = substrLen;
-                }
-                
-                // Move the pointers to expand around the center
-                left--;
-                right++;
+
+            // Even-length palindrome
+            String palindromeEven = expandAndGetPalindrome(s, center, center + 1);
+            if (palindromeEven.length() > longestPalindrome.length()) {
+                longestPalindrome = palindromeEven;
             }
         }
-        
-        // Return the longest palindromic substring
-        return s.substring(resIdx, resIdx + resLen);
+
+        return longestPalindrome;
+    }
+
+    // Expand from center and return the palindrome substring
+    private String expandAndGetPalindrome(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        // After expanding, left and right are one step beyond the palindrome
+        // So the actual palindrome is from left+1 to right (exclusive)
+        return s.substring(left + 1, right);
     }
 }
+
 
