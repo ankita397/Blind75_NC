@@ -1,6 +1,8 @@
 https://leetcode.com/problems/set-matrix-zeroes/description/
 //chatgpt
 
+https://www.youtube.com/watch?v=dSxt3ZCbIqA
+
 //Bruteforce
 First, find all the places where there’s a zero.
 Remember which rows and columns have zeros.
