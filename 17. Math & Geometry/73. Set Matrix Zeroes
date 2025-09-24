@@ -8,7 +8,7 @@ Then, set every element in those rows and columns to zero.
 This way, you don’t accidentally change things while you’re still checking the matrix.
 
 //TC = O(n*m)
-//SC = O(n+m)
+//SC = O(n+m) - for zeroRows and zeroCols
 
 class Solution {
     public void setZeroes(int[][] matrix) {
