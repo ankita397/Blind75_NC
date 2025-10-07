@@ -52,3 +52,31 @@ class Solution {
         return true;
     }
 }
+
+//Optimal - Sort meetings by start time and check if any meeting starts before the previous one ends 
+// by keeping track of the end of last non-overlapping meetings meeting.
+
+//This is similar to pervious problem (Non-overlapping intervals)
+
+//TC = O(nlog n)
+//SC = O(1)
+
+public boolean canAttend(int[][] arr) {
+    // Sort the intervals by their start time (ascending)
+    Arrays.sort(arr, (a, b) -> a[0] - b[0]);
+
+    int endOfLast = arr[0][1]; //end of last non-overlapping meeting
+
+    for (int i = 1; i < arr.length; i++) {
+        // If the current meeting starts before the previous one ends, there's an overlap
+        if (arr[i][0] < endOfLast) {
+            return false; // Cannot attend all meetings
+        }
+
+        // Update the end time to the current meeting's end time
+        endOfLast = arr[i][1];
+    }
+
+    // No overlaps found, all meetings can be attended
+    return true;
+}
