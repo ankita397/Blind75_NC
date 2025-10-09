@@ -27,13 +27,15 @@ public class Solution {
 //Optimal - 2 pointers
 
 //INTUITION:
+- Move slow pointer by 1 and fast pointer by 2. 
 - If slow and fast pointer collide at any node((or point to same node) then we know the LL has a cycle.
-- They will for sure collide because the distance between fast and slow (not slow and fast) reduces at each step. 
-- So they are bound to collide when there distance becomes 0. This is only possible when the LL has cycle.
-- That is the reason, we move fast by 2 positions towarss slow and slow by 1 position away from fast.. so the distance(d) from fast to slow 
-    reduces by 1 each time (fast becomes closer to slow by 1 position).
-- Distance = d in 1st iteration, d-1 in second and so on.
-- d % 1 = 0 (d is always divisible by 1)
+- They will eventually collide for sure  because the distance between fast and slow (not slow and fast) reduces at each step. 
+- That is the reason, 
+    - we move fast by 2 positions towards slow 
+    - we move slow by 1 position away from fast 
+    so the distance(d) from fast to slow reduces by 1 each time (fast becomes closer to slow by 1 position).
+- This ensures the distance d reduces as: d → d-1 → d-2 … until it becomes 0 (collision).
+- This only happens when the linked list has a cycle, which is why fast moves 2 steps toward slow and slow moves 1 step.
 
 //TC = O(N), where N is the number of nodes in the linked list. 
 This is because in the worst-case scenario, the fast pointer, which moves quicker, will either reach the end of the list (in case of no loop)
