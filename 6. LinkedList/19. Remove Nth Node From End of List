@@ -38,6 +38,42 @@ class Solution {
     }
 }
 
+
+//Brute Force - iterative 2 - more intuitive
+//TC = O(2L)
+//SC = O(1)
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        int size = 0;
+        ListNode temp = head;
+
+        // Count the total number of nodes in the list
+        while(temp != null){
+            size++;
+            temp = temp.next;
+        }
+
+        int pos = size - n + 1; // Calculate the position of the node to remove from the start
+        
+        // If the node to remove is the head, return the next node
+        if (pos == 1) {
+            return head.next;
+        }
+        
+        temp = head;
+        
+        // Traverse to the node just before the one to remove
+        for(int i = 1; i < pos-1; i++){
+            temp = temp.next;
+        }
+
+        // Skip the node to be removed by making current node point to the one after the next node
+        temp.next = temp.next.next;
+
+        return head;
+    }
+}
+
 //Optimal - 2 pointer
 
 //TC = O(L) since the fast pointer will traverse the entire linked list, where L is the length of the linked list. 
