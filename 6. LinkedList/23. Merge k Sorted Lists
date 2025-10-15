@@ -55,7 +55,7 @@ class Solution {
 INTUITION
 
 //TC = N1+N2 + (N1+N2+N3) + (N1+N2+N3+N4) = N(1+2+...+k) = N * ((K * K+1)/2) 
-~ O(k*n), where k is the number of lists and n is the average number of nodes per list, 
+~ O(n^3), where k is the number of lists and n is the average number of nodes per list, 
 as each merge operation takes O(n) and we perform it k−1 times.
 
 //SC = O(1) - We just use the existing linked lists and link them in sorted manner. No extra space is used
