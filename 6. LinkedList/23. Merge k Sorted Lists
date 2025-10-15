@@ -4,7 +4,7 @@ https://www.youtube.com/watch?v=1zktEppsdig
 
 //Brute Force - exactly same as 21. Merge Two Sorted Lists
 
-//TC = O(KN) + O(M log M) + O(M) , K = lists.length = size of the given list of LLs, M = each linked list size, 
+//TC = O(KN) + O(M log M) + O(M) , K = lists.length = size of the given list of LLs, N = each linked list size, 
 //M = N*K (total no of elements in the nodeList
 
 //SC = O(M)+O(M) where M is the total number of nodes from all lists, N1 + N2 + N3...+Nk. O(M) to store all the nodes of both the lists in an 
