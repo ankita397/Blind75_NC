@@ -3,7 +3,7 @@ https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-tr
 https://www.youtube.com/watch?v=aZNaLrVebKQ&list=PLkjdNRgDmcc0Pom5erUBU4ZayeU9AyRRu&index=34
 
 /*
- * Root = preorder[0] - so we find the corresponding address of this root in inorder array 
+ * Root = preorder[0] - so we find the corresponding index of this root in inorder array 
  * Left of that root will have the left sub tree nodes
  * Right of that root will have the left sub tree nodes
  * 
