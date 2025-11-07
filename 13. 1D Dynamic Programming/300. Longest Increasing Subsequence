@@ -41,7 +41,7 @@ class Solution {
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        int[][] dp = new int[n][n+1];// 2D as our variables are ind and prevInd
+        int[][] dp = new int[n][n+1];// 2D as our variables are ind and prevInd (2 changing parameters) 
         //n+1 = because we need to do a coordinate shift since we cannot start prevInd from -1. It used to start from -1 and go till n-1 in recursion. Now, we start it from 0 and go till n;
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
