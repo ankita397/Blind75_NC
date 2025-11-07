@@ -139,9 +139,13 @@ class Solution {
     }
 }
 
+//Binary Search - optimal
+
 https://www.youtube.com/watch?v=on2hvxBXJH4&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=44
 
-//Binary Search - optimal
+INTUITION : Replacing an element in nums with a smallest value that is ≥ the element keeps the same-length subsequence possible while allowing future elements
+to potentially extend it, so the LIS length is preserved.
+
 //TC = O(n log n)
 //SC = O(n) 
 class Solution {
