@@ -9,6 +9,7 @@ https://www.youtube.com/watch?v=ekcwMsSIzVc&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81P
 
 //Approach - Take/Not take
 //For taking current index element, one must know what was taken previously(previous index).
+//prevInd represents the index of the last element included in the current increasing subsequence.
 
 //TC - O(2^n)
 //SC - O(n) - recursive stack
